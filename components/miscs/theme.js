@@ -14,7 +14,7 @@ export const mainColor = "#1b1a1d";
 export const mainColor2 = "#0071ce";
 export const mainColor3 = "#0054a6";
 
-export const textColor = "rgba(33, 37, 41)";
+export const textColor = "33, 37, 41";
 export const textColor2 = "rgba(68, 68, 68)";
 export const textColor3 = "rgb(17, 17, 17)";
 

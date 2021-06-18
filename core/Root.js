@@ -50,7 +50,7 @@ const Body = styled.div `
     font-size: ${(props) => props.theme.fontSize};
     font-family: ${(props) => props.theme.fontFamily1};
     font-weight: ${props => props.theme.fontWeightNormal};
-    color:  ${props=> props.theme.textColor};
+    color: rgba(${props=> props.theme.textColor});
     span,h3,div,p,li,a{
         font-weight: inherit;
         color:inherit;

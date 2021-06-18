@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { IoIosCall, IoMdMail } from "react-icons/io"
 import { ImLocation } from "react-icons/im"
 import { FaFacebookF,FaTwitter, FaYoutube, FaInstagram  } from "react-icons/fa"
+import ContactFeedback from "@/components/feedback/ContactFeedback"
 
 const Contact = ({data}) => {
     return (
@@ -16,25 +17,29 @@ const Contact = ({data}) => {
                 </div>
 
                 <div className="MainCont">
-                    <div className="Sector2 Sector3">
-                        <div className="menu">
-                            <div className="menus"><IoIosCall /> <span>{data?.phone}</span></div>
-                            <div className="menus"><ImLocation /><span>{data?.location}</span></div>
-                            <div className="menus"><IoMdMail /><span>{data?.email}</span></div>
+                    <div className="SectorPar">
+                        <div className="Sector2 Sector3">
+                            <div className="menu">
+                                <div className="menus"><IoIosCall /> <span>{data?.phone}</span></div>
+                                <div className="menus"><ImLocation /><span>{data?.location}</span></div>
+                                <div className="menus"><IoMdMail /><span>{data?.email}</span></div>
+                            </div>
+                        </div>
+                        <div className="SocialButton">
+                            {data?.SocialButton?.length&&data?.SocialButton.map((el, ind)=>{
+                                return(
+                                    <div key={ind}>
+                                        {el.name==="facebook"&&<a href={el.link} target="_blank" className="icon facebook"> <FaFacebookF /></a> }
+                                        {el.name==="twitter"&&<a href={el.link} target="_blank" className="icon twitter"> <FaTwitter /></a> }
+                                        {el.name==="youtube"&&<a href={el.link} target="_blank" className="icon youtube"> <FaYoutube /></a>}
+                                        {el.name==="instagram"&&<a href={el.link} target="_blank" className="icon insta"> <FaInstagram /></a>}
+                                    </div>
+                                )
+                            })}
                         </div>
                     </div>
-                    <div className="SocialButton">
-                        {data?.SocialButton?.length&&data?.SocialButton.map((el, ind)=>{
-                            return(
-                                <div key={ind}>
-                                    {el.name==="facebook"&&<a href={el.link} target="_blank" className="icon facebook"> <FaFacebookF /></a> }
-                                    {el.name==="twitter"&&<a href={el.link} target="_blank" className="icon twitter"> <FaTwitter /></a> }
-                                    {el.name==="youtube"&&<a href={el.link} target="_blank" className="icon youtube"> <FaYoutube /></a>}
-                                    {el.name==="instagram"&&<a href={el.link} target="_blank" className="icon insta"> <FaInstagram /></a>}
-                                </div>
-                            )
-                        })}
-                    </div>
+
+                    <ContactFeedback />
                 </div>
                
             </div>
@@ -71,43 +76,54 @@ const Container = styled.div`
     }
 
     .MainCont{
-        
-        .Sector3{
-            font-size: 15px;
-            padding-right:20px;
-            width:35%;
-            .menu{
-                .menus{
-                   cursor:pointer;
-                   transition:all 0.3s ease;
-                   display:flex;
-                   align-items:center;
-                   margin-bottom:30px;
-                   &:hover{
-                        color: ${props=>props.theme.mainColor2};
-                    }
-                    svg{
-                        color: rgba(0,0,0,.7);
-                        margin-right:15px;
-                        font-size:24px;
-                        width:10%;
-                    }
-                    span{
-                        width:90%;
-                    }
-                }
-            }
-            @media (max-width:786px){
+        display:flex;
+        justify-content:space-between;
+        @media (max-width:768px){
+            flex-direction:column;
+        }
+        .SectorPar{
+            width:40%;
+            @media (max-width:768px){
+                margin-bottom:40px;
                 width:100%;
             }
-        }
-
-        .SocialButton{
+            .Sector3{
+                padding-bottom:15px;
+                font-size: 15px;
+                // padding-right:20px;
+                width:100%;
+                .menu{
+                    .menus{
+                       cursor:pointer;
+                       transition:all 0.3s ease;
+                       display:flex;
+                       align-items:center;
+                       margin-bottom:30px;
+                       &:hover{
+                            color: ${props=>props.theme.mainColor2};
+                        }
+                        svg{
+                            color: rgba(0,0,0,.7);
+                            margin-right:15px;
+                            font-size:24px;
+                            width:10%;
+                        }
+                        span{
+                            width:90%;
+                        }
+                    }
+                }
+                @media (max-width:786px){
+                    width:100%;
+                }
+            }
+    
+            .SocialButton{
                 display:flex;
                 flex-direction:row;
                 justify-content:start;
                 align-items:center;
-                gap: 20px;
+                gap: 30px;
                 .icon{
                     transition:all 0.3s ease;
                     display:flex;
@@ -145,6 +161,8 @@ const Container = styled.div`
                     background-color: #f00;
                 }
             }
+        }
+        
     }
     
 `

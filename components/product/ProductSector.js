@@ -71,35 +71,6 @@ const Container = styled.div`
            .Buttons{
                display:flex;
                flex-direction:column;
-               /* width: 38px; */
-               /* height: 38px; */
-               .boov{
-                   width:50px;
-                   height:50px;
-                   cursor: pointer;
-                    .Btnssss{
-                        border:1px solid rgba(0,0,0,0.3);
-                        border-radius:50%;
-                        color:#bbb;
-                        font-size:12px;
-                        width:38px;
-                        height:38px;
-                        display:flex;
-                        align-items:center;
-                        justify-content:center;
-                        svg{
-                            transition:all 0.2s ease;
-                            font-size:15px;
-                        }
-                        &:hover{
-                            svg{
-                                transform:scale(1.3);
-                            }
-                        }
-                    }
-               }
-              
-                
                button{
                     margin-bottom:9px;
                     .Btnss{
@@ -156,6 +127,17 @@ const Container = styled.div`
         }
         img{
             width:100%;
+        }
+        @media (max-width:768px){
+            flex-direction:column-reverse;
+            .Icons{
+                margin-top:30px;
+                .Buttons{
+                    flex-direction:row;
+                    justify-content:space-between;
+                    gap:30px;
+                }
+            }
         }
     }
     .Image{
