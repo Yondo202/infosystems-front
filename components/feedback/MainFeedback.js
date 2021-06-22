@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components';
+import CommentSector from './CommentSector';
 import { FaFilter } from "react-icons/fa"
 import { BiSearchAlt } from "react-icons/bi"
 import { IoMdArrowDropright } from "react-icons/io"
@@ -45,7 +46,7 @@ const MainFeedback = ({ data }) => {
                     </div>
 
                     <div className="CommentSector">
-                        Home
+                        {targetProduct.id?<CommentSector product={targetProduct} />:null}
                     </div>
                 </div>
             </div>
@@ -125,7 +126,7 @@ const Container = styled.div`
             }
         }
         .CommentSector{
-            width:68%;
+            width:70%;
         }
     }
     .Header{

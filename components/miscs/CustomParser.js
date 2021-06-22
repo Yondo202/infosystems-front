@@ -28,8 +28,6 @@ const HtmlParser = ({ data }) => {
     let tmpImg = document.querySelectorAll("figure");
     let arr = Array.from(tmpImg);
 
-    console.log(`tmpImg`, tmpImg);
-    
     if(arr.length > 0){
       arr.forEach(el=>{
         let img = el.querySelector("img");

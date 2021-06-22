@@ -117,6 +117,9 @@ export const InputStyle = styled.div`
         }
         .red{
             border:1px solid rgba(255,0,0,0.8);
+            &:focus{
+                border:1px solid rgba(255,0,0,0.8);
+            }
         }
         .cash{
             padding-right:10px;
