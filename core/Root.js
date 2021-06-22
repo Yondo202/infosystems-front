@@ -1,14 +1,16 @@
-import React from "react"
+import React, { useContext, useState } from "react"
 import Header from '@/core/Header'
 import Footer from '@/core/Footer';
 import { MenuContext } from '@/miscs/ContextMenuProvider';
-import { useContext, useState } from "react";
 import styled from "styled-components";
 import PreSeo from "@/components/miscs/PreSeo";
 import { IoIosArrowUp } from "react-icons/io";
 import { animateScroll as scroll } from "react-scroll";
+import { Alert } from "@/components/miscs/CustomComp"
+import UserContext from "./context/Context";
 
 export default function Root(props) {
+    const ctx = useContext(UserContext);
     const { headerMenu, logo, footerMenu } = useContext(MenuContext);
     const [ showBtn, setShowBtn ] = useState(false);
 
@@ -33,13 +35,14 @@ export default function Root(props) {
     return (
         <Body>
             <PreSeo seo={props.seo}/>
-            <Header logo={logo} menu={headerMenu || []}/>
+            <Header login={props.login} logo={logo} menu={headerMenu || []} />
                 {props.children}
-            <Footer footerMenu={footerMenu} logo={logo}/>
+            {!props.login&&<Footer footerMenu={footerMenu} logo={logo}/>}
             {showBtn&&<div  onClick={clickHandle} className="toTop">
                <IoIosArrowUp className="one" />
                <IoIosArrowUp className="two" />
-            </div>} 
+            </div>}
+            <Alert alert={ctx.alert} />
         </Body>
     )
 }

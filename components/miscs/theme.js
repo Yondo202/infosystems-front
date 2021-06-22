@@ -3,7 +3,7 @@ export const fontSize2 = '14px';
 export const fontSize3 = '18px';
 
 export const fontFamily1 = `'Fira Sans', sans-serif`;
-export const fontFamily2 = `'Open Sans', sans-serif`;
+export const fontFamily2 = `'Roboto', sans-serif`;
 export const fontFamily3 = `'Montserrat', sans-serif`;
 export const fontWeightNormal = 400;
 

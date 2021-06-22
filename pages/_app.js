@@ -5,7 +5,10 @@ import { MenuProvider } from "@/miscs/ContextMenuProvider";
 import { ThemeProvider } from "styled-components";
 import * as theme from "@/miscs/theme";
 // import TagManager from "react-gtm-module";
-
+import Router from "next/router"
+import { parseCookies } from "nookies"
+import { UserStore } from "@/core/context/Context"
+ 
 
 class MyApp extends App {
     state = {
@@ -23,7 +26,6 @@ class MyApp extends App {
     async componentDidMount() {
         const res = await checkLanguage('/settings', null, true);
         const config = {width: window.innerWidth, height: window.innerHeight};
-        console.log(`res`, res);
         if(res.data.header_menu?.length){
             this.setState({
                 completelyLoaded: true,
@@ -44,18 +46,51 @@ class MyApp extends App {
 
 
     render() {
-        const { Component, pageProps, router } = this.props;
+        const { Component, pageProps, router  } = this.props;
+
             return (
-                <ThemeProvider theme={theme}>
-                    <MenuProvider value={this.state}>
-                           {this.state.completelyLoaded? <Component {...pageProps} key={router.route} /> 
-                           :<div style={{width:`100%`, height:`100vh`,display:`flex`, alignItems:"center", justifyContent:"center"}}> <img src="/giff2.gif" /></div> }
-                    </MenuProvider>
-                </ThemeProvider>
+                <UserStore>
+                    <ThemeProvider theme={theme}>
+                        <MenuProvider value={this.state}>
+                            {this.state.completelyLoaded? <Component {...pageProps} key={router.route} /> 
+                            :<div style={{width:`100%`, height:`100vh`,display:`flex`, alignItems:"center", justifyContent:"center"}}> <img src="/giff2.gif" /></div> }
+                        </MenuProvider>
+                    </ThemeProvider>
+                </UserStore>
+                
             );
     }
 }
 
+function redirectUser(ctx, location){
+    if(ctx.req){
+        ctx.res.writeHead(302, { Location: location });
+        ctx.res.end();
+    }else{
+        Router.push(location);
+    }
+}
+
+MyApp.getInitialProps = async({ Component, ctx }) =>{
+    let pageProps = {}
+    const jwt = parseCookies(ctx).jwt;
+
+    if(!jwt){
+        if(ctx.pathname === "/feedback"){
+            redirectUser(ctx, "/login");
+        }
+    }
+
+    if(Component.getInitialProps){
+        pageProps = await Component.getInitialProps(ctx);
+    }
+
+    return{
+        pageProps,
+    }
+}
+
 export default MyApp;
+
 
 

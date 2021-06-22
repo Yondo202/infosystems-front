@@ -56,7 +56,7 @@ const MainFeedback = ({ data }) => {
 export default MainFeedback
 
 const Container = styled.div`
-    padding-top 76.28px;
+    padding-top: 76.28px;
     margin-bottom: 12em;
     font-family:${props=>props.theme.fontFamily2};
     .MainContent{

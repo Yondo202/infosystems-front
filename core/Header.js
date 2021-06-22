@@ -5,19 +5,35 @@ import Link from "next/link"
 import { HiOutlineMenuAlt3 } from "react-icons/hi"
 import { IoCloseSharp } from "react-icons/io5"
 import { FiChevronDown } from "react-icons/fi"
+import { RiArrowRightSLine } from "react-icons/ri"
+import { TiArrowSortedDown } from "react-icons/ti"
 import minimize from "@/miscs/minimize"
+import { parseCookies } from "nookies"
+import nookies from 'nookies'
 
-const Header = ({menu, logo}) => {
-    const router = useRouter()
+const Header = ({menu, logo, login}) => {
+    const router = useRouter();
     const headRef = useRef();
     const [ HeadColor, setHeadColor ] = useState(false);
     const [ leftMenu, setLeftMenu ] = useState(`100%`);
     const [ subMenus, setSubmenu ] = useState([]);
     const [ showSub, setshowSub ] = useState(`none`);
+    const [ userName, setUserName ] = useState('');
+    const [ role, setRole ] = useState('');
+    const [ showSmMenu, setShowSmMenu ] = useState(false);
 
     React.useEffect(()=>{
+        setRole(parseCookies().role);
+        setUserName(parseCookies().username);
         window.addEventListener("scroll", handleScroll);
     },[])
+
+    const LogOut = () =>{
+        nookies.destroy(null, 'jwt');
+        nookies.destroy(null, 'username');
+        nookies.destroy(null, 'role');
+        router.reload(window.location.pathname);
+    }
 
     const handleScroll = () => {
         if (window.pageYOffset > 100) {
@@ -37,7 +53,8 @@ const Header = ({menu, logo}) => {
     }
 
     return (
-        <Container style={router.asPath==="/"
+        <Container style={
+            router.asPath==="/" || router.asPath==="/login"
             ?HeadColor
             ?{backgroundColor:`rgba(37,41,45,.9)`}
             :{backgroundColor:`rgba(0,0,0,0)`}
@@ -66,7 +83,7 @@ const Header = ({menu, logo}) => {
 
             <div className={`container-xxl Parent ${HeadColor?`ToBottom`:``}`}>
                 <Link href="/">
-                    <a className="imgPar">
+                    <a className={`imgPar ${role==="infosystem_admin"&&`B22`}`}>
                         <img className="logo" src={process.env.serverUrl + logo?.url} alt="infosystem" />
                     </a>
                 </Link>
@@ -80,7 +97,8 @@ const Header = ({menu, logo}) => {
                             return(
                                 <Link key={i} href={el.slug!=="/"&&el.slug?`${process.env.frontUrl+process.env.pageUrl+el.slug}`:`/`}>
                                     <a className="content">
-                                        <div onClick={()=>MenuHandle(`100%`)} onMouseOver={el.submenu.length?()=>OnMouseOverHandle(el.submenu):console.log()} onMouseLeave={()=>setshowSub(`none`)} className="items">
+                                        <div onClick={()=>MenuHandle(`100%`)} onMouseOver={el.submenu.length?()=>OnMouseOverHandle(el.submenu):console.log()} onMouseLeave={()=>setshowSub(`none`)}
+                                         className={`items ${login&&`A2`}`}>
                                             {el.name}
                                            {el.submenu.length?<FiChevronDown />:null} 
                                         </div>
@@ -88,14 +106,40 @@ const Header = ({menu, logo}) => {
                                 </Link>
                             )  
                         })}
+                    </div>
+                    <div className="Menu B2">
+
+                        <Link href={userName?"/feedback":"/login"}>
+                             <a className="content">
+                                <div className={`items ${login&&`A2`}`}>
+                                    Хэлэлцүүлэг
+                                </div>
+                            </a>
+                        </Link>
+
+                        {!userName?<Link href={"/login"}>
+                             <a className="content">
+                                <div className={`items ${login&&`A2`}`}>
+                                    Нэвтрэх
+                                </div>
+                            </a>
+                        </Link>
+
+                        :<div  className="content Login">
+                            <div style={showSmMenu?{color:"#fff"}:{color:`rgba(255,255,255,.65)`}} onClick={()=>setShowSmMenu(prev=>!prev)} className={`items ${login&&`A2`}`}>
+                                {userName}
+                                <TiArrowSortedDown />
+                            </div>
+                            {showSmMenu?<div className="showMenu">
+                                <div onClick={LogOut} className="itemss">
+                                    Гарах <RiArrowRightSLine />
+                                </div>
+                            </div>:null}
+                        </div>}
                         
+
                     </div>
                 </div>
-
-                <div className="smMenu">
-                    
-                </div>
-                
             </div>
             <div style={{display:showSub}} className="GhostBack" />
                  
@@ -175,6 +219,8 @@ const Container = styled.div`
         padding-bottom:16px;
         
         .imgPar{
+            position: relative;
+            z-index: 2;
             width:170px;
             .logo{
                 width:100%;
@@ -182,15 +228,35 @@ const Container = styled.div`
                 object-fit:contain;
                 vertical-align: middle;
             }
+            
+        }
+        .B22{
+            position: relative;
+            z-index: 2;
+            &:before{
+                z-index:0;
+                font-size: 12px;
+                content: "admin";
+                position: absolute;
+                right: -25%;
+                color: white;
+                top: -20%;
+                font-weight: 500;
+                padding: 2px 10px;
+                letter-spacing: 0.2px;
+                border-radius: 3px;
+            }
         }
         .mobileMenu{
             display:none;
         }
         .ghost{
-            width:60%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            width:90%;
             .Menu{
                 display:flex;
-                
                 .headerMobile{
                     display: none;
                 }
@@ -222,6 +288,39 @@ const Container = styled.div`
                             color: rgba(255,255,255,1);
                         }
                         
+                    }
+                    .A2{
+                        font-size:0.97rem;
+                        font-weight: 500;
+                        color: rgba(255,255,255,1);
+                    }
+                }
+            }
+            .B2{
+                .Login{
+                    position: relative;
+                    .showMenu{
+                        border-radius: 3px;
+                        position: absolute;
+                        width: 10em;
+                        padding: 8px 16px;
+                        top: 130%;
+                        right: 0;
+                        background-color: #ffffff;
+                        .itemss{
+                            padding: 3px 5px;
+                            cursor: pointer;
+                            font-size: 15px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            svg{
+                                font-size: 20px;
+                            }
+                            &:hover{
+                                background-color: #DCDCDC;
+                            }
+                        }
                     }
                 }
             }
@@ -269,8 +368,9 @@ const Container = styled.div`
                 z-index: 9999;
                 background-color: rgba(0,0,0,0.6);
                 display: flex;
-                align-items:center;
+                align-items:flex-end;
                 justify-content: flex-end;
+                flex-direction: column;
                 .Menu{
                     padding: 30px 15px;
                     width: 70%;

@@ -1,14 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import styled from "styled-components"
 import { InputStyle } from "@/miscs/CustomStyle"
+import UserContext from '@/core/context/Context'
 import { GrSend } from "react-icons/gr"
-import { IoCheckmarkCircleOutline } from "react-icons/io5"
 import axios from 'axios'
+import { LoadingStyle } from '../miscs/CustomComp'
 
 const ContactReport = () => {
+    const ctx = useContext(UserContext);
     const [ showErr, setShowErr ] = useState(`0`);
-    const [ Loading, setLoading ] = useState(false);
-    const [ alertShow, setAlertShow ] = useState({ color: "#0071ce", text:"Амжилттай илгээгдлээ", cond:false, });
+    const [ loading, setLoading ] = useState(false);
 
     const ClickHandle = (e) =>{
         e.preventDefault();
@@ -23,7 +24,6 @@ const ContactReport = () => {
             }
         });
         let keys = Object.keys(final).length;
-        console.log(`final`, final);
 
         if(keys < 3){
             setShowErr(`1`); setTimeout(() => {  setShowErr(`0`);  }, 4000)
@@ -32,20 +32,17 @@ const ContactReport = () => {
             axios.post(`${process.env.serverUrl}/infosystem-reports`, final).then(res=>{
                 console.log(`res`, res);
                 setLoading(false);
-                setAlertShow({ color: "#0071ce",  text:"Амжилттай илгээгдлээ", cond:true, }); 
-                setTimeout(() => {setAlertShow({ cond:false, }); }, 4000);
+                ctx.alertFunc( "#0071ce",  "Амжилттай илгээгдлээ", true); 
                 e.target.reset();
             }).catch(_=>{
                 setLoading(false);
-                setAlertShow({ color: "#f56c73",  text:"Алдаа гарлаа", cond:true, }); 
-                setTimeout(() => {setAlertShow({ cond:false, }); }, 4000);
+                ctx.alertFunc("#f56c73", "Алдаа гарлаа", true ); 
             })
             setTimeout(() => {
                 setLoading(false); 
             }, 5000)
         }
     }
-    // infosystem-reports
     return (
         <Container>
             <form onSubmit={ClickHandle}>
@@ -69,14 +66,13 @@ const ContactReport = () => {
                     <button className="button">Илгээх <GrSend /></button>
                </div>
             </form>
-            {Loading&&<div className="Loading">
-                <img src="/giff2.gif" />
-            </div>}
 
-            <div style={alertShow.cond?{right:`0%`, borderBottom:`2px solid ${alertShow.color}`}:{right:`-100%`}} className="Alert">
+            {loading?<LoadingStyle> <img src="/giff2.gif" /></LoadingStyle>:null}
+
+            {/* <div style={alertShow.cond?{right:`0%`, borderBottom:`2px solid ${alertShow.color}`}:{right:`-100%`}} className="Alert">
                 <IoCheckmarkCircleOutline color={alertShow.color} />
                 <div className="text">{alertShow.text}</div>
-            </div>
+            </div> */}
 
         </Container>
     )
@@ -88,28 +84,6 @@ export default ContactReport
 const Container = styled.div`
     width:50%;
     position:relative;
-    
-    .Alert{
-        transition:all 0.8s ease;
-        position:fixed;
-        top:100px;
-        right:0%;
-        background-color:#fff;
-        box-shadow:1px 1px 20px -8px;
-        display:flex;
-        align-items:center;
-        gap:16px;
-        padding:16px 18px;
-        width:280px;
-        border-radius:4px;
-        border-bottom:2px solid ${props=>props.theme.mainColor2};
-        svg{
-            font-size:22px;
-        }
-        .text{
-            font-size:16px;
-        }
-    }
     .Loading{
         position:absolute;
         top:0;

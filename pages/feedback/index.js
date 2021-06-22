@@ -2,6 +2,7 @@ import React from 'react'
 import Root from "@/core/Root";
 import MainFeedback from "@/components/feedback/MainFeedback"
 import checkLanguage from "@/components/miscs/checkLanguage";
+// import nextConfig from 'next/config';
 
 const index = ({ data }) => {
     return (
@@ -11,9 +12,12 @@ const index = ({ data }) => {
     )
 }
 
-export default index
+export default index;
 
-export async function getServerSideProps({params, req}){
+
+// const { publicRuntimeConfig } = nextConfig();
+
+export async function getServerSideProps({params, ctx, req}){
     let res = await checkLanguage(`/products`, req, true);
     return {props: {data:res.data}}
 }
