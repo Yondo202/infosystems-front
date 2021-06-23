@@ -40,13 +40,10 @@ const login = () => {
                     Router.push('/');
                     setLoading(false);
                 }).catch(err=>{
-                    console.log(`err.response`, err.response.data);
-                    if(err.response.data){
-                        setLoading(false);
-                        setErrText('Нууц үг болон нэвтрэх нэрээ шалгана уу');
-                        setShowErr(true);
-                        setTimeout(() => {  setShowErr(false); }, 5000)
-                    }
+                    setLoading(false);
+                    setErrText('Нууц үг болон нэвтрэх нэрээ шалгана уу');
+                    setShowErr(true);
+                    setTimeout(() => {  setShowErr(false); }, 5000)
                 })
             }
     }

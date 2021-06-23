@@ -49,7 +49,8 @@ export default function Root(props) {
 
 const Body = styled.div `
     position: relative;
-    background-color: #f6f6f6;
+    /* background-color: #f6f6f6; */
+    background-color: #ffffff;
     font-size: ${(props) => props.theme.fontSize};
     font-family: ${(props) => props.theme.fontFamily1};
     font-weight: ${props => props.theme.fontWeightNormal};

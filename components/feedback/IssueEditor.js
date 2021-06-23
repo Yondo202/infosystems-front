@@ -6,6 +6,7 @@ import { BsImageFill } from "react-icons/bs"
 import { FaUserTie } from "react-icons/fa"
 import {useRouter} from 'next/router'
 import UserContext from "@/core/context/Context"
+import { InputStyle } from "@/miscs/CustomStyle"
 
 let CKEditor;
 let ClassicEditor;
@@ -46,22 +47,24 @@ const CkEditor = (props) => {
     }
 
     const SendHandle =()=>{
-        // if(title===''){
-        //     setTitleRed(true);
-        // }else{
-            axios.post(`${process.env.serverUrl}/issue-answers`, { 
+        if(title===''){
+            setTitleRed(true);
+        }else{
+            axios.post(`${process.env.serverUrl}/product-feedbacks`, { 
+                name: title, 
                 content: data,
                 user: parseCookies().id,
-                product_issue: props.productId
+                product: props.productId
             },
             { headers: {
                 Authorization: `Bearer ${parseCookies().jwt}`
               }} ).then(res=>{
                   router.replace(router.asPath);
-                  setData('')   
+                  setData('')
+                  props.setShowEditor(false);
                   ctx.alertFunc('green', "Амжилттай", true);
               })
-        // }
+        }
     }
 
     return (
@@ -100,9 +103,9 @@ const CkEditor = (props) => {
 
             <div className="buttomPar">
                 <div className="title">
-                    {/* <InputStyle  style={{marginBottom:`0px`}}>
+                    <InputStyle  style={{marginBottom:`0px`}}>
                         <input className={titleRed?`red`:``} autoFocus={titleRed?true:false} value={title} onChange={(e)=>setTitle(e.target.value)} placeholder="Гарчиг" />
-                    </InputStyle> */}
+                    </InputStyle>
                 </div>
                 <button className={data===''?`Disable`:``} disabled={data===''?true:false} onClick={SendHandle}>Сэтгэгдэл үлдээх</button>
             </div>
@@ -116,6 +119,7 @@ export default CkEditor
 // #f6f8fa
 
 const Container = styled.div`
+    margin-bottom: 30px;
     position: relative;
     .userProfile{
         position: absolute;

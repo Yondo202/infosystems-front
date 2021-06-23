@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import styled,{ keyframes } from 'styled-components';
 import Link from "next/link"
@@ -27,6 +27,10 @@ const Header = ({menu, logo, login}) => {
         setUserName(parseCookies().username);
         window.addEventListener("scroll", handleScroll);
     },[])
+    
+    // useEffect(()=>{
+    //     setShowSmMenu(false);
+    // })
 
     const LogOut = () =>{
         nookies.destroy(null, 'jwt');

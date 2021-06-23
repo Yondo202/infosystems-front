@@ -12,7 +12,8 @@ export const headerHeight = 50;
 // export const mainColor = "#e51715";
 export const mainColor = "#1b1a1d";
 export const mainColor2 = "#0071ce";
-export const mainColor3 = "#0054a6";
+export const mainColor3 = "#586069";
+export const mainColor4 = "#f6f8fa";
 
 export const textColor = "33, 37, 41";
 export const textColor2 = "rgba(68, 68, 68)";
