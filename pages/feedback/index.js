@@ -38,7 +38,6 @@ const Container = styled.div`
 `
 
 export async function getServerSideProps({params, req}){
-
     // let res = await checkLanguage(`/products`, req, true);
     let res2 = await axios.post(`${process.env.serverUrl}/graphql`, { query:`query{
             productFeedbacks(sort:"created_at:DESC"){

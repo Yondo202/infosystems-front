@@ -76,17 +76,21 @@ MyApp.getInitialProps = async({ Component, ctx }) =>{
     const jwt = parseCookies(ctx).jwt;
 
     if(!jwt){
-        if(ctx.pathname === "/feedback"){
+        if(ctx.pathname.includes("/feedback") || ctx.pathname.includes("/answer")){
             redirectUser(ctx, "/login");
         }
+    }else{
+        if(ctx.pathname==="/login"){
+            redirectUser(ctx, "/");
+        }
     }
-
+    
     if(Component.getInitialProps){
         pageProps = await Component.getInitialProps(ctx);
     }
 
     return{
-        pageProps,
+        pageProps
     }
 }
 

@@ -8,10 +8,12 @@ import { RiArrowDownSLine } from "react-icons/ri"
 
 const Homenews = ({ data }) => {
     const [ Result, setResult ] = useState([]);
-    const [ LimitCount, setLimitCount ] = useState(6)
+    const [ LimitCount, setLimitCount ] = useState(6);
 
     useEffect(()=>{
-        FetchData();
+        if(data.title){
+            FetchData();
+        }
     },[LimitCount]);
 
     const FetchData  = async () =>{

@@ -13,6 +13,7 @@
     "@ckeditor/ckeditor5-react": "^3.0.2",
     "axios": "^0.21.1",
     "cookie": "^0.4.1",
+    "firebase": "^8.6.8",
     "html-to-react": "^1.4.5",
     "html-to-text": "^8.0.0",
     "moment": "^2.29.1",

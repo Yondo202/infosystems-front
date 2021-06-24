@@ -1,17 +1,21 @@
-import React, { useState, useRef, useEffect } from 'react'
-import { useRouter } from 'next/router'
+import React, { useState, useRef, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import styled,{ keyframes } from 'styled-components';
-import Link from "next/link"
-import { HiOutlineMenuAlt3 } from "react-icons/hi"
-import { IoCloseSharp } from "react-icons/io5"
-import { FiChevronDown } from "react-icons/fi"
-import { RiArrowRightSLine } from "react-icons/ri"
-import { TiArrowSortedDown } from "react-icons/ti"
-import minimize from "@/miscs/minimize"
-import { parseCookies } from "nookies"
-import nookies from 'nookies'
+import Link from "next/link";
+import { HiOutlineMenuAlt3 } from "react-icons/hi";
+import { IoCloseSharp } from "react-icons/io5";
+import { FiChevronDown } from "react-icons/fi";
+import { RiArrowRightSLine } from "react-icons/ri";
+import { TiArrowSortedDown } from "react-icons/ti";
+import { GoBell } from "react-icons/go";
+import minimize from "@/miscs/minimize";
+import { parseCookies } from "nookies";
+import nookies from 'nookies';
+import axios from 'axios';
+
 
 const Header = ({menu, logo, login}) => {
+    const { id, jwt } = parseCookies();
     const router = useRouter();
     const headRef = useRef();
     const [ HeadColor, setHeadColor ] = useState(false);
@@ -26,17 +30,46 @@ const Header = ({menu, logo, login}) => {
         setRole(parseCookies().role);
         setUserName(parseCookies().username);
         window.addEventListener("scroll", handleScroll);
+        window.addEventListener("mousedown", handleScroll2, false);
     },[])
-    
-    // useEffect(()=>{
-    //     setShowSmMenu(false);
-    // })
+
+    useEffect(()=>{
+        if(id){
+            FetchData();
+        }
+    },[])
+
+    const FetchData = async () =>{
+        //    await axios.post(`${process.env.serverUrl}/graphql`, {
+        //         query:`query {
+        //             user(id: ${id}){
+        //                 id
+        //                 username
+        //               }
+        //            }` 
+        //     },{ headers: {
+        //         Authorization: `Bearer ${jwt}`
+        //       } }).then(res=>{
+        //         console.log(`res`, res)
+        //     })
+        await axios.get(`${process.env.serverUrl}/users/${id}` ,{ headers: { Authorization: `Bearer ${jwt}`} }).then(res=>{
+            console.log(`res`, res);
+        })
+    }
 
     const LogOut = () =>{
         nookies.destroy(null, 'jwt');
         nookies.destroy(null, 'username');
         nookies.destroy(null, 'role');
-        router.reload(window.location.pathname);
+        nookies.destroy(null, 'id');
+        router.reload(router.asPath);
+    }
+
+    const handleScroll2 = (e) => {
+        console.log(`e.target.classList.value`, e.target.classList.value)
+        if(e.target.classList.value!=="dropDown"){
+            setShowSmMenu(false)
+        }
     }
 
     const handleScroll = () => {
@@ -87,7 +120,7 @@ const Header = ({menu, logo, login}) => {
 
             <div className={`container-xxl Parent ${HeadColor?`ToBottom`:``}`}>
                 <Link href="/">
-                    <a className={`imgPar ${role==="infosystem_admin"&&`B22`}`}>
+                    <a className={`imgPar ${role==="infosystem_admin"?`B22`:``}`}>
                         <img className="logo" src={process.env.serverUrl + logo?.url} alt="infosystem" />
                     </a>
                 </Link>
@@ -102,7 +135,7 @@ const Header = ({menu, logo, login}) => {
                                 <Link key={i} href={el.slug!=="/"&&el.slug?`${process.env.frontUrl+process.env.pageUrl+el.slug}`:`/`}>
                                     <a className="content">
                                         <div onClick={()=>MenuHandle(`100%`)} onMouseOver={el.submenu.length?()=>OnMouseOverHandle(el.submenu):console.log()} onMouseLeave={()=>setshowSub(`none`)}
-                                         className={`items ${login&&`A2`}`}>
+                                         className={`items ${login?`A2`:``}`}>
                                             {el.name}
                                            {el.submenu.length?<FiChevronDown />:null} 
                                         </div>
@@ -113,17 +146,26 @@ const Header = ({menu, logo, login}) => {
                     </div>
                     <div className="Menu B2">
 
+                        {userName?<Link href={userName?"/feedback":"/login"}>
+                             <a className="content">
+                                <div tooltip={0} className={`items Alert Alert2 ${login?`A2`:``}`}>
+                                    <GoBell />
+                                </div>
+                            </a>
+                        </Link>:null}
+
+
                         <Link href={userName?"/feedback":"/login"}>
                              <a className="content">
-                                <div className={`items ${login&&`A2`}`}>
-                                    Хэлэлцүүлэг
+                                <div className={`items ${login?`A2`:``}`}>
+                                    Тусламж
                                 </div>
                             </a>
                         </Link>
 
                         {!userName?<Link href={"/login"}>
                              <a className="content">
-                                <div className={`items ${login&&`A2`}`}>
+                                <div className={`items ${login?`A2`:``}`}>
                                     Нэвтрэх
                                 </div>
                             </a>
@@ -134,8 +176,8 @@ const Header = ({menu, logo, login}) => {
                                 {userName}
                                 <TiArrowSortedDown />
                             </div>
-                            {showSmMenu?<div className="showMenu">
-                                <div onClick={LogOut} className="itemss">
+                            {showSmMenu?<div className=" showMenu">
+                                <div onClick={LogOut} className="dropDown">
                                     Гарах <RiArrowRightSLine />
                                 </div>
                             </div>:null}
@@ -210,6 +252,9 @@ const Container = styled.div`
                     }
                 }
             }
+        }
+        @media (max-width:768px){
+            display: none !important;
         }
     }
     .Parent{
@@ -293,6 +338,31 @@ const Container = styled.div`
                         }
                         
                     }
+                    .Alert{
+                        position: relative;
+                        &:before{
+                            content: attr(tooltip);
+                            position: absolute;
+                            top: -40%;
+                            right: -40%;
+                            z-index: 333;
+                            font-size: 12px;
+                            background-color: red;
+                            color: #ffffff;
+                            width: 18px;
+                            height: 18px;
+                            font-weight: 500;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            border-radius: 50%;
+                        }
+                    }
+                    .Alert2{
+                        &:before{
+                            display: none;
+                        }
+                    }
                     .A2{
                         font-size:0.97rem;
                         font-weight: 500;
@@ -311,7 +381,7 @@ const Container = styled.div`
                         top: 130%;
                         right: 0;
                         background-color: #ffffff;
-                        .itemss{
+                        .dropDown{
                             padding: 3px 5px;
                             cursor: pointer;
                             font-size: 15px;
@@ -393,7 +463,7 @@ const Container = styled.div`
                     .content{
                         margin: 15px 0px;
                         .items{
-                            color: #666666;
+                            color: #666666 !important;
                             svg{
                                 display:none;
                             }

@@ -8,10 +8,9 @@ import LeftMenu from "@/components/feedback/header/LeftMenu"
 import QuestionHome from '@/components/feedback/QuestionHome';
 import axios from 'axios';
 
-
 const ProductId = ({ data }) => {
     const [ targetProduct, setTargetProduct ] = React.useState({});
-
+    
     return (
         <Root>
             <TopHead targetProduct={targetProduct} />
@@ -42,6 +41,7 @@ const Container = styled.div`
 `
 
 export async function getServerSideProps({params, req}){
+    
     let res2 = await axios.post(`${process.env.serverUrl}/graphql`, { query: `query{
         products(where:{id:${params.ids}}){
             id

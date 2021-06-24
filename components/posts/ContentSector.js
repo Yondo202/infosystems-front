@@ -18,7 +18,7 @@ const ContentSector = ({news}) => {
             <div className="ContentSection">
                 <div className={`Icons `}>
                     <div className= {`Buttons`}>
-                        <FacebookShareButton  imageURL={process.env.serverUrl+news.image.url} media={process.env.serverUrl+news.image.url} resetButtonStyle={true} url={process.env.frontUrl+process.env.postUrl+news.slug} style={{ width: 50, height: 50 }} >
+                        <FacebookShareButton  imageurl={process.env.serverUrl+news.image.url} media={process.env.serverUrl+news.image.url} resetButtonStyle={true} url={process.env.frontUrl+process.env.postUrl+news.slug} style={{ width: 50, height: 50 }} >
                             <div className="Btnss facebook"><FaFacebookF /></div>
                         </FacebookShareButton>
 

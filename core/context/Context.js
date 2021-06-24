@@ -30,8 +30,6 @@ export const UserStore = (props) => {
              product{ id title }
             }
         }`})
-
-        console.log(`res2`, res2?.data?.data?.productFeedbacks[0]);
         setProduct(res2?.data?.data?.productFeedbacks[0]?.product);
     }
     

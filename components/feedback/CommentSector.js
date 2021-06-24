@@ -5,6 +5,7 @@ import Comment from "@/components/feedback/Comments";
 import { useRouter } from 'next/router'
 import axios from 'axios';
 
+
 const CommentSector = ({ product }) => {
     const [ products, setProduct ] = useState([]);
     const router = useRouter()

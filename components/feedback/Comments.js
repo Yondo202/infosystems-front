@@ -1,18 +1,33 @@
-import React, { useEffect } from 'react'
-import styled from 'styled-components'
+import React, { useEffect, useContext, useState } from 'react'
+import styled, { keyframes } from 'styled-components'
+import UserContext from "@/core/context/Context"
 import { FaUserTie } from "react-icons/fa"
+import { HiOutlineDotsHorizontal } from "react-icons/hi"
 import HtmlParser from "@/miscs/CustomParser2"
 import DateFormat from '../miscs/FormatDate'
 import axios from 'axios'
 import { parseCookies } from "nookies"
+import {useRouter} from 'next/router'
 
 const Comments = ({ datas, parent }) => {
+    const { id, jwt, role } = parseCookies();
+    const ctx = useContext(UserContext);
+    const router = useRouter();
+    const [ showDrop, setShowDrop ] = useState(false);
+
     
     useEffect(()=>{
         // if(!parent){
         //     FetchUser();
         // }
+        window.addEventListener("mousedown", handleScroll, false);
     },[])
+
+    const handleScroll = (e) =>{
+        if(e.target.classList.value!=="dropDown"){
+            setShowDrop(false)
+        }
+    }
 
     // const FetchUser = () =>{
     //     axios.get(`${process.env.serverUrl}/users?id=${datas.id}`,{ headers: {
@@ -22,8 +37,25 @@ const Comments = ({ datas, parent }) => {
     //       })
     // }
 
+    const HandleChange = async () =>{
+        await axios.delete(`${process.env.serverUrl}/issue-answers/${datas.id}`,
+            {headers:{
+                Authorization: `Bearer ${jwt}`
+            }}
+        ).then(()=>{
+            setShowDrop(false);
+            router.replace(router.asPath);
+            ctx.alertFunc('green', "Устгагдлаа", true);
+            
+        })
+    }
+
+
+    console.log(`datas.user.idd`, parseInt(datas.user.id))
+    console.log(`idd`, parseInt(id))
+
     return (
-        <Container>
+        <Container >
             <div className="userProfile">
                <div className="profileImg"><FaUserTie /></div> 
             </div>
@@ -33,9 +65,18 @@ const Comments = ({ datas, parent }) => {
                         <div className="name">{datas.user?.username}</div>
                         <div className="date">{DateFormat(datas.created_at)}</div>
                     </div>
-                    {parent&&<div className="Author">
-                        Асуултын эзэн
-                    </div>}
+
+                    <div className="addition">
+                        {parent&&<div className="Author">
+                            Асуултын эзэн
+                        </div>}
+                        {!parent?role==='infosystem_admin' || parseInt(id)===parseInt(datas.user.id)
+                        ?<div className={`menuIcon ${showDrop?`active`:``}`}>
+                                <HiOutlineDotsHorizontal onClick={()=>setShowDrop(prev=>!prev)} />
+                                {showDrop&&<div onClick={HandleChange} className="dropDown">Устгах</div>}
+                            </div>:null:null}
+                    </div>
+                    
                 </div>
                 <div className="MainConent">
                     <HtmlParser data={datas.content} />
@@ -46,6 +87,12 @@ const Comments = ({ datas, parent }) => {
 }
 
 export default Comments
+
+const animate = keyframes`
+    0%{ opacity:0.5; transform:scale(0.5); }
+    70%{ opacity:1; transform:scale(1.2); }
+    100%{ opacity:1; transform:scale(1); }
+`
 
 
 const Container = styled.div`
@@ -76,6 +123,7 @@ const Container = styled.div`
             font-size: 14px;
         }
         .header{
+            /* margin-left: -15px; */
             background-color: ${props=>props.theme.mainColor4};
             display: flex;
             justify-content: space-between;
@@ -92,12 +140,50 @@ const Container = styled.div`
                     color: #24292e;
                 }
             }
-          .Author{
-              border-radius: 50px;
-              font-weight: 500;
-              padding: 4px 15px;
-              border: 1px solid rgba(0,0,0,0.1);
-          }
+            .addition{
+                display: flex;
+                align-self: center;
+                gap: 20px;
+                .Author{
+                    font-size: 12px;
+                    border-radius: 50px;
+                    font-weight: 500;
+                    padding: 3px 15px;
+                    border: 1px solid rgba(0,0,0,0.1);
+                }
+                .menuIcon{
+                    position: relative;
+                    svg{
+                        cursor: pointer;
+                        font-size: 22px;
+                        &:hover{
+                            color: ${props=>props.theme.mainColor2};
+                        }
+                    }
+                   .dropDown{
+                        animation: ${animate} 0.15s ease;
+                        cursor: pointer;
+                        position: absolute;
+                        top: 100%;
+                        right: 0;
+                        border:1px solid #e1e4e8;
+                        padding: 4px 12px; 
+                        border-radius: 6px; 
+                        background-color: #ffffff;
+                        color: #24292e;
+                        width: 120px;
+                        &:hover{
+                            color: #ffffff;
+                            background-color: ${props=>props.theme.mainColor2};
+                        }
+                   }
+                }
+                .active{
+                    svg{
+                        color: ${props=>props.theme.mainColor2};
+                    }
+                }
+            }
         }
         &:before{
             content:"";
