@@ -15,8 +15,6 @@ const CkEditor = (props) => {
     const router = useRouter();
     const [ loading, setLoading ] = useState(true);
     const [ active, setActive ] = useState(false);
-    const [ title, setTitle ] = useState('');
-    const [ titleRed, setTitleRed ] = useState(false);
     const [ data, setData ] = useState('');
 
     useEffect(() => {
@@ -52,13 +50,14 @@ const CkEditor = (props) => {
             axios.post(`${process.env.serverUrl}/issue-answers`, { 
                 content: data,
                 user: parseCookies().id,
-                product_issue: props.productId
+                product_issue: props.productId,
+                seen: props.UserId===parseCookies().id?true:false
             },
             { headers: {
                 Authorization: `Bearer ${parseCookies().jwt}`
-              }} ).then(res=>{
+              }} ).then(_=>{
                   router.replace(router.asPath);
-                  setData('')   
+                  setData('')
                   ctx.alertFunc('green', "Амжилттай", true);
               })
         // }
@@ -75,14 +74,9 @@ const CkEditor = (props) => {
                     editor={ ClassicEditor }
                     config={ configuration }
                     data={data}
-                    onReady={ editor => {
-                        // You can store the "editor" and use when it is needed.
-                        console.log( 'Editor is ready to use!', editor );
-                    } }
                     onChange={ ( event, editor ) => {
                         const data = editor.getData();
                         setData(data);
-                        // console.log( { event, editor, data } );
                     }}
                     onBlur={ ( event, editor ) => {
                         setActive(false);

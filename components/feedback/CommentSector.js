@@ -8,6 +8,7 @@ import axios from 'axios';
 
 const CommentSector = ({ product }) => {
     const [ products, setProduct ] = useState([]);
+    const [ UserId, setUserId ] = useState();
     const router = useRouter()
     const { slug } = router.query
 
@@ -20,12 +21,16 @@ const CommentSector = ({ product }) => {
     const FetchMenu2 = async () =>{
         let res2 = await axios.post(`${process.env.serverUrl}/graphql`, { query:`query{
             productFeedbacks( where: { id: ${slug} }){
+             user{ id }
              issue_answers{ id content  created_at user{ id username role{ name } } } }
             }`})
 
+        setUserId(res2?.data?.data?.productFeedbacks[0]?.user.id);
+        console.log(`res2`, res2);
         setProduct(res2?.data?.data?.productFeedbacks[0]?.issue_answers);
     }
 
+    console.log(`UserId`, UserId);
     return (
         <Container>
             <div className="MainContent">
@@ -43,7 +48,7 @@ const CommentSector = ({ product }) => {
                 )
             })}
 
-            <CkEditor productId={product?.id} height={true} />
+            <CkEditor productId={product?.id} UserId={UserId} height={true} />
         </Container>
     )
 }

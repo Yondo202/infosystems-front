@@ -12,14 +12,15 @@ const Homenews = ({ data }) => {
 
     useEffect(()=>{
         if(data.title){
-            FetchData();
+            void async function FetchData (){
+                 await axios.get(process.env.serverUrl+`/posts?_limit=${LimitCount}&_sort=published_at:DESC&_start=0`).then(res=>{
+                    setResult(res?.data);
+                })
+            }()
         }
-    },[LimitCount]);
+    },[]);
 
-    const FetchData  = async () =>{
-        const Data = await axios.get(process.env.serverUrl+`/posts?_limit=${LimitCount}&_sort=published_at:DESC&_start=0`);
-        setResult(Data?.data);
-    }
+    
     
     return (
         <Container>
