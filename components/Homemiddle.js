@@ -21,13 +21,13 @@ const Homemiddle = ({ data }) => {
         <Container>
             <div className="container-xxl">
                 <div className="Title">
-                   <h1>{data?.title}</h1>
+                   <h1>{data?.title} hahah</h1>
                 </div>
                 <div className="contentPar">
                     <div className="Header">
                         {data?.ProductSector.map((el,i)=>{
                             return(
-                                <div key={i} onClick={()=>RenderHandle(el)} className={`contentSector ${el.code===Menu.code&&`Active`}`}>
+                                <div key={i} onClick={()=>RenderHandle(el)} className={`contentSector ${el.code===Menu.code?`Active`:``}`}>
                                     <div className={`svgParent ${el?.code}`}></div> 
                                     <span className="headText">{el?.title_head}</span>
                                 </div>

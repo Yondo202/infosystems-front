@@ -46,9 +46,6 @@ export const UserStore = (props) => {
         setProduct(el)
     }
 
-    console.log(`Product`, Product);
-    console.log(`ids`, ids);
-
     return (
         <UserContext.Provider value={{ alert, alertFunc, TargetProduct, Product, ...props.value }}>
             {props.children}

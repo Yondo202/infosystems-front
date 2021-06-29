@@ -48,9 +48,9 @@ const Homenews = ({ data }) => {
                         )
                     })}
                 </div>
-                {LimitCount<7&&<div className="More">
+                {LimitCount<7?<div className="More">
                     <div onClick={()=>setLimitCount(prev=>prev+6)} className="text"><span>Цааш үзэх</span> <RiArrowDownSLine /></div>
-                </div>}
+                </div>:<div />}
             </div>
         </Container>
     )

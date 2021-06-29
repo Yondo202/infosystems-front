@@ -1,13 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
+import UserContext from "@/core/context/Context";
 import Root from "@/core/Root";
 import ResolveComponent from "@/components/dynamic/ResolveComponent"
 import checkLanguage from "@/components/miscs/checkLanguage";
 import Router from "next/router"
 
 const Index = ({ data }) => {
+    const { alertFunc } = useContext(UserContext)
     let {Layout} = data
     useEffect(()=>{
-        if(data.slug==="download"){ Router.push('/login') }
+        if(data.slug==="download"){
+            Router.push('/login')
+            alertFunc('orange', 'Нэвтэрсэн байх хэрэгтэй', true);
+        }
     },[data])
 
     return (
