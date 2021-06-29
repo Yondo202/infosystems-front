@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Root from "@/core/Root";
 import ResolveComponent from "@/components/dynamic/ResolveComponent"
 import checkLanguage from "@/components/miscs/checkLanguage";
-
+import Router from "next/router"
 
 const Index = ({ data }) => {
     let {Layout} = data
+    useEffect(()=>{
+        if(data.slug==="download"){ Router.push('/login') }
+    },[data])
 
     return (
         <Root>
@@ -15,10 +18,9 @@ const Index = ({ data }) => {
     );
 };
 
-export default Index;
-
-
 export async function getServerSideProps({params, req}){
     let res = await checkLanguage(`/pages?slug=${params.id}`, req, true);
     return {props: {data:res.data[0]}}
 }
+
+export default Index;

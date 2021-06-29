@@ -1,12 +1,12 @@
 import Head from 'next/head';
 import React from 'react';
-import {MenuContext} from '@/miscs/ContextMenuProvider'
+import UserContext from '@/core/context/Context'; 
 import { useContext } from "react";
 import { useRouter } from 'next/router';
 
 const PreSeo = ({seo}) => {
     const Router = useRouter();
-    const ctx = useContext(MenuContext);
+    const ctx = useContext(UserContext);
 
     if(seo) {
         const {title, description, thumb, article} = seo

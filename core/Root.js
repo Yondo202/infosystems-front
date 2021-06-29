@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react"
 import Header from '@/core/Header'
 import Footer from '@/core/Footer';
-import { MenuContext } from '@/miscs/ContextMenuProvider';
 import styled from "styled-components";
 import PreSeo from "@/components/miscs/PreSeo";
 import { IoIosArrowUp } from "react-icons/io";
@@ -10,8 +9,7 @@ import { Alert } from "@/components/miscs/CustomComp"
 import UserContext from "./context/Context";
 
 export default function Root(props) {
-    const ctx = useContext(UserContext);
-    const { headerMenu, logo, footerMenu } = useContext(MenuContext);
+    const { headerMenu, logo, footerMenu, alert } = useContext(UserContext);
     const [ showBtn, setShowBtn ] = useState(false);
 
     React.useEffect(()=>{
@@ -42,7 +40,7 @@ export default function Root(props) {
                <IoIosArrowUp className="one" />
                <IoIosArrowUp className="two" />
             </div>}
-            <Alert alert={ctx.alert} />
+            <Alert alert={alert} />
         </Body>
     )
 }
@@ -106,7 +104,7 @@ const Body = styled.div `
         overflow:hidden;
         transition:all 0.3s ease;
         cursor: pointer;
-        background-color:${(props)=>props.theme.mainColorZox};
+        background-color:${(props)=>props.theme.mainColor4};
         border-radius: 50%;
         color: #000;
         font-size: 25px;

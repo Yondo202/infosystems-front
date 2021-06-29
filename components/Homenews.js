@@ -20,8 +20,6 @@ const Homenews = ({ data }) => {
         }
     },[LimitCount]);
 
-    
-    
     return (
         <Container>
             <div className="container-xxl">

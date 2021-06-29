@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styled,{ keyframes } from 'styled-components';
+import UserContext from "@/core/context/Context"
 import Link from "next/link";
 import LanguageDate from "@/miscs/LanguageDate"
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
@@ -32,7 +33,6 @@ const Header = ({menu, logo, login}) => {
     const [ showNotf, setShowNotf ] = useState(false);
 
     React.useEffect(()=>{
-        
         window.addEventListener("scroll", handleScroll);
         window.addEventListener("mousedown", handleScroll2, false);
         window.addEventListener("mousedown", handleScrollNotf, false);
@@ -45,6 +45,8 @@ const Header = ({menu, logo, login}) => {
             FetchData();
         }
     },[])
+
+   
 
     const FetchData = async () =>{
            await axios.post(`${process.env.serverUrl}/graphql`, {

@@ -106,7 +106,7 @@ const Container = styled.div`
         height: 30px;
         width: 3px;
         bottom: 0;
-        left: 20%;
+        left: 15%;
         margin-bottom: -30px;
         background-color: #e1e4e8;
     }

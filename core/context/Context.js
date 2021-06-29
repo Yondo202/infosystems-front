@@ -11,6 +11,10 @@ export const UserStore = (props) => {
     const [ Product, setProduct ] = useState({});
 
     useEffect(()=>{
+        if(!ids){
+            setProduct({});
+        }
+        
         if(!Product.id && ids){
             FetchMenu()
         }else if(slug){
@@ -41,9 +45,12 @@ export const UserStore = (props) => {
     const TargetProduct = (el) =>{
         setProduct(el)
     }
-    
+
+    console.log(`Product`, Product);
+    console.log(`ids`, ids);
+
     return (
-        <UserContext.Provider value={{ alert, alertFunc, TargetProduct, Product }}>
+        <UserContext.Provider value={{ alert, alertFunc, TargetProduct, Product, ...props.value }}>
             {props.children}
         </UserContext.Provider>
     )
