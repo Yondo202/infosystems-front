@@ -10,7 +10,7 @@ const login = () => {
         <Root login={true}>
             <Container>
                 {/* <div className="container-xxl"> */}
-                    <div className="ContentSector">
+                    <div style={showLogin?{width:`35em`}:{width:`50em`}} className="ContentSector">
                         <div className="header">
                             <div onClick={()=>setShowLogin(true)} className={`item ${showLogin&&`Active`}`}>Нэвтрэх</div>
                             <div onClick={()=>setShowLogin(false)}  className={`item ${!showLogin&&`Active`}`}>Бүртгүүлэх</div>
@@ -56,6 +56,7 @@ const Container = styled.div`
         .InputParent{
             position: relative;
             animation: ${Animate} 0.4s ease;
+            /* display: flex; */
             .buttonPar{
                 .ErrTxt{
                     animation: ${Animate} 0.4s ease;

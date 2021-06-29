@@ -32,14 +32,15 @@ const Header = ({menu, logo, login}) => {
     const [ showNotf, setShowNotf ] = useState(false);
 
     React.useEffect(()=>{
-        setRole(parseCookies().role);
-        setUserName(parseCookies().username);
+        
         window.addEventListener("scroll", handleScroll);
         window.addEventListener("mousedown", handleScroll2, false);
         window.addEventListener("mousedown", handleScrollNotf, false);
     },[])
 
     useEffect(()=>{
+        setRole(parseCookies().role);
+        setUserName(parseCookies().username);
         if(id){
             FetchData();
         }
@@ -66,9 +67,6 @@ const Header = ({menu, logo, login}) => {
                 })
                 setNotf(arr);
             })
-            // await axios.get(`${process.env.serverUrl}/users/${id}` ,{ headers: { Authorization: `Bearer ${jwt}`} }).then(res=>{
-            //     console.log(`res++`, res);
-            // })
     }
 
     const LogOut = () =>{
@@ -110,6 +108,7 @@ const Header = ({menu, logo, login}) => {
     const OnMouseOverHandle = (el) =>{
         setshowSub(`block`);
         setSubmenu(el);
+        return
     }
 
 
@@ -117,9 +116,7 @@ const Header = ({menu, logo, login}) => {
         el.forEach(item=>{
             axios.put(`${process.env.serverUrl}/issue-answers/${item.id}`, { seen:true },{ headers:{
                Authorization:`bearer ${jwt}`
-           }}).then(res=>{
-               console.log(`res`, res);
-           })
+           }})
         })
     }
 
@@ -168,7 +165,7 @@ const Header = ({menu, logo, login}) => {
                             return(
                                 <Link key={i} href={el.slug!=="/"&&el.slug?`${process.env.frontUrl+process.env.pageUrl+el.slug}`:`/`}>
                                     <a className="content">
-                                        <div onClick={()=>MenuHandle(`100%`)} onMouseOver={el.submenu.length?()=>OnMouseOverHandle(el.submenu):console.log()} onMouseLeave={()=>setshowSub(`none`)}
+                                        <div onClick={()=>MenuHandle(`100%`)} onMouseOver={el.submenu.length?()=>OnMouseOverHandle(el.submenu):()=>setshowSub(`none`)} onMouseLeave={()=>setshowSub(`none`)}
                                          className={`items ${login?`A2`:``}`}>
                                             {el.name}
                                            {el.submenu.length?<FiChevronDown />:null} 

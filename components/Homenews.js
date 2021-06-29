@@ -18,7 +18,7 @@ const Homenews = ({ data }) => {
                 })
             }()
         }
-    },[]);
+    },[LimitCount]);
 
     
     

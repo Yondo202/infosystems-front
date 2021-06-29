@@ -18,14 +18,14 @@ const Aboutustwo = ({ data }) => {
     return (
         <Container>
             <div className="container">
-                <div className="contentSector">
+                {data?.AboutUsTwoChild.title?<div className="contentSector">
                     <div  className="contents">
                         <HeadStyle ><span className="text">{data?.AboutUsTwoChild.title}</span></HeadStyle>
                         <div className="imgPar">
                             <img  src={Minimize(data?.AboutUsTwoChild.image, "large")} />
                         </div>
                     </div>
-                </div>
+                </div>:null}
 
                 <div className="PurposeComp">
                     <div className="Headers">
