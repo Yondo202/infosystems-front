@@ -47,6 +47,7 @@ const Container = styled.div`
     justify-content: center;
     font-family: ${props=>props.theme.fontFamily2};
     .ContentSector{
+        transition: all 0.2s ease;
         background-color: #ffffff;
         height: 40em;
         width: 35em;

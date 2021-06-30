@@ -5,8 +5,10 @@ import UserContext from '@/core/context/Context'
 import { GrSend } from "react-icons/gr"
 import axios from 'axios'
 import { LoadingStyle } from '../miscs/CustomComp'
+import { parseCookies } from 'nookies'
 
 const ContactReport = () => {
+    const { username, email } = parseCookies();
     const ctx = useContext(UserContext);
     const [ showErr, setShowErr ] = useState(`0`);
     const [ loading, setLoading ] = useState(false);
@@ -30,7 +32,6 @@ const ContactReport = () => {
         }else{
             setLoading(true);
             axios.post(`${process.env.serverUrl}/infosystem-reports`, final).then(res=>{
-                console.log(`res`, res);
                 setLoading(false);
                 ctx.alertFunc( "#0071ce",  "Амжилттай илгээгдлээ", true); 
                 e.target.reset();
@@ -48,12 +49,12 @@ const ContactReport = () => {
             <form onSubmit={ClickHandle}>
                 <InputStyle >
                     <div className="label">Таны И-Мэйл хаяг</div>
-                    <input className="getInp" name="email" type="email" required />
+                    <input defaultValue={email?email:``} className="getInp" name="email" type="email" required />
                 </InputStyle>
 
                 <InputStyle >
                     <div className="label">Таны нэр</div>
-                    <input className="getInp" name="name" type="text"  />
+                    <input defaultValue={username?username:``} className="getInp" name="name" type="text"  />
                 </InputStyle>
 
                 <InputStyle >

@@ -84,19 +84,19 @@ const Body = styled.div `
         }
     }
 
-    &::-webkit-scrollbar {
+    ::-webkit-scrollbar {
         width: 4px !important;
         color:#aaa;
     }
-    &::-webkit-scrollbar-track {
+    ::-webkit-scrollbar-track {
         box-shadow: inset 0 0 5px #aaa !important;
         border-radius: 10px;
     }
-    &::-webkit-scrollbar-thumb {
+    ::-webkit-scrollbar-thumb {
         background: #777777;
         border-radius: 10px;
     }
-    &::-webkit-scrollbar-thumb:hover {
+    ::-webkit-scrollbar-thumb:hover {
         background: #aaa;
     }
  

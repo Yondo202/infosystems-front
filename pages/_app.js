@@ -52,7 +52,6 @@ class MyApp extends App {
                             :<div style={{width:`100%`, height:`100vh`,display:`flex`, alignItems:"center", justifyContent:"center"}}> <img src="/giff2.gif" /></div> }
                     </ThemeProvider>
                 </UserStore>
-                
             );
     }
 }
@@ -70,8 +69,11 @@ MyApp.getInitialProps = async({ Component, ctx }) =>{
     let pageProps = {}
     const jwt = parseCookies(ctx).jwt;
 
+    // console.log(`ctx`, ctx);
+    // console.log(`parseCookies`, parseCookies(ctx));
+
     if(!jwt){
-        if(ctx.pathname.includes("/feedback") || ctx.pathname.includes("/answer")){
+        if(ctx.pathname.includes("/feedback") || ctx.pathname.includes("/answer") || ctx.pathname.includes("/admin") ){
             redirectUser(ctx, "/login");
         }
     }else{

@@ -6,7 +6,7 @@ import Link from "next/link"
 import DateFormat from "@/miscs/LanguageDate"
 import IssueEditor from "@/components/feedback/IssueEditor"
 
-const QuestionHome = ({data, title, ids, productId}) => {
+const QuestionHome = ({data, title, ids, productId, search}) => {
     const [ Menu, setMenu ] = useState([]);
     const [ sort, setSort ] = useState(`DESC`);
     const [ showEditor, setShowEditor ] = useState(false);
@@ -34,7 +34,7 @@ const QuestionHome = ({data, title, ids, productId}) => {
             <div className="TopHead">
                 {ids&&<button onClick={()=>setShowEditor(true)} className="myBtn">Нэмэх</button>}
             </div>
-
+            {search&&<div className="SearchTitle"><h3>Үр дүн</h3></div>}
             {ids&&showEditor&&<IssueEditor setShowEditor={setShowEditor} productId={productId} height={true} />}
 
             <div className="AllQuestion">
@@ -49,13 +49,13 @@ const QuestionHome = ({data, title, ids, productId}) => {
                                 <IoHelpCircleOutline />
                             </div>
                             <div className="TextPar">
-                                <Link href={ids?`answer/${el.id}`:`feedback/answer/${el.id}`}>
+                                <Link href={ids?`answer/${el.id}`:`/feedback/answer/${el.id}`}>
                                     <a className="titles">
                                         <span>{el.name}</span>
                                     </a>
                                 </Link>
                                 
-                                <div className="sm">{DateFormat(el.created_at)} - ийн өмнө {el.user?.username} ( {title?title:el.product.title} )</div>
+                                <div className="sm">{DateFormat(el.created_at)} - өмнө {el.user?.username} ( {title?title:el.product.title} )</div>
                             </div>
                         </div>
                     )
@@ -68,6 +68,10 @@ const QuestionHome = ({data, title, ids, productId}) => {
 export default QuestionHome
 
 const Container = styled.div`
+    .SearchTitle{
+        margin-bottom: 10px;
+        border-bottom: 1px solid ${props=>props.theme.mainColor2};
+    }
     .TopHead{
         display: flex;
         justify-content: flex-end;

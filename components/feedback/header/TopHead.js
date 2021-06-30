@@ -1,11 +1,20 @@
-import React,{ useContext } from 'react'
+import React,{ useContext, useState } from 'react'
 import styled from 'styled-components'
 import { FaFilter } from "react-icons/fa"
 import { BiSearchAlt } from "react-icons/bi"
 import Context from "@/core/context/Context"
+import Router from "next/router"
 
 const TopHead = () => {
     const ctx = useContext(Context);
+    const [ search, setSearch ] = useState('');
+
+    const HandleSubmit = (e) =>{
+        e.preventDefault();
+        if(search){
+            Router.push(`/feedback/search/${search}`);
+        }
+    }
 
     return (
         <Header className="Header">
@@ -18,10 +27,13 @@ const TopHead = () => {
                     {ctx.Product?.title?<div className="TargetFilter">{ctx.Product?.title}</div>:null}
                 </div>
 
-                <div className="searchPar">
-                    <input className="myInp" placeholder="Хайх..." />
-                    <BiSearchAlt />
-                </div>
+                <form onSubmit={HandleSubmit} className="searchPar">
+                    {/* <div className="searchPar"> */}
+                        <input value={search} onChange={e=>setSearch(e.target.value)} className="myInp" placeholder="Хайх..." type="text" />
+                        <BiSearchAlt />
+                    {/* </div> */}
+                </form>
+               
 
             </div>
         </Header>
@@ -62,6 +74,7 @@ const Header = styled.div`
                 padding:6px 20px;
                 padding-right:40px;
                 border-radius:50px;
+                font-weight: 500;
                 &:hover{
                     border:1px solid rgba(33, 101, 159, 0.4);
                 }

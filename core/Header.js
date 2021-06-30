@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styled,{ keyframes } from 'styled-components';
-import UserContext from "@/core/context/Context"
 import Link from "next/link";
 import LanguageDate from "@/miscs/LanguageDate"
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
@@ -15,8 +14,6 @@ import minimize from "@/miscs/minimize";
 import { parseCookies } from "nookies";
 import nookies from 'nookies';
 import axios from 'axios';
-
-
 
 const Header = ({menu, logo, login}) => {
     const { id, jwt } = parseCookies();
@@ -76,6 +73,7 @@ const Header = ({menu, logo, login}) => {
         nookies.destroy(null, 'username');
         nookies.destroy(null, 'role');
         nookies.destroy(null, 'id');
+        nookies.destroy(null, 'email');
         router.reload(router.asPath);
     }
 
@@ -299,7 +297,9 @@ const Container = styled.div`
                     text-decoration:none;
                     width:18%;
                     &:hover{
-                        background-color: ${props=>props.theme.mainColor4};
+                        .titles{
+                            color: ${props=>props.theme.mainColor2};
+                        }
                     }
                     img{
                         width:100%;
