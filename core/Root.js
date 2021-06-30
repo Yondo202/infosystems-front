@@ -35,8 +35,8 @@ export default function Root(props) {
             <PreSeo seo={props.seo}/>
             <Header login={props.login} logo={logo} menu={headerMenu || []} />
                 {props.children}
-            {!props.login&&<Footer footerMenu={footerMenu} logo={logo}/>}
-            {showBtn&&<div  onClick={clickHandle} className="toTop">
+                {!props.login&&<Footer footerMenu={footerMenu} logo={logo}/>}
+                {showBtn&&<div  onClick={clickHandle} className="toTop">
                <IoIosArrowUp className="one" />
                <IoIosArrowUp className="two" />
             </div>}

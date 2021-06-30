@@ -1,11 +1,11 @@
 import htmlToText from 'html-to-text'
-import {MenuContext} from '@/miscs/ContextMenuProvider'
+import UserContext from '@/core/context/Context'
 import { useContext } from 'react';
 
 
 const decrease = (string, length, mobileLength)=>{
 
-    const {config} = useContext(MenuContext)
+    const {config} = useContext(UserContext);
 
     let tmp = htmlToText.fromString(string);
     let linkCount = tmp.split('[').length -1

@@ -17,7 +17,8 @@ const Blog = ({news}) => {
 export default Blog;
 
 export async function getServerSideProps({params, req}){
-    let data = await checkLanguage(`/posts?slug=${params.id}`, req, true);
+    let data = await Axios.get(`${process.env.serverUrl}/posts?slug=${params.id}`);
+
     let add
     if(data.data[0]?.count){
          add = parseInt(data.data[0].count) + 1

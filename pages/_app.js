@@ -32,7 +32,7 @@ class MyApp extends App {
                 logo : res.data.logo,
                 footerMenu: res.data.FooterSector,
                 completelyLoaded: true,
-                config,
+                config: config,
             });
         }
 

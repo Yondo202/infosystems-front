@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Root from "@/core/Root";
 import checkLanguage from '@/miscs/checkLanguage';
 import decrease from "@/miscs/decrease"
@@ -6,11 +6,17 @@ import Axios from "axios";
 import MainContent from "components/product/MainProduct"
 
 const Products = ({product}) => {
-    return (
-        <Root seo={{title: product.name, description: decrease(product.description, 120), thumb: product.image.url }}>
-             <MainContent product={product} />
-        </Root>
+    const [ Load, setLoad ] = useState(false);
+    useEffect(()=>{
+        setLoad(true)
+    },[])
 
+    return (
+        <>
+           {Load?<Root seo={{title: product.name, description: decrease(product.description, 120), thumb: product.image.url }}>
+                <MainContent product={product} />
+            </Root>:null}
+        </>
     );
 };
 

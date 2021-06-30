@@ -23,23 +23,6 @@ const MainFeedback = ({data, cond, users}) => {
     )
 }
 
-MainFeedback.getInitialProps = async ctx =>{
-    const {jwt} = parseCookies(ctx);
-    try{
-        let res = await axios.get(`${process.env.serverUrl}/infosystem-reports`, { headers:{ Authorization: `bearer ${jwt}` } })
-        let users =  await axios.post(`${process.env.serverUrl}/graphql`, {
-            query:`query { users{  id username email company_name company_register created_at }
-            }`
-        },{ headers: {
-            Authorization: `Bearer ${jwt}`
-          } })
-
-        return {data: res.data, users:users.data.data?.users, cond:true}
-    }catch{
-        return {data: [], users:[], cond:false}
-    }
-}
-
 const Errors = styled.div`
     display: flex;
     align-items: center;
@@ -63,6 +46,23 @@ const Component = styled.div`
     }
 `
 
+MainFeedback.getInitialProps = async ctx =>{
+    const {jwt} = parseCookies(ctx);
+    try{
+        let res = await axios.get(`${process.env.serverUrl}/infosystem-reports`, { headers:{ Authorization: `bearer ${jwt}` } })
+        let users =  await axios.post(`${process.env.serverUrl}/graphql`, {
+            query:`query { users{  id username email company_name company_register created_at }
+            }`
+        },{ headers: {
+            Authorization: `Bearer ${jwt}`
+          } })
+        return {data: res.data, users:users.data.data?.users, cond:true}
+    }catch{
+        return {data: [], users:[], cond:false}
+    }
+}
 
 export default MainFeedback
+
+
 
