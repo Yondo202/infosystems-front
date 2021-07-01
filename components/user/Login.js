@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import { FaRegUser } from "react-icons/fa"
 import { BiLock } from "react-icons/bi"
+import { BsEye, BsEyeSlash } from "react-icons/bs"
 import axios from 'axios'
 import { setCookie } from 'nookies'
 import Router from "next/router"
 import { LoadingStyle } from '../miscs/CustomComp'
 
 const login = () => {
+    const [ showPass, setShowPass ] = useState(false);
     const [ errText, setErrText ] = useState('Мэдээллээ гүйцэд оруулна уу');
     const [ showErr, setShowErr ] = useState(false);
     const [ loading, setLoading ] = useState(false);
@@ -63,9 +65,12 @@ const login = () => {
                 <div className="inputItem">
                     <div className="title">Нууц үг</div>
                     <div className="inputPar">
-                        <input value={password} onChange={e=>setPassword(e.target.value)} type="password" placeholder="Нууц үгээ оруулна уу" />
+                        <input value={password} className="pass" onChange={e=>setPassword(e.target.value)}
+                         type={showPass?`text`:`password`}
+                         placeholder="Нууц үгээ оруулна уу" />
                         <BiLock className="A2"  />
                         <div className="line" />
+                        <div className="mySvg">{showPass?<BsEye onClick={()=>setShowPass(false)} />:<BsEyeSlash onClick={()=>setShowPass(true)} />}</div>
                     </div>
                 </div>
                 

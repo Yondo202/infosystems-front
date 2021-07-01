@@ -1,15 +1,13 @@
-import UserContext from '@/core/context/Context'; 
-import { useContext } from 'react';
 
 const placeholder = '/img/placeholder.jpg'
 const path = process.env.serverUrl;
 
 const minimize = (obj, quality) => {
+    const config = {width: window.innerWidth, height: window.innerHeight};
 
     if(obj === undefined || obj === null) return placeholder
     if(obj.formats === undefined || obj.formats === null) return obj.url && CH(obj.url) || placeholder
 
-    const {config} = useContext(UserContext)
     const formats = obj.formats
 
     if(config.width <= 768) {

@@ -133,6 +133,27 @@ const Container = styled.div`
                             color: ${props=>props.theme.mainColor2};
                         }
                     }
+                    .pass{
+                        padding-right: 30px;
+                    }
+                    .mySvg{
+                        position: absolute;
+                        right: 0;
+                        bottom: 6px;
+                        height: 30px;
+                        width: 30px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        svg{
+                            cursor: pointer;
+                            font-size: 17px;
+                            color: rgba(0,0,0,0.7);
+                            &:hover{
+                                color: rgba(0,0,0,1);
+                            }
+                        }
+                    }
                 }
             }
         }

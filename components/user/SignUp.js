@@ -5,12 +5,14 @@ import { AiOutlineMail } from "react-icons/ai"
 import { CgNametag } from "react-icons/cg"
 import { RiRegisteredLine } from "react-icons/ri"
 import axios from 'axios'
+import { BsEye, BsEyeSlash } from "react-icons/bs"
 import { setCookie } from 'nookies'
 import Router from "next/router"
 import { LoadingStyle } from '../miscs/CustomComp'
 import styled from 'styled-components'
 
 const SignUp = () => {
+    const [ showPass, setShowPass ] = useState(false);
     const [ errText, setErrText ] = useState('Мэдээллээ гүйцэд оруулна уу');
     const [ showErr, setShowErr ] = useState(false);
     const [ loading, setLoading ] = useState(false);
@@ -107,9 +109,14 @@ const SignUp = () => {
                         <div style={{marginBottom:20}} className="inputItem">
                             <div className="title">Нууц үг</div>
                             <div className="inputPar">
-                                <input value={password} onChange={e=>setPassword(e.target.value)} type="password" placeholder="Нууц үгээ оруулна уу" />
+                                <input value={password}
+                                 type={showPass?`text`:`password`}
+                                 className="pass"
+                                 onChange={e=>setPassword(e.target.value)} placeholder="Нууц үгээ оруулна уу" />
                                 <BiLock className="A2"  />
                                 <div className="line" />
+                                <div className="mySvg">{showPass?<BsEye onClick={()=>setShowPass(false)} />:<BsEyeSlash onClick={()=>setShowPass(true)} />}</div>
+                           
                             </div>
                         </div>
                     </div>
