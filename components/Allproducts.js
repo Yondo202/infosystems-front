@@ -57,6 +57,7 @@ const Allproducts = ({ data }) => {
     )
 }
 
+
 export default Allproducts
 
 const animate = keyframes`
