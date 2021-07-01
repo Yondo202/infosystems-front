@@ -21,7 +21,7 @@ const Homemiddle = ({ data }) => {
         <Container>
             <div className="container-xxl">
                 <div className="Title">
-                   <h1>{data?.title} hahah</h1>
+                   <h1>{data?.title}</h1>
                 </div>
                 <div className="contentPar">
                     <div className="Header">
