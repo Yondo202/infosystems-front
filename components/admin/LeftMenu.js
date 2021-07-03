@@ -2,21 +2,30 @@ import React,{useContext} from 'react'
 import styled from 'styled-components'
 import UserContext from '@/core/context/Context'
 import { FaComments, FaUsers } from "react-icons/fa"
+import { RiFeedbackFill } from "react-icons/ri"
 import Link from "next/link"
+import { useRouter } from 'next/router'
 
 const LeftMenu = () => {
+    const path = useRouter().pathname;
     const { logo } = useContext(UserContext);
+
     return (
         <LeftMenuStyle>
-            <Link href="/">
+            <Link href="/admin">
                 <a className="Header">
                     <img src={process.env.serverUrl+logo?.url} />
                 </a>
             </Link>
 
             <div className="mainMenu">
-                <div className="items"><FaComments /><span>Сэтгэгдэлүүд</span> </div>
-                <div className="items"><FaUsers /><span>Хэрэглэгчид</span> </div>
+                <Link href="/admin/users">
+                    <a className={`items ${path.includes('users')?`Active`:``}`}><FaUsers /><span>Хэрэглэгчид</span> </a>
+                </Link>
+
+                <div className="items"><FaComments /><span>Тусламж</span> </div>
+
+                <div className="items"><RiFeedbackFill /><span>Санал хүсэлт</span> </div>
             </div>
         </LeftMenuStyle>
     )
@@ -30,27 +39,37 @@ const LeftMenuStyle = styled.div`
     background-color: #182444;
     color: #ffffff;
     font-family:${props=>props.theme.fontFamily2};
-    font-size: 14px;
+    font-size: 13px;
     letter-spacing: 0.5px;
     .mainMenu{
         width: 100%;
         .items{
+            text-decoration: none;
+            color: unset;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 18px;
             padding: 15px 25px;
             font-weight: 500;
+            color: rgba(255,255,255,.7);
             svg{
                 color: rgba(255,255,255,.7);
                 font-size: 22px;
             }
             &:hover{
                 background-color: rgba(20,130,225,0.6);
-                color: rgba(255,255,255,.8);
+                color: rgba(255,255,255,1);
                 svg{
                     color: #ffffff;
                 }
+            }
+        }
+        .Active{
+            background-color: rgba(20,130,225,0.6);
+            color: rgba(255,255,255,1);
+            svg{
+                color: #ffffff;
             }
         }
     }

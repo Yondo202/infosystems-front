@@ -5,7 +5,6 @@ import { IoMdArrowDropright } from "react-icons/io"
 import axios from "axios"
 import Link from "next/link"
 
-
 const LeftMenu = () => {
     const ctx = useContext(Context);
     const [ Menu, setMenu ] = useState([]);

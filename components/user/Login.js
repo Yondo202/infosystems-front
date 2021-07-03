@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { FaRegUser } from "react-icons/fa"
 import { BiLock } from "react-icons/bi"
 import { BsEye, BsEyeSlash } from "react-icons/bs"
@@ -6,8 +6,10 @@ import axios from 'axios'
 import { setCookie } from 'nookies'
 import Router from "next/router"
 import { LoadingStyle } from '../miscs/CustomComp'
+import UserContext from '@/core/context/Context'
 
 const login = () => {
+    const { alertFunc } = useContext(UserContext);
     const [ showPass, setShowPass ] = useState(false);
     const [ errText, setErrText ] = useState('Мэдээллээ гүйцэд оруулна уу');
     const [ showErr, setShowErr ] = useState(false);
@@ -33,13 +35,18 @@ const login = () => {
                 setLoading(true);
                 await axios.post(`${process.env.serverUrl}/auth/local`, loginInfo )
                 .then(res=>{
-                    setCookie(null, 'jwt', res.data.jwt,{ maxAge: 30 * 24 * 60 * 60, path:"/" });
-                    setCookie(null, 'username', res.data.user.username, { maxAge: 30 * 24 * 60 * 60, path:"/" });
-                    setCookie(null, 'role', res.data.user.role.type, { maxAge: 30 * 24 * 60 * 60, path:"/" });
-                    setCookie(null, 'id', res.data.user.id, { maxAge: 30 * 24 * 60 * 60, path:"/" });
-                    setCookie(null, 'email', res.data.user.email, { maxAge: 30 * 24 * 60 * 60, path:"/" });
-
-                    Router.push('/');
+                    console.log(`res`, res);
+                    if(res.data.user.admin_confirmed){
+                        setCookie(null, 'jwt', res.data.jwt,{ maxAge: 30 * 24 * 60 * 60, path:"/" });
+                        setCookie(null, 'username', res.data.user.username, { maxAge: 30 * 24 * 60 * 60, path:"/" });
+                        setCookie(null, 'role', res.data.user.role.type, { maxAge: 30 * 24 * 60 * 60, path:"/" });
+                        setCookie(null, 'id', res.data.user.id, { maxAge: 30 * 24 * 60 * 60, path:"/" });
+                        setCookie(null, 'email', res.data.user.email, { maxAge: 30 * 24 * 60 * 60, path:"/" });
+                        Router.push('/');
+                    }else{
+                        alertFunc('green', "зөвшөөрөл хүлээнүү", true);
+                        Router.push(Router.asPath);
+                    }
                     setLoading(false);
                 }).catch(err=>{
                     setLoading(false);

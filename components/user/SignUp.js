@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import UserContext from '@/core/context/Context'
 import { FaRegUser } from "react-icons/fa"
 import { BiLock } from "react-icons/bi"
 import { AiOutlineMail } from "react-icons/ai"
@@ -12,6 +13,7 @@ import { LoadingStyle } from '../miscs/CustomComp'
 import styled from 'styled-components'
 
 const SignUp = () => {
+    const { alertFunc } = useContext(UserContext);
     const [ showPass, setShowPass ] = useState(false);
     const [ errText, setErrText ] = useState('Мэдээллээ гүйцэд оруулна уу');
     const [ showErr, setShowErr ] = useState(false);
@@ -30,8 +32,11 @@ const SignUp = () => {
                 email: email,
                 password: password,
                 company_name: companyName,
-                company_register: companyRegister
+                company_register: companyRegister,
+                admin_confirmed:false
             }
+
+            console.log(`loginInfo`, loginInfo);
 
             if(username===''){
                 setErrText('Нэрээ оруулна уу');
@@ -57,16 +62,20 @@ const SignUp = () => {
                 setLoading(true);
                 await axios.post(`${process.env.serverUrl}/auth/local/register`, loginInfo )
                 .then(res=>{
-                    setCookie(null, 'jwt', res.data.jwt,{ maxAge: 30 * 24 * 60 * 60, path:"/" });
-                    setCookie(null, 'username', res.data.user.username, { maxAge: 30 * 24 * 60 * 60, path:"/" });
-                    setCookie(null, 'id', res.data.user.id, { maxAge: 30 * 24 * 60 * 60, path:"/" });
-                    setCookie(null, 'email', res.data.user.email, { maxAge: 30 * 24 * 60 * 60, path:"/" });
-                    setCookie(null, 'role', res.data.user.role.type, { maxAge: 30 * 24 * 60 * 60, path:"/" });
-                //  Router.push('/feedback');
-                    Router.push('/');
+                    if(res.data.user.admin_confirmed){
+                        setCookie(null, 'jwt', res.data.jwt,{ maxAge: 30 * 24 * 60 * 60, path:"/" });
+                        setCookie(null, 'username', res.data.user.username, { maxAge: 30 * 24 * 60 * 60, path:"/" });
+                        setCookie(null, 'id', res.data.user.id, { maxAge: 30 * 24 * 60 * 60, path:"/" });
+                        setCookie(null, 'email', res.data.user.email, { maxAge: 30 * 24 * 60 * 60, path:"/" });
+                        setCookie(null, 'role', res.data.user.role.type, { maxAge: 30 * 24 * 60 * 60, path:"/" });
+                        Router.push('/');
+                    }else{
+                        alertFunc('green', "Амжилттай зөвшөөрөл хүлээнүү", true);
+                        Router.push(Router.asPath);
+                    }
                     setLoading(false);
                 }).catch(err=>{
-                    console.log(`err.response`, err.response.data);
+                    console.log(`err.response`, err);
                     if(err.response.data.message){
                         setLoading(false);
                         setErrText('Мэдээллээ шалгана уу');

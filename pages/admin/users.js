@@ -1,27 +1,26 @@
 import React from 'react'
-import { parseCookies } from "nookies";
-import axios from 'axios';
 import styled from 'styled-components';
-import MainPage from "@/components/admin/MainPage"
 import LeftMenu from '@/components/admin/LeftMenu';
 import TopMenu from "@/components/admin/TopMenu"
+import HomeUsers from "@/components/admin/users/HomeUsers"
 
-const MainFeedback = ({data, cond, users}) => {
+const Users = ({data, cond, users}) => {
     return (
         <>
-            {cond?
+            {!cond?
             <Component>
                 <LeftMenu />
                 <div className="right">
                     <div className="ghost" />
                     <TopMenu />
-                    <MainPage users={users} data={data} />
+                    <HomeUsers users={users} data={data} />
                 </div>
             </Component>
             :<Errors><h1>Эрх хүрэлцэхгүй байна</h1></Errors>}
         </>
     )
 }
+export default Users;
 
 const Errors = styled.div`
     display: flex;
@@ -46,23 +45,23 @@ const Component = styled.div`
     }
 `
 
-MainFeedback.getInitialProps = async ctx =>{
-    const {jwt} = parseCookies(ctx);
-    try{
-        let res = await axios.get(`${process.env.serverUrl}/infosystem-reports`, { headers:{ Authorization: `bearer ${jwt}` } })
-        let users =  await axios.post(`${process.env.serverUrl}/graphql`, {
-            query:`query { users(sort:"created_at:DESC"){  id username email company_name company_register created_at }
-            }`
-        },{ headers: {
-            Authorization: `Bearer ${jwt}`
-          } })
-        return {data: res.data, users:users.data.data?.users, cond:true}
-    }catch{
-        return {data: [], users:[], cond:false}
-    }
-}
+// MainFeedback.getInitialProps = async ctx =>{
+//     const {jwt} = parseCookies(ctx);
+//     try{
+//         let res = await axios.get(`${process.env.serverUrl}/infosystem-reports`, { headers:{ Authorization: `bearer ${jwt}` } })
+//         let users =  await axios.post(`${process.env.serverUrl}/graphql`, {
+//             query:`query { users{  id username email company_name company_register created_at }
+//             }`
+//         },{ headers: {
+//             Authorization: `Bearer ${jwt}`
+//           } })
+//         return {data: res.data, users:users.data.data?.users, cond:true}
+//     }catch{
+//         return {data: [], users:[], cond:false}
+//     }
+// }
 
-export default MainFeedback
+// export default MainFeedback
 
 
 

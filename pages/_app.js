@@ -68,15 +68,19 @@ function redirectUser(ctx, location){
 MyApp.getInitialProps = async({ Component, ctx }) =>{
     let pageProps = {}
     const jwt = parseCookies(ctx).jwt;
+    const role = parseCookies(ctx).role;
 
-    // console.log(`ctx`, ctx);
     // console.log(`parseCookies`, parseCookies(ctx));
+    // console.log("---------------")
 
     if(!jwt){
         if(ctx.pathname.includes("/feedback") || ctx.pathname.includes("/answer") || ctx.pathname.includes("/admin") ){
             redirectUser(ctx, "/login");
         }
     }else{
+        if(ctx.pathname.includes("/admin") && role !== "infosystem_admin" ){
+            redirectUser(ctx, "/");
+        }
         if(ctx.pathname==="/login"){
             redirectUser(ctx, "/");
         }
