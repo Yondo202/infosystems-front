@@ -4,9 +4,13 @@ import { RiEdit2Line } from "react-icons/ri"
 import { VscError } from "react-icons/vsc"
 import axios from 'axios'
 import { parseCookies } from "nookies"
+import Modal from "@/components/admin/users/Modal"
 
 const HomeUsers = () => {
+    const [ showModal, setShowModal ] = useState(false);
     const [users, setUsers] = useState([]);
+    const [ products, setProducts ] = useState([]);
+    const [ targetProduct, setTargetProduct ] = useState({});
     const { jwt } = parseCookies();
     useEffect(() => {
         Go();
@@ -14,18 +18,20 @@ const HomeUsers = () => {
 
     const Go = async () => {
         await axios.post(`${process.env.serverUrl}/graphql`, {
-            query: `query { users{ id username email confirmed company_name company_register created_at }
-                        }`
-        }, {
-            headers: {
-                Authorization: `Bearer ${jwt}`
-            }
-        }).then(res => {
-            console.log(`res`, res)
-            setUsers(res.data.data?.users);
+            query: `query { users{ id username email confirmed company_name admin_confirmed company_register created_at } }`
+        }, { headers: { Authorization: `Bearer ${jwt}` }   }).then(res => { setUsers(res.data.data?.users); })
+
+        await axios.post(`${process.env.serverUrl}/graphql`, {
+            query: `query{products{ id title catigory slug }}`
+        }).then(res => { 
+            setProducts(res.data.data?.products)
         })
     }
 
+    const ShowHandle = (el) =>{
+        setShowModal(true);
+        setTargetProduct(el);
+    }
 
     return (
         <Container>
@@ -50,11 +56,11 @@ const HomeUsers = () => {
                                         <td>{el.company_name}</td>
                                         <td>{el.company_register}</td>
                                         <td>{el.email}</td>
-                                        <td>{el.confirmed?`Зөвшөөрсөн`:`Хүлээгдэж байгаа`}</td>
+                                        <td>{el.admin_confirmed?`Зөвшөөрсөн`:`Хүлээгдэж байгаа`}</td>
                                         <td>wait..</td>
                                         <td className="editDelete">
                                             <div className="editDeletePar">
-                                                <div className="smBtn"><RiEdit2Line /></div>
+                                                <div onClick={()=>ShowHandle(el)} className="smBtn"><RiEdit2Line /></div>
                                                 <div className="smBtn"><VscError /></div>
                                             </div>
                                         </td>
@@ -66,7 +72,7 @@ const HomeUsers = () => {
                     </table>
                 </div>
             </div>
-
+           {showModal&&<Modal showModal={showModal} products={products} targ={targetProduct} setShowModal={setShowModal} />}
         </Container>
     )
 }

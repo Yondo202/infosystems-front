@@ -1,13 +1,12 @@
 import React from "react";
 import Root from "@/core/Root";
-import checkLanguage from '@/miscs/checkLanguage';
 import decrease from "@/miscs/decrease"
 import Axios from "axios";
 import MainContent from "components/posts/MainPost"
 
 const Blog = ({news}) => {
     return (
-        <Root seo={{title: news.name, description: decrease(news.description, 120), thumb: news.image.url }}>
+        <Root seo={{title: news.title, description: decrease(news.description, 120), thumb: news.image.url }}>
              <MainContent news={news} />
         </Root>
 

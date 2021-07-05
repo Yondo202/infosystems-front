@@ -7,6 +7,7 @@ import { MdEmail } from "react-icons/md"
 import {FacebookShareButton,TwitterShareButton, LinkedinShareButton, PinterestShareButton, EmailShareButton } from 'react-share';
 
 const ContentSector = ({news}) => {
+
     return (
         <Container className="MainContent">
             <h2 className="title">{news.title}</h2>
@@ -18,7 +19,11 @@ const ContentSector = ({news}) => {
             <div className="ContentSection">
                 <div className={`Icons `}>
                     <div className= {`Buttons`}>
-                        <FacebookShareButton  imageurl={process.env.serverUrl+news.image.url} media={process.env.serverUrl+news.image.url} resetButtonStyle={true} url={process.env.frontUrl+process.env.postUrl+news.slug} style={{ width: 50, height: 50 }} >
+                        <FacebookShareButton media={process.env.serverUrl+news.image.url}
+                        resetButtonStyle={true} 
+                        url={`${process.env.frontUrl}${process.env.postUrl}${news.slug}`}
+                        // url="https://infosystems.mn/posts/bayar-naadmyn-dr-ded-azhillah-azhilchdyn-ners-holbogdoh-utas"
+                        style={{ width: 50, height: 50 }} >
                             <div className="Btnss facebook"><FaFacebookF /></div>
                         </FacebookShareButton>
 
