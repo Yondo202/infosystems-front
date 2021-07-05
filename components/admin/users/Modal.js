@@ -1,31 +1,54 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from "axios"
 import styled, { keyframes } from 'styled-components'
-import { MdClose } from "react-icons/md"
+import { MdClose, MdCheck } from "react-icons/md"
 import { VscSave } from "react-icons/vsc"
 import Select from 'react-select';
+import {MdKeyboardArrowRight} from 'react-icons/md'
+import { parseCookies } from "nookies"
 
-const Modal = ({showModal, setShowModal, products, targ}) => {
+const Modal = ({ setShowModal, products, targ}) => {
+    const { jwt } = parseCookies();
     const [ classN, setClassN ] = useState(``);
     const [ selectOption, setSelectOption ] = useState([]);
+    const [ selectOptionId, setSelectOptionId ] = useState([]);
+    const [ approve, setApprove ] = useState(targ.admin_confirmed);
+
+    useEffect(()=>{
+        let arr = []
+        targ?.products.forEach(el=>{
+            arr.push(el.id);
+        });
+        setSelectOptionId(arr);
+        setSelectOption(targ?.products);
+    },[])
 
     const CloseHandle = () =>{
         setClassN(`Content2`);
         setTimeout(() => {
             setShowModal(false);
-        }, 300)
+        }, 280);
     }
+
     const ChangeHandle = (item) =>{
-        // let difference = selectOption.filter(x => !item.includes(x));
-
-        // console.log('Removed: ', difference);
-
-        console.log(`item`, item);
-
+        let arr = []
+        item.forEach(el=>{
+            arr.push(el.id);
+        });
         setSelectOption(item);
+        setSelectOptionId(arr);
     }
 
-    // console.log(`targetProduct`, targ);
-    // console.log(`selectOption`, selectOption);
+    const ClickHandle = () =>{
+        axios.put(`${process.env.serverUrl}/users/${targ.id}`, { admin_confirmed:approve, products: selectOptionId }, {
+            headers: {Authorization: `bearer ${jwt}`}
+        }).then(res=>{
+            setClassN(`Content2`);
+            setTimeout(() => {
+                setShowModal(false);
+            }, 280);
+        })
+    }
 
     return (
         <ModalContainer>
@@ -49,13 +72,20 @@ const Modal = ({showModal, setShowModal, products, targ}) => {
                 <div className="Handles">
                     <div className="items">
                         <div className="title">Бүртгэлийн зөвшөөрөл</div>
-                        <button className="button"><span>✓ </span>Зөвшөөрөх</button>
+                        {/* <button className="button"><span>✓ </span>Зөвшөөрөх</button> */}
+
+                        <button onClick={()=>setApprove(prev=>!prev)} className={`buttons ${approve?`A11`:``} `}>
+                            <div className="SVG">< MdCheck /></div>
+                            <span>{approve?`Зөвшөөрсөн`:`Зөвшөөрөх`}</span><MdKeyboardArrowRight /> <MdKeyboardArrowRight className="one" /> <MdKeyboardArrowRight className="two" />
+                        </button>
+
                     </div>
 
                     <div className="items">
                         <div className="title">Бүтээгдэхүүн сонгох</div>
                         <Select
-                            // value={selectOption}
+                            value={selectOption}
+                            // value={option =>`${option.title}`}
                             getOptionLabel={option =>`${option.title}` }
                             isMulti
                             onChange={ChangeHandle}
@@ -72,7 +102,7 @@ const Modal = ({showModal, setShowModal, products, targ}) => {
                 </div>
 
                 <div className="btnPar">
-                    <button className="SaveButton"><VscSave /> Хадгалах</button>
+                    <button onClick={ClickHandle} className={`SaveButton`}> <VscSave /> Хадгалах</button>
                 </div>
            </div>
            <div />
@@ -91,7 +121,13 @@ const ModalAnimate2 = keyframes`
     100%{ opacity:0; transform:scale(0); }
 `
 
-const ModalContainer = styled.div`
+const animation3 = keyframes`
+    0% { transform:scale(0); }
+    50% { transform:scale(1.2); }
+    100% { transform:scale(1); }
+`
+
+export const ModalContainer = styled.div`
     position:fixed;
     top:0;
     left:0;
@@ -101,17 +137,25 @@ const ModalContainer = styled.div`
     display:flex;
     flex-direction:column;
     align-items:center;
-    justify-content:space-evenly;
-
+    justify-content:space-around;
+    font-size:14px;
     .Content{
         animation:${ModalAnimate} 0.3s ease;
-        padding:20px 20px;
+        padding:30px 30px;
         border-radius:6px;
         position:relative;
-        height:30em;
-        width:30em;
+        z-index:999;
+        height:38em;
+        width:33em;
         background-color:#ffffff;
+        max-height:38em;
+        overflow-y:scroll;
+        ::-webkit-scrollbar {
+            width: 0px;
+            height: 0px;
+        }
         .btnPar{
+            z-index:1000;
             width:100%;
             margin-top:20px;
             display:flex;
@@ -129,29 +173,93 @@ const ModalContainer = styled.div`
                     opacity:0.8;
                 }
             }
+            .disable{
+                opacity:0.7;
+            }
         }
         
         .Handles{
             display:flex;
             flex-direction:column;
             .items{
-                margin-bottom:15px;
+                margin-bottom:18px;
                 width:100%;
                 .title{
-                    margin-bottom:10px;
-                    font-size:13px;
+                    margin-bottom:12px;
+                    font-size:14px;
                     font-weight:500;
                 }
-                .button{
+                .buttons{
+                    color: rgba(${props=>props.theme.textColor},0.8);
+                    text-decoration:none;
+                    margin-right:18px;
+                    transition:all 0.3s ease;
+                    cursor:pointer;
+                    border-radius:5px;
+                    padding:5px 60px;
+                    padding-right:30px;
+                    border:1px solid rgba(0,0,0,0.2);
                     display:flex;
-                    gap:10px;
-                    border:none;
-                    padding:2px 20px;
-                    background-color:${props=>props.theme.mainColor2};
-                    color:white;
-                    border-radius:4px;
+                    align-items:center;
+                    justify-content:space-between;
+                    box-shadow:1px 1px 8px -6px;
+                    background-color:${props=>props.theme.mainColor4};
                     &:hover{
-                        opacity:0.8;
+                        box-shadow:1px 1px 16px -7px;
+                        .one{
+                            margin-left:0px;
+                            transform:scale(1);
+                        }
+                        .two{
+                            margin-left:0px;
+                            transform:scale(1);
+                        }
+                    }
+                    span{
+                        font-weight:500;
+                        margin-right:30px;
+                    }
+                    svg{
+                        opacity:0.6;
+                        height:100%;
+                        font-size:16px;
+                    }
+                    .one{
+                        transition:all 0.3s ease;
+                        margin-left:-15px;
+                        transform:scale(0);
+                    }
+                    .two{
+                        transition:all 0.3s ease;
+                        margin-left:-15px;
+                        transform:scale(0);
+                    }
+                    .SVG{
+                        display:none;
+                    }
+    
+                }
+                .A11{
+                    position:relative;
+                    color: green;
+                    border:1px solid rgba(0,0,0,0.2);
+                    box-shadow:1px 1px 14px -6px;
+                    .SVG{
+                        animation:${animation3} 0.7s ease;
+                        content:"✔";
+                        position:absolute;
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        z-index:1;
+                        top:-7px;
+                        right:0%;
+                        border:1px solid green;
+                        background-color:white;
+                        color:green;
+                        width:19px;
+                        height:19px;
+                        border-radius:50%;
                     }
                 }
             }
@@ -178,8 +286,8 @@ const ModalContainer = styled.div`
         .close{
             cursor:pointer;
             position:absolute;
-            top:-10px;
-            right:-10px;
+            top:3px;
+            right:3px;
             background-color:#fff;
             border-radius:50%;
             height:30px;

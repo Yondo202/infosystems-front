@@ -15,7 +15,6 @@ const QuestionHome = ({data, title, ids, productId, search}) => {
         // Go();
         setMenu(data);
         setShowEditor(false);
-        console.log("----------");
     },[sort, data])
 
     const Go = async () =>{

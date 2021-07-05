@@ -44,7 +44,7 @@ const login = () => {
                         setCookie(null, 'email', res.data.user.email, { maxAge: 30 * 24 * 60 * 60, path:"/" });
                         Router.push('/');
                     }else{
-                        alertFunc('green', "зөвшөөрөл хүлээнүү", true);
+                        alertFunc('green', "Зөвшөөрөл хүлээнэ үү...", true);
                         Router.push(Router.asPath);
                     }
                     setLoading(false);

@@ -12,7 +12,7 @@ import Router from "next/router"
 import { LoadingStyle } from '../miscs/CustomComp'
 import styled from 'styled-components'
 
-const SignUp = () => {
+const SignUp = ({setShowLogin}) => {
     const { alertFunc } = useContext(UserContext);
     const [ showPass, setShowPass ] = useState(false);
     const [ errText, setErrText ] = useState('Мэдээллээ гүйцэд оруулна уу');
@@ -35,8 +35,6 @@ const SignUp = () => {
                 company_register: companyRegister,
                 admin_confirmed:false
             }
-
-            console.log(`loginInfo`, loginInfo);
 
             if(username===''){
                 setErrText('Нэрээ оруулна уу');
@@ -62,23 +60,23 @@ const SignUp = () => {
                 setLoading(true);
                 await axios.post(`${process.env.serverUrl}/auth/local/register`, loginInfo )
                 .then(res=>{
-                    if(res.data.user.admin_confirmed){
-                        setCookie(null, 'jwt', res.data.jwt,{ maxAge: 30 * 24 * 60 * 60, path:"/" });
-                        setCookie(null, 'username', res.data.user.username, { maxAge: 30 * 24 * 60 * 60, path:"/" });
-                        setCookie(null, 'id', res.data.user.id, { maxAge: 30 * 24 * 60 * 60, path:"/" });
-                        setCookie(null, 'email', res.data.user.email, { maxAge: 30 * 24 * 60 * 60, path:"/" });
-                        setCookie(null, 'role', res.data.user.role.type, { maxAge: 30 * 24 * 60 * 60, path:"/" });
-                        Router.push('/');
-                    }else{
+                    // if(res.data.user.admin_confirmed){
+                    //     setCookie(null, 'jwt', res.data.jwt,{ maxAge: 30 * 24 * 60 * 60, path:"/" });
+                    //     setCookie(null, 'username', res.data.user.username, { maxAge: 30 * 24 * 60 * 60, path:"/" });
+                    //     setCookie(null, 'id', res.data.user.id, { maxAge: 30 * 24 * 60 * 60, path:"/" });
+                    //     setCookie(null, 'email', res.data.user.email, { maxAge: 30 * 24 * 60 * 60, path:"/" });
+                    //     setCookie(null, 'role', res.data.user.role.type, { maxAge: 30 * 24 * 60 * 60, path:"/" });
+                    //     Router.push('/');
+                    // }else{
                         alertFunc('green', "Амжилттай зөвшөөрөл хүлээнүү", true);
-                        Router.push(Router.asPath);
-                    }
+                        setShowLogin(true);
+                    // }
                     setLoading(false);
                 }).catch(err=>{
                     console.log(`err.response`, err);
                     if(err.response.data.message){
                         setLoading(false);
-                        setErrText('Мэдээллээ шалгана уу');
+                        setErrText('Алдаа гарлаа');
                         setShowErr(true);
                         setTimeout(() => {  setShowErr(false); }, 6000)
                     }

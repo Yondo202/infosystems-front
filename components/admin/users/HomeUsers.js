@@ -5,21 +5,26 @@ import { VscError } from "react-icons/vsc"
 import axios from 'axios'
 import { parseCookies } from "nookies"
 import Modal from "@/components/admin/users/Modal"
+import Delete from "@/components/admin/users/Delete"
 
 const HomeUsers = () => {
     const [ showModal, setShowModal ] = useState(false);
+    const [ delModal, setDelModal ] = useState(false);
     const [users, setUsers] = useState([]);
     const [ products, setProducts ] = useState([]);
-    const [ targetProduct, setTargetProduct ] = useState({});
+    const [ targetUser, setTargetUser ] = useState({});
     const { jwt } = parseCookies();
+
     useEffect(() => {
         Go();
-    }, []);
+    }, [showModal, delModal]);
 
     const Go = async () => {
         await axios.post(`${process.env.serverUrl}/graphql`, {
-            query: `query { users{ id username email confirmed company_name admin_confirmed company_register created_at } }`
-        }, { headers: { Authorization: `Bearer ${jwt}` }   }).then(res => { setUsers(res.data.data?.users); })
+            query: `query { users{ id username email confirmed company_name admin_confirmed company_register created_at
+                products{ id title }
+            } }`
+        }, { headers: { Authorization: `Bearer ${jwt}` } }).then(res => { setUsers(res.data.data?.users); })
 
         await axios.post(`${process.env.serverUrl}/graphql`, {
             query: `query{products{ id title catigory slug }}`
@@ -30,13 +35,17 @@ const HomeUsers = () => {
 
     const ShowHandle = (el) =>{
         setShowModal(true);
-        setTargetProduct(el);
+        setTargetUser(el);
+    }
+    const ShowHandle2 = (el) =>{
+        setDelModal(true);
+        setTargetUser(el);
     }
 
     return (
         <Container>
             <div className="Parent">
-                <div className="title">Нийт хэрэглэгчид</div>
+                <div className="title">Нийт хэрэглэгчид - {users.length} </div>
 
                 <div className="UserSector">
                     <table>
@@ -56,12 +65,18 @@ const HomeUsers = () => {
                                         <td>{el.company_name}</td>
                                         <td>{el.company_register}</td>
                                         <td>{el.email}</td>
-                                        <td>{el.admin_confirmed?`Зөвшөөрсөн`:`Хүлээгдэж байгаа`}</td>
-                                        <td>wait..</td>
+                                        <td>{el.admin_confirmed
+                                        ?<span className="apps approve">Зөвшөөрсөн</span>
+                                        :<span className="apps notApprove">Хүлээгдсэн...</span>}</td>
+                                        <td style={{textAlign:`left`}}><ul>{el.products.map((el, ind)=>{
+                                            return(
+                                                <li key={ind}>{el.title}</li>
+                                            )
+                                        })}</ul></td>
                                         <td className="editDelete">
                                             <div className="editDeletePar">
                                                 <div onClick={()=>ShowHandle(el)} className="smBtn"><RiEdit2Line /></div>
-                                                <div className="smBtn"><VscError /></div>
+                                                <div onClick={()=>ShowHandle2(el)}  className="smBtn"><VscError /></div>
                                             </div>
                                         </td>
                                     </tr>
@@ -72,7 +87,8 @@ const HomeUsers = () => {
                     </table>
                 </div>
             </div>
-           {showModal&&<Modal showModal={showModal} products={products} targ={targetProduct} setShowModal={setShowModal} />}
+           {showModal&&<Modal products={products} targ={targetUser} setShowModal={setShowModal} />}
+           {delModal&&<Delete targ={targetUser} setShowModal={setDelModal}/>}
         </Container>
     )
 }
@@ -82,7 +98,8 @@ export default HomeUsers
 const Container = styled.div`
     padding: 0px 20px;
     .Parent{
-        height: 34.5em;
+        // height: 35.5em;
+        height: 85vh;
         overflow-y: scroll;
         ::-webkit-scrollbar {
             width: 0px;
@@ -101,6 +118,18 @@ const Container = styled.div`
 
         .UserSector{
             font-size: 13px;
+                .apps{
+                    border-radius:3px;
+                    padding:4px 10px;
+                    font-weight:500;
+                    font-size:12px;
+                }
+                .approve{
+                    background-color:#4CBB17;
+                }
+                .notApprove{
+                    background-color:#ffc720;
+                }
                 table{
                     width:100%;
                     border-collapse: collapse;

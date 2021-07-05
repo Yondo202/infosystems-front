@@ -15,7 +15,7 @@ const login = () => {
                             <div onClick={()=>setShowLogin(true)} className={`item ${showLogin&&`Active`}`}>Нэвтрэх</div>
                             <div onClick={()=>setShowLogin(false)}  className={`item ${!showLogin&&`Active`}`}>Бүртгүүлэх</div>
                         </div>
-                        {showLogin?<Login />:<SignUp />}
+                        {showLogin?<Login />:<SignUp setShowLogin={setShowLogin} />}
                     </div>
                 {/* </div> */}
             </Container>

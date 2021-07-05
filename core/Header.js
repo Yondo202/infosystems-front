@@ -16,7 +16,7 @@ import nookies from 'nookies';
 import axios from 'axios';
 
 const Header = ({menu, logo, login}) => {
-    const { id, jwt } = parseCookies();
+    const { id, jwt, role } = parseCookies();
     const router = useRouter();
     const headRef = useRef();
     const [ HeadColor, setHeadColor ] = useState(false);
@@ -24,10 +24,10 @@ const Header = ({menu, logo, login}) => {
     const [ subMenus, setSubmenu ] = useState([]);
     const [ showSub, setshowSub ] = useState(`none`);
     const [ userName, setUserName ] = useState('');
-    const [ role, setRole ] = useState('');
     const [ showSmMenu, setShowSmMenu ] = useState(false);
     const [ notf, setNotf ] = useState([]);
     const [ showNotf, setShowNotf ] = useState(false);
+    const [ userNotif, setUserNotif ] = useState([]);
 
     React.useEffect(()=>{
         window.addEventListener("scroll", handleScroll);
@@ -36,14 +36,14 @@ const Header = ({menu, logo, login}) => {
     },[])
 
     useEffect(()=>{
-        setRole(parseCookies().role);
         setUserName(parseCookies().username);
         if(id){
             FetchData();
+            if(role === "infosystem_admin"){
+                FetchUser()
+            }
         }
     },[])
-
-   
 
     const FetchData = async () =>{
            await axios.post(`${process.env.serverUrl}/graphql`, {
@@ -68,6 +68,18 @@ const Header = ({menu, logo, login}) => {
             })
     }
 
+    const FetchUser = async () =>{
+        await axios.post(`${process.env.serverUrl}/graphql`, {
+            query: `query { users(where:{ admin_confirmed: false }){ id username email confirmed company_name admin_confirmed company_register created_at
+                products{ id title }
+            }}`
+        }, { headers: { Authorization: `Bearer ${jwt}` } }).then(res => {
+            setUserNotif(res.data.data?.users);
+        })
+    }
+
+    console.log(`userNotif`, userNotif);
+
     const LogOut = () =>{
         nookies.destroy(null, 'jwt');
         nookies.destroy(null, 'username');
@@ -81,11 +93,7 @@ const Header = ({menu, logo, login}) => {
         if(!e.target.classList.value.includes("BellChild")){
             setShowNotf(false);
         }
-        // else if(e.target.classList.value.includes("BellPar")){
-        //     setShowNotf(prev=>!prev);
-        // }
     }
-
 
     const handleScroll2 = (e) => {
         if(!e.target.classList.value.includes("dropDown")){
@@ -111,7 +119,6 @@ const Header = ({menu, logo, login}) => {
         return
     }
 
-
     const SeenHandle = (el) =>{
         el.forEach(item=>{
             axios.put(`${process.env.serverUrl}/issue-answers/${item.id}`, { seen:true },{ headers:{
@@ -128,7 +135,6 @@ const Header = ({menu, logo, login}) => {
             :{backgroundColor:`rgba(0,0,0,0)`}
             :{backgroundColor:`rgba(37,41,45,.9)`}}
         >
-
             <div onMouseOver={()=>OnMouseOverHandle(subMenus)} onMouseLeave={()=>setshowSub(`none`)} style={{display:showSub}} className="Submenu">
                 <div className="subDiv">
                     <div  className="subDivChild container-xxl">
@@ -188,16 +194,18 @@ const Header = ({menu, logo, login}) => {
                                 {showNotf&&notf.length?<div className="notify BellChild">
                                     {notf.map((el,ind)=>{
                                         return(
-                                            <Link key={ind} href={`/feedback/answer/${el.id}`}>
-                                                <a onClick={()=>SeenHandle(el.issue_answers)} className="Itemss BellChild">
-                                                    <div className="svgs BellChild"><RiMailSendLine /></div>
-                                                    <div className="textPar BellChild">
-                                                        <div className="par BellChild">{el.name}</div>
-                                                        <div className="childs BellChild">Хариулсан байна <span><BiMessage />{el.issue_answers?.length}</span> </div>
-                                                        <div className="date BellChild">{LanguageDate(el.issue_answers[0]?.created_at)} - өмнө</div>
-                                                    </div>
-                                                </a>
-                                            </Link>
+                                            <>
+                                                <Link key={ind} href={`/feedback/answer/${el.id}`}>
+                                                    <a onClick={()=>SeenHandle(el.issue_answers)} className="Itemss BellChild">
+                                                        <div className="svgs BellChild"><RiMailSendLine /></div>
+                                                        <div className="textPar BellChild">
+                                                            <div className="par BellChild">{el.name}</div>
+                                                            <div className="childs BellChild">Хариулсан байна <span><BiMessage />{el.issue_answers?.length}</span> </div>
+                                                            <div className="date BellChild">{LanguageDate(el.issue_answers[0]?.created_at)} - өмнө</div>
+                                                        </div>
+                                                    </a>
+                                                </Link>
+                                            </>
                                         )
                                     })}
                                 </div>:null}
