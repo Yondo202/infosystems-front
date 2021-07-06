@@ -18,22 +18,23 @@ const LeftMenu = () => {
 
     const Go = async () =>{
         if(role==="infosystem_admin"){
-            await axios.post(`${process.env.serverUrl}/graphql`, { query:`query{ products{ id title slug }  } `}).then(res=>{
-                setMenu(res.data.data.products);
-            })
+           let res = await axios.post(`${process.env.serverUrl}/graphql`, { query:`query{ products{ id title slug }  } `})
+           setMenu(res.data.data.products);
         }else{
-            await axios.post(`${process.env.serverUrl}/graphql`, {
+            let res = await axios.post(`${process.env.serverUrl}/graphql`, {
                 query: `query { users(where:{ id: "${id}" }, sort:"created_at:DESC"){ id username email confirmed company_name admin_confirmed company_register created_at
                     products{ id title slug }
                 } }`
-            }, { headers: { Authorization: `Bearer ${jwt}` } }).then(res => { 
+            }, { headers: { Authorization: `Bearer ${jwt}` } })
+
+            if(res.data.data.users.length){
                 setMenu(res.data.data.users[0]?.products);
                 if(res.data.data.users[0]?.products.length){
                     if(!Router.pathname.includes('/answer') && !Router.pathname.includes('/search')){
                         Router.push(`/feedback/${res.data.data.users[0]?.products[0]?.id}`);
                     }
                 }
-            })
+            }
         }
     }
 
