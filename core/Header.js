@@ -16,18 +16,16 @@ import nookies from 'nookies';
 import axios from 'axios';
 
 const Header = ({menu, logo, login}) => {
-    const { id, jwt, role } = parseCookies();
+    const { id, jwt, role, username } = parseCookies();
     const router = useRouter();
     const headRef = useRef();
     const [ HeadColor, setHeadColor ] = useState(false);
     const [ leftMenu, setLeftMenu ] = useState(`100%`);
     const [ subMenus, setSubmenu ] = useState([]);
     const [ showSub, setshowSub ] = useState(`none`);
-    const [ userName, setUserName ] = useState('');
     const [ showSmMenu, setShowSmMenu ] = useState(false);
     const [ notf, setNotf ] = useState([]);
     const [ showNotf, setShowNotf ] = useState(false);
-    const [ userNotif, setUserNotif ] = useState([]);
 
     React.useEffect(()=>{
         window.addEventListener("scroll", handleScroll);
@@ -36,11 +34,11 @@ const Header = ({menu, logo, login}) => {
     },[])
 
     useEffect(()=>{
-        setUserName(parseCookies().username);
         if(id){
             FetchData();
             if(role === "infosystem_admin"){
-                FetchUser()
+                FetchUser();
+                FetchFeedback();
             }
         }
     },[])
@@ -70,15 +68,22 @@ const Header = ({menu, logo, login}) => {
 
     const FetchUser = async () =>{
         await axios.post(`${process.env.serverUrl}/graphql`, {
-            query: `query { users(where:{ admin_confirmed: false }){ id username email confirmed company_name admin_confirmed company_register created_at
+            query: `query { users(where:{ seen: false }, sort:"created_at:DESC"){ id username email confirmed company_name admin_confirmed company_register created_at
                 products{ id title }
             }}`
         }, { headers: { Authorization: `Bearer ${jwt}` } }).then(res => {
-            setUserNotif(res.data.data?.users);
+            // setUserNotif(res.data.data?.users);
+            setNotf(prev=> [ ...prev, ...res.data.data?.users]);
         })
     }
 
-    console.log(`userNotif`, userNotif);
+    const FetchFeedback = async () =>{
+        await axios.post(`${process.env.serverUrl}/graphql`, {
+            query: `query{ productFeedbacks(where:{ seen: false }, sort:"created_at:DESC"){ id name created_at } }`
+        }, { headers: { Authorization: `Bearer ${jwt}` } }).then(res => {
+            setNotf(prev=> [ ...prev, ...res.data.data?.productFeedbacks]);
+        })
+    }
 
     const LogOut = () =>{
         nookies.destroy(null, 'jwt');
@@ -125,6 +130,18 @@ const Header = ({menu, logo, login}) => {
                Authorization:`bearer ${jwt}`
            }})
         })
+    }
+
+    const SeenUserHandle = (el) =>{
+        axios.put(`${process.env.serverUrl}/users/${el.id}`, { seen:true },{ headers:{
+            Authorization:`bearer ${jwt}`
+        }})
+    }
+
+    const SeenFeedback = (el) =>{
+        axios.put(`${process.env.serverUrl}/product-feedbacks/${el.id}`, { seen:true },{ headers:{
+            Authorization:`bearer ${jwt}`
+        }})
     }
 
     return (
@@ -183,7 +200,7 @@ const Header = ({menu, logo, login}) => {
                     </div>
                     <div className="Menu B2">
 
-                        {userName?
+                        {username?
                              <div className="BellPar content Bell">
                                 <div onClick={()=>setShowNotf(prev=>!prev)} tooltip={notf.length}
                                 style={showNotf?{color:"#fff"}:{color:`rgba(255,255,255,.65)`}}
@@ -194,18 +211,27 @@ const Header = ({menu, logo, login}) => {
                                 {showNotf&&notf.length?<div className="notify BellChild">
                                     {notf.map((el,ind)=>{
                                         return(
-                                            <>
-                                                <Link key={ind} href={`/feedback/answer/${el.id}`}>
-                                                    <a onClick={()=>SeenHandle(el.issue_answers)} className="Itemss BellChild">
-                                                        <div className="svgs BellChild"><RiMailSendLine /></div>
-                                                        <div className="textPar BellChild">
-                                                            <div className="par BellChild">{el.name}</div>
-                                                            <div className="childs BellChild">Хариулсан байна <span><BiMessage />{el.issue_answers?.length}</span> </div>
-                                                            <div className="date BellChild">{LanguageDate(el.issue_answers[0]?.created_at)} - өмнө</div>
+                                            <Link key={ind} href={!el.email?el.issue_answers?`/feedback/answer/${el.id}`:`/admin/care`:`/admin/users`}>
+                                                <a onClick={()=>!el.email?el.issue_answers?SeenHandle(el.issue_answers):SeenFeedback(el):SeenUserHandle(el)} className="Itemss BellChild">
+                                                    <div className="svgs BellChild"><RiMailSendLine /></div>
+                                                    {!el.email?el.issue_answers?<div className="textPar BellChild">
+                                                        <div className="par BellChild">{el.name}</div>
+                                                        <div className="childs BellChild">Хариулсан байна <span><BiMessage />{el.issue_answers?.length}</span> </div>
+                                                        <div className="date BellChild">{LanguageDate(el.issue_answers[0]?.created_at)} - өмнө</div>
+                                                    </div>
+                                                    :<div className="textPar BellChild">
+                                                        <div className="par BellChild">{el.name}</div>
+                                                        <div className="childs BellChild">Тусламж хүсэлтийн зөвшөөрөл хүссэн <span><BiMessage />1</span> </div>
+                                                        <div className="date BellChild">{LanguageDate(el.created_at)} - өмнө</div>
+                                                    </div>
+                                                    :<div className="textPar BellChild">
+                                                        <div className="par BellChild">{el.email}</div>
+                                                        <div className="childs BellChild">Шинэ бүртгэл
                                                         </div>
-                                                    </a>
-                                                </Link>
-                                            </>
+                                                        <div className="date BellChild">{LanguageDate(el.created_at)} - өмнө</div>
+                                                    </div>}
+                                                </a>
+                                            </Link>
                                         )
                                     })}
                                 </div>:null}
@@ -214,7 +240,7 @@ const Header = ({menu, logo, login}) => {
                         :null}
 
 
-                        <Link href={userName?"/feedback":"/login"}>
+                        <Link href={username?"/feedback":"/login"}>
                              <a className="content">
                                 <div className={`items ${login?`A2`:``}`}>
                                     Тусламж
@@ -222,7 +248,7 @@ const Header = ({menu, logo, login}) => {
                             </a>
                         </Link>
 
-                        {!userName?<Link href={"/login"}>
+                        {!username?<Link href={"/login"}>
                              <a className="content">
                                 <div className={`items ${login?`A2`:``}`}>
                                     Нэвтрэх
@@ -232,7 +258,7 @@ const Header = ({menu, logo, login}) => {
 
                         :<div  className="content Login">
                             <div style={showSmMenu?{color:"#fff"}:{color:`rgba(255,255,255,.65)`}} onClick={()=>setShowSmMenu(prev=>!prev)} className={`items ${login?`A2`:``}`}>
-                                {userName}
+                                {username}
                                 <TiArrowSortedDown />
                             </div>
                             {showSmMenu?<div className="showMenu">

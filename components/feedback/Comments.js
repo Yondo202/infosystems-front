@@ -50,10 +50,6 @@ const Comments = ({ datas, parent }) => {
         })
     }
 
-
-    console.log(`datas.user.idd`, parseInt(datas.user.id))
-    console.log(`idd`, parseInt(id))
-
     return (
         <Container >
             <div className="userProfile">
@@ -70,6 +66,10 @@ const Comments = ({ datas, parent }) => {
                         {parent&&<div className="Author">
                             Асуултын эзэн
                         </div>}
+                        
+                        {parent&&datas.resolved?<div style={{color:`green`}} className="Author">
+                            Шийдэгдсэн
+                        </div>:null}
                         {!parent?role==='infosystem_admin' || parseInt(id)===parseInt(datas.user.id)
                         ?<div className={`menuIcon ${showDrop?`active`:``}`}>
                                 <HiOutlineDotsHorizontal onClick={()=>setShowDrop(prev=>!prev)} />

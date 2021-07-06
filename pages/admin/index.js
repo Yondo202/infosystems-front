@@ -23,14 +23,14 @@ const MainFeedback = ({data, cond, users}) => {
     )
 }
 
-const Errors = styled.div`
+export const Errors = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
     height: 60vh;
     width: 100vw;
 `
-const Component = styled.div`
+export const Component = styled.div`
     display: flex;
     .right{
         width: 100%;
@@ -56,9 +56,9 @@ MainFeedback.getInitialProps = async ctx =>{
         },{ headers: {
             Authorization: `Bearer ${jwt}`
           } })
-        return {data: res.data, users:users.data.data?.users, cond:true}
+        return { data: res.data, users:users.data.data?.users, cond:true }
     }catch{
-        return {data: [], users:[], cond:false}
+        return { data: [], users:[], cond:false }
     }
 }
 

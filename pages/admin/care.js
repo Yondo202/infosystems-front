@@ -1,10 +1,10 @@
 import React from 'react'
 import LeftMenu from '@/components/admin/LeftMenu';
 import TopMenu from "@/components/admin/TopMenu"
-import HomeUsers from "@/components/admin/users/HomeUsers"
 import { Component } from "./index"
+import CarePage from "@/components/admin/care/MainPage"
 
-const Users = () => {
+const Care = () => {
     return (
         <>
             <Component>
@@ -12,10 +12,11 @@ const Users = () => {
                 <div className="right">
                     <div className="ghost" />
                     <TopMenu />
-                    <HomeUsers />
+                    <CarePage />
                 </div>
             </Component>
         </>
     )
 }
-export default Users;
+
+export default Care;

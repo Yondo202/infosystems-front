@@ -4,8 +4,11 @@ import styled from 'styled-components'
 import { IoMdArrowDropright } from "react-icons/io"
 import axios from "axios"
 import Link from "next/link"
+import { parseCookies } from "nookies"
+import Router from "next/router"
 
 const LeftMenu = () => {
+    const { id, jwt, role } = parseCookies(); 
     const ctx = useContext(Context);
     const [ Menu, setMenu ] = useState([]);
     useEffect(()=>{
@@ -13,13 +16,29 @@ const LeftMenu = () => {
     },[])
 
     const Go = async () =>{
-        let res2 = await axios.post(`${process.env.serverUrl}/graphql`, { query:`query{ products{ id title slug }  } `})
-        setMenu(res2.data.data.products);
+        if(role==="infosystem_admin"){
+            await axios.post(`${process.env.serverUrl}/graphql`, { query:`query{ products{ id title slug }  } `}).then(res=>{
+                setMenu(res.data.data.products);
+            })
+        }else{
+            await axios.post(`${process.env.serverUrl}/graphql`, {
+                query: `query { users(where:{ id: "${id}" }, sort:"created_at:DESC"){ id username email confirmed company_name admin_confirmed company_register created_at
+                    products{ id title slug }
+                } }`
+            }, { headers: { Authorization: `Bearer ${jwt}` } }).then(res => { 
+                setMenu(res.data.data.users[0]?.products);
+                if(res.data.data.users[0]?.products.length){
+                    if(!Router.pathname.includes('/answer') && !Router.pathname.includes('/search')){
+                        Router.push(`/feedback/${res.data.data.users[0]?.products[0]?.id}`);
+                    }
+                }
+            })
+        }
     }
 
     return (
         <LeftMenuComponent className="leftMenu">
-            <div className="Title">Бүх бүтээгдэхүүн</div>
+            <div className="Title">Бүтээгдэхүүн</div>
             {Menu.map((el,ind)=>{
                 return(
                     <Link key={ind} href={`/feedback/${el.id}`}>
@@ -44,6 +63,7 @@ const LeftMenuComponent = styled.div`
         background-color:#fff;
         color:#333;
         width:25%;
+        height:80vh;
         border:1px solid rgba(0,0,0,.2);
         padding:30px 20px;
         padding-top:10px;

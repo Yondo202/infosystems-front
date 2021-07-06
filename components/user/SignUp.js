@@ -33,7 +33,8 @@ const SignUp = ({setShowLogin}) => {
                 password: password,
                 company_name: companyName,
                 company_register: companyRegister,
-                admin_confirmed:false
+                admin_confirmed:false,
+                seen:false
             }
 
             if(username===''){

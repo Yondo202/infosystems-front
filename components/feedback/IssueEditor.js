@@ -54,7 +54,8 @@ const CkEditor = (props) => {
                 name: title, 
                 content: data,
                 user: parseCookies().id,
-                product: props.productId
+                product: props.productId,
+                admin_confirmed:false
             },
             { headers: {
                 Authorization: `Bearer ${parseCookies().jwt}`
@@ -62,7 +63,7 @@ const CkEditor = (props) => {
                   router.replace(router.asPath);
                   setData('')
                   props.setShowEditor(false);
-                  ctx.alertFunc('green', "Амжилттай", true);
+                  ctx.alertFunc('green', "Амжилттай илгээгдлээ", true);
               })
         }
     }

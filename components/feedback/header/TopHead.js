@@ -28,13 +28,9 @@ const TopHead = () => {
                 </div>
 
                 <form onSubmit={HandleSubmit} className="searchPar">
-                    {/* <div className="searchPar"> */}
-                        <input value={search} onChange={e=>setSearch(e.target.value)} className="myInp" placeholder="Хайх..." type="text" />
-                        <BiSearchAlt />
-                    {/* </div> */}
+                    <input value={search} onChange={e=>setSearch(e.target.value)} className="myInp" placeholder="Хайх..." type="text" />
+                    <BiSearchAlt />
                 </form>
-               
-
             </div>
         </Header>
     )

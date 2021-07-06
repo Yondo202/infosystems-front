@@ -21,7 +21,7 @@ const HomeUsers = () => {
 
     const Go = async () => {
         await axios.post(`${process.env.serverUrl}/graphql`, {
-            query: `query { users{ id username email confirmed company_name admin_confirmed company_register created_at
+            query: `query { users(sort:"created_at:DESC"){ id username email confirmed company_name admin_confirmed company_register created_at
                 products{ id title }
             } }`
         }, { headers: { Authorization: `Bearer ${jwt}` } }).then(res => { setUsers(res.data.data?.users); })
@@ -44,9 +44,9 @@ const HomeUsers = () => {
 
     return (
         <Container>
-            <div className="Parent">
-                <div className="title">Нийт хэрэглэгчид - {users.length} </div>
+            <div className="title">Нийт хэрэглэгчид - {users.length} </div>
 
+            <div className="Parent">
                 <div className="UserSector">
                     <table>
                         <tbody>
@@ -97,6 +97,12 @@ export default HomeUsers
 
 const Container = styled.div`
     padding: 0px 20px;
+    .title{
+        font-size: 20px;
+        font-weight: 500;
+        margin-bottom: 15px;
+        padding:0px 15px;
+    }
     .Parent{
         // height: 35.5em;
         height: 85vh;
@@ -110,12 +116,6 @@ const Container = styled.div`
         border-radius: 8px;
         padding:12px 15px;
         box-shadow:0px 0px 27px -20px;
-        .title{
-            font-size: 20px;
-            font-weight: 500;
-            margin-bottom: 15px;
-        }
-
         .UserSector{
             font-size: 13px;
                 .apps{

@@ -10,7 +10,7 @@ import axios from 'axios';
 
 const ProductId = ({ data }) => {
     const [ targetProduct, setTargetProduct ] = React.useState({});
-    
+
     return (
         <Root>
             <TopHead targetProduct={targetProduct} />
@@ -46,10 +46,11 @@ export async function getServerSideProps({params, req}){
         products(where:{id:${params.ids}}){
             id
             title
-            product_feedbacks(sort:"created_at:DESC"){
+            product_feedbacks(where:{ admin_confirmed: true }, sort:"created_at:DESC"){
             id
             created_at
             name
+            resolved
             user{
                     id
                     username

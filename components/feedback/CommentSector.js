@@ -26,11 +26,9 @@ const CommentSector = ({ product }) => {
             }`})
 
         setUserId(res2?.data?.data?.productFeedbacks[0]?.user.id);
-        console.log(`res2`, res2);
         setProduct(res2?.data?.data?.productFeedbacks[0]?.issue_answers);
     }
 
-    console.log(`UserId`, UserId);
     return (
         <Container>
             <div className="MainContent">
@@ -48,7 +46,7 @@ const CommentSector = ({ product }) => {
                 )
             })}
 
-            <CkEditor productId={product?.id} UserId={UserId} height={true} />
+            {!product?.resolved&&<CkEditor productId={product?.id} UserId={UserId} height={true} />}
         </Container>
     )
 }

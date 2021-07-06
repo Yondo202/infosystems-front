@@ -40,7 +40,7 @@ const Modal = ({ setShowModal, products, targ}) => {
     }
 
     const ClickHandle = () =>{
-        axios.put(`${process.env.serverUrl}/users/${targ.id}`, { admin_confirmed:approve, products: selectOptionId }, {
+        axios.put(`${process.env.serverUrl}/users/${targ.id}`, { admin_confirmed:approve, products: selectOptionId, seen: true }, {
             headers: {Authorization: `bearer ${jwt}`}
         }).then(res=>{
             setClassN(`Content2`);
@@ -273,6 +273,7 @@ export const ModalContainer = styled.div`
                 display:flex;
                 gap:15px;
                 .title{
+                    font-size:14px;
                     width:46%;
                     color:rgba(17,17,17);
                     font-weight:500;

@@ -1,32 +1,26 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import { parseCookies } from "nookies";
 import styled from 'styled-components';
-import axios from 'axios';
-import { IoHelpCircleOutline, IoCheckmarkCircleOutline } from "react-icons/io5"
-import Link from "next/link"
-import DateFormat from "@/miscs/LanguageDate"
-import IssueEditor from "@/components/feedback/IssueEditor"
+import { IoHelpCircleOutline, IoCheckmarkCircleOutline } from "react-icons/io5";
+import Link from "next/link";
+import DateFormat from "@/miscs/LanguageDate";
+import IssueEditor from "@/components/feedback/IssueEditor";
 
 const QuestionHome = ({data, title, ids, productId, search}) => {
+    const { role } = parseCookies();
     const [ Menu, setMenu ] = useState([]);
     const [ sort, setSort ] = useState(`DESC`);
     const [ showEditor, setShowEditor ] = useState(false);
 
     useEffect(()=>{
-        // Go();
-        setMenu(data);
+        if(ids){
+            setMenu(data);
+        }
+        if(role==="infosystem_admin"){
+            setMenu(data);
+        }
         setShowEditor(false);
     },[sort, data])
-
-    const Go = async () =>{
-        let res2 = await axios.post(`${process.env.serverUrl}/graphql`, { query:`query{
-            productFeedbacks(sort:"created_at:${sort}"){
-                id name  created_at
-                product{ id title }
-                user{ id username role{ name } }
-            }
-        }`})
-        setMenu(res2.data.data.productFeedbacks);
-    }
 
     return (
         <Container>
@@ -50,7 +44,10 @@ const QuestionHome = ({data, title, ids, productId, search}) => {
                             <div className="TextPar">
                                 <Link href={ids?`answer/${el.id}`:`/feedback/answer/${el.id}`}>
                                     <a className="titles">
-                                        <span>{el.name}</span>
+                                        <div className="text">{el.name}</div>
+                                        <div className="approve">
+                                            {el.resolved&&<div className="item itemActive">Шийдэгдсэн</div>}
+                                        </div>
                                     </a>
                                 </Link>
                                 
@@ -128,13 +125,43 @@ const Container = styled.div`
                 }
             }
             .TextPar{
+                width:100%;
                 .titles{
-                    font-weight: 500;
-                    text-decoration: none;
-                    font-size: 17px;
-                    color: #24292e;
-                    &:hover{
-                        color: ${props=>props.theme.mainColor2};
+                    text-decoration:none;
+                    width:100%;
+                    display:flex;
+                    justify-content: space-between;
+                    .approve{
+                        display:flex;
+                        gap:20px;
+                        .item{
+                            cursor:pointer;
+                            text-align:center;
+                            background-color:#ffc720;
+                            border-radius: 3px;
+                            padding: 2px 10px;
+                            font-weight: 500;
+                            font-size: 12px;
+                            width:130px;
+                            height:22px;
+                            border-radius:50px;
+                            &:hover{
+                                opacity:0.8;
+                            }
+                        }
+                        .itemActive{
+                            background-color:#4CBB17 !important;
+                        }
+                    }
+                    .text{
+                        cursor:pointer;
+                        font-weight: 500;
+                        text-decoration: none;
+                        font-size: 17px;
+                        color: #24292e;
+                        &:hover{
+                            color: ${props=>props.theme.mainColor2};
+                        }
                     }
                 }
                 .sm{
@@ -143,7 +170,6 @@ const Container = styled.div`
                     color: #586069;
                 }
             }
-           
         }
     }
 `

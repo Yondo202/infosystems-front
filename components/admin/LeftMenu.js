@@ -22,9 +22,10 @@ const LeftMenu = () => {
                 <Link href="/admin/users">
                     <a className={`items ${path.includes('users')?`Active`:``}`}><FaUsers /><span>Хэрэглэгчид</span> </a>
                 </Link>
-
-                <div className="items"><FaComments /><span>Тусламж</span> </div>
-
+                <Link href="/admin/care">
+                    <a className={`items ${path.includes('care')?`Active`:``}`}><FaComments /><span>Тусламж</span> </a>
+                </Link>
+                
                 <div className="items"><RiFeedbackFill /><span>Санал хүсэлт</span> </div>
             </div>
         </LeftMenuStyle>
