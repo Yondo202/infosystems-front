@@ -4,14 +4,17 @@ import axios from "axios"
 import DateFormat from "@/miscs/LanguageDate"
 import { IoHelpCircleOutline } from "react-icons/io5"
 import { FiClock, FiUser } from "react-icons/fi"
-import { AiOutlineFileProtect } from "react-icons/ai"
+import { AiOutlineFileProtect, AiOutlineDelete } from "react-icons/ai"
 import HtmlParser from "@/miscs/CustomParser2"
 import { parseCookies } from "nookies"
+import Delete from "@/components/admin/care/Delete"
 
 const MainPage = () => {
+    const [ show, setShow ] = useState(false);
     const { jwt } = parseCookies();
     const [ datas, setDatas ] = useState([]);
     const [ targ, setTarg ] = useState(null);
+    const [ Target, setTarget ] = useState({});
 
     useEffect(()=>{
         FetchData();
@@ -21,6 +24,7 @@ const MainPage = () => {
         let res2 = await axios.post(`${process.env.serverUrl}/graphql`, { query:`query{
             productFeedbacks(sort:"created_at:DESC"){
                 id name content created_at admin_confirmed resolved
+                issue_answers{ id }
                 product{ id title }
                 user{ id username role{ name } }
             }
@@ -48,6 +52,12 @@ const MainPage = () => {
         })
     }
 
+    const ShowHandle = (el) =>{
+        console.log("el");
+        setTarget(el);
+        setShow(true);
+    }
+
 
     console.log(`datas`, datas);
 
@@ -73,6 +83,7 @@ const MainPage = () => {
                                                 {el.admin_confirmed
                                                 ?<div onClick={()=>ApproveHandle(el)} className="item itemActive">Зөвшөөрсөн</div>
                                                 :<div onClick={()=>ApproveHandle(el)} className="item">Хүлээгдсэн...</div>}
+                                                <div onClick={()=>ShowHandle(el)} className="itemDel"><AiOutlineDelete /></div>
                                             </div>
                                         </div>
                                     <div className="sm">
@@ -85,13 +96,13 @@ const MainPage = () => {
 
                             <div className={`MainConent ${el.id===targ?`MainConent2`:``}`}>
                                 <div className="gap" />
-                                <HtmlParser data={el.content} />
+                                <HtmlParser data={el.content}  />
                             </div>
                         </div>
                     )
                 })}
             </div>
-            
+            {show&&<Delete setShow={setShow} Target={Target} FetchData={FetchData} />}
         </Container>
     )
 }
@@ -152,6 +163,20 @@ const Container = styled.div`
                         .approve{
                             display:flex;
                             gap:20px;
+                            .itemDel{
+                                color:white;
+                                cursor:pointer;
+                                background-color:#f33c29;
+                                width:25px;
+                                height:25px;
+                                display:flex;
+                                align-items:center;
+                                justify-content:center;
+                                border-radius:50%;
+                                &:hover{
+                                    opacity:0.8;
+                                }
+                            }
                             .item{
                                 cursor:pointer;
                                 text-align:center;

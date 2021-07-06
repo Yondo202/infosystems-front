@@ -24,7 +24,6 @@ const CommentSector = ({ product }) => {
              user{ id }
              issue_answers{ id content  created_at user{ id username role{ name } } } }
             }`})
-
         setUserId(res2?.data?.data?.productFeedbacks[0]?.user.id);
         setProduct(res2?.data?.data?.productFeedbacks[0]?.issue_answers);
     }

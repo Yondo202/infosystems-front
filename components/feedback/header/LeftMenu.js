@@ -11,6 +11,7 @@ const LeftMenu = () => {
     const { id, jwt, role } = parseCookies(); 
     const ctx = useContext(Context);
     const [ Menu, setMenu ] = useState([]);
+    
     useEffect(()=>{
         Go();
     },[])

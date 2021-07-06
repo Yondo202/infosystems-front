@@ -26,7 +26,6 @@ const TopHead = () => {
                     </div>
                     {ctx.Product?.title?<div className="TargetFilter">{ctx.Product?.title}</div>:null}
                 </div>
-
                 <form onSubmit={HandleSubmit} className="searchPar">
                     <input value={search} onChange={e=>setSearch(e.target.value)} className="myInp" placeholder="Хайх..." type="text" />
                     <BiSearchAlt />
