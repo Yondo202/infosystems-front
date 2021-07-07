@@ -87,6 +87,18 @@ const Container = styled.div`
                     padding-left: 7px;
                     margin-bottom:2px;
                 }
+                .titleV2{
+                    display:flex;
+                    justify-content:space-between;
+                    .forget{
+                        &:hover{
+                            opacity:1;
+                        }
+                        opacity:0.8;
+                        cursor:pointer;
+                        font-weight:500;
+                    }
+                }
                 .inputPar{
                     color:#adadad;
                     position: relative;

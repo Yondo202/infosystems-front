@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
+import UserContext from "@/core/context/Context"
 import styled from 'styled-components'
 import { RiEdit2Line } from "react-icons/ri"
 import { VscError } from "react-icons/vsc"
@@ -6,11 +7,13 @@ import axios from 'axios'
 import { parseCookies } from "nookies"
 import Modal from "@/components/admin/users/Modal"
 import Delete from "@/components/admin/users/Delete"
+import { Alert } from "@/components/miscs/CustomComp"
 
 const HomeUsers = () => {
+    const { alert } = useContext(UserContext);
     const [ showModal, setShowModal ] = useState(false);
     const [ delModal, setDelModal ] = useState(false);
-    const [users, setUsers] = useState([]);
+    const [ users, setUsers ] = useState([]);
     const [ products, setProducts ] = useState([]);
     const [ targetUser, setTargetUser ] = useState({});
     const { jwt } = parseCookies();
@@ -41,6 +44,8 @@ const HomeUsers = () => {
         setDelModal(true);
         setTargetUser(el);
     }
+
+    // console.log(`users`, users);
 
     return (
         <Container>
@@ -89,6 +94,8 @@ const HomeUsers = () => {
             </div>
            {showModal&&<Modal products={products} targ={targetUser} setShowModal={setShowModal} />}
            {delModal&&<Delete targ={targetUser} setShowModal={setDelModal}/>}
+
+           <Alert alert={alert} />
         </Container>
     )
 }

@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import axios from "axios"
+import UserContext from "@/core/context/Context"
 import styled, { keyframes } from 'styled-components'
 import { MdClose, MdCheck } from "react-icons/md"
 import { VscSave } from "react-icons/vsc"
@@ -8,6 +9,7 @@ import {MdKeyboardArrowRight} from 'react-icons/md'
 import { parseCookies } from "nookies"
 
 const Modal = ({ setShowModal, products, targ}) => {
+    const { alertFunc } = useContext(UserContext);
     const { jwt } = parseCookies();
     const [ classN, setClassN ] = useState(``);
     const [ selectOption, setSelectOption ] = useState([]);
@@ -21,6 +23,7 @@ const Modal = ({ setShowModal, products, targ}) => {
         });
         setSelectOptionId(arr);
         setSelectOption(targ?.products);
+
     },[])
 
     const CloseHandle = () =>{
@@ -42,11 +45,22 @@ const Modal = ({ setShowModal, products, targ}) => {
     const ClickHandle = () =>{
         axios.put(`${process.env.serverUrl}/users/${targ.id}`, { admin_confirmed:approve, products: selectOptionId, seen: true }, {
             headers: {Authorization: `bearer ${jwt}`}
-        }).then(res=>{
-            setClassN(`Content2`);
-            setTimeout(() => {
-                setShowModal(false);
-            }, 280);
+        }).then((res)=>{
+            console.log(`res`, res);
+            if(res.data.admin_confirmed){
+                axios.post(`${process.env.serverUrl}/emails`, { to: targ.email }).then(()=>{
+                    setClassN(`Content2`);
+                    setTimeout(() => {
+                        setShowModal(false);
+                        alertFunc('green', 'Email амжилттай илгээгдлээ', true);
+                    }, 280);
+                })
+            }else{
+                setClassN(`Content2`);
+                setTimeout(() => {
+                    setShowModal(false);
+                }, 280);
+            }
         })
     }
 

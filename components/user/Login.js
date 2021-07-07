@@ -70,7 +70,10 @@ const login = () => {
                 </div>
 
                 <div className="inputItem">
-                    <div className="title">Нууц үг</div>
+                    <div className="title titleV2">
+                        <span>Нууц үг</span>
+                        <span className="forget">Нууц үг мартсан</span>
+                    </div>
                     <div className="inputPar">
                         <input value={password} className="pass" onChange={e=>setPassword(e.target.value)}
                          type={showPass?`text`:`password`}

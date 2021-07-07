@@ -26,6 +26,8 @@ const LeftMenu = () => {
                     products{ id title slug }
                 } }`
             }, { headers: { Authorization: `Bearer ${jwt}` } })
+            
+            console.log(`res`, res);
 
             if(res.data.data.users.length){
                 setMenu(res.data.data.users[0]?.products);
