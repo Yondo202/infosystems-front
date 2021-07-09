@@ -46,7 +46,6 @@ const Modal = ({ setShowModal, products, targ}) => {
         axios.put(`${process.env.serverUrl}/users/${targ.id}`, { admin_confirmed:approve, products: selectOptionId, seen: true }, {
             headers: {Authorization: `bearer ${jwt}`}
         }).then((res)=>{
-            console.log(`res`, res);
             if(res.data.admin_confirmed){
                 axios.post(`${process.env.serverUrl}/emails`, { to: targ.email }).then(()=>{
                     setClassN(`Content2`);

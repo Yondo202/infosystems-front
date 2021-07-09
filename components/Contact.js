@@ -29,10 +29,10 @@ const Contact = ({data}) => {
                             {data?.SocialButton?.length&&data?.SocialButton.map((el, ind)=>{
                                 return(
                                     <div key={ind}>
-                                        {el.name==="facebook"?<a href={el.link} target="_blank" className="icon facebook"> <FaFacebookF /></a>:null }
-                                        {el.name==="twitter"?<a href={el.link} target="_blank" className="icon twitter"> <FaTwitter /></a>:null }
-                                        {el.name==="youtube"?<a href={el.link} target="_blank" className="icon youtube"> <FaYoutube /></a>:null}
-                                        {el.name==="instagram"?<a href={el.link} target="_blank" className="icon insta"> <FaInstagram /></a>:null}
+                                        {el.name==="facebook"?<a href={el.link} target="_blank" rel="noopener" className="icon facebook"> <FaFacebookF /></a>:null }
+                                        {el.name==="twitter"?<a href={el.link} target="_blank" rel="noopener" className="icon twitter"> <FaTwitter /></a>:null }
+                                        {el.name==="youtube"?<a href={el.link} target="_blank" rel="noopener" className="icon youtube"> <FaYoutube /></a>:null}
+                                        {el.name==="instagram"?<a href={el.link} target="_blank" rel="noopener" className="icon insta"> <FaInstagram /></a>:null}
                                     </div>
                                 )
                             })}

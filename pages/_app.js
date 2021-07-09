@@ -1,5 +1,6 @@
 import React from "react";
 import App from "next/app";
+import '../style.css'
 import checkLanguage from "@/miscs/checkLanguage";
 // import { MenuProvider } from "@/miscs/ContextMenuProvider";
 import { ThemeProvider } from "styled-components";

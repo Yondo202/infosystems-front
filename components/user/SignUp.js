@@ -7,8 +7,6 @@ import { CgNametag } from "react-icons/cg"
 import { RiRegisteredLine } from "react-icons/ri"
 import axios from 'axios'
 import { BsEye, BsEyeSlash } from "react-icons/bs"
-import { setCookie } from 'nookies'
-import Router from "next/router"
 import { LoadingStyle } from '../miscs/CustomComp'
 import styled from 'styled-components'
 
@@ -41,8 +39,16 @@ const SignUp = ({setShowLogin}) => {
                 setErrText('Нэрээ оруулна уу');
                 setShowErr(true);
                 setTimeout(() => {  setShowErr(false); }, 6000)
+            }else if(username.length < 5){
+                setErrText('Нэр - ий урт 5с багагүй байх');
+                setShowErr(true);
+                setTimeout(() => {  setShowErr(false); }, 6000)
             }else if(password===''){
                 setErrText('Нууц үгээ оруулна уу');
+                setShowErr(true);
+                setTimeout(() => {  setShowErr(false); }, 6000)
+            }else if(password.length < 6){
+                setErrText('Нууц үг - ий урт 6с багагүй байх');
                 setShowErr(true);
                 setTimeout(() => {  setShowErr(false); }, 6000)
             }else if(email===''){
@@ -60,7 +66,7 @@ const SignUp = ({setShowLogin}) => {
             }else{
                 setLoading(true);
                 await axios.post(`${process.env.serverUrl}/auth/local/register`, loginInfo )
-                .then(res=>{
+                .then(()=>{
                     // if(res.data.user.admin_confirmed){
                     //     setCookie(null, 'jwt', res.data.jwt,{ maxAge: 30 * 24 * 60 * 60, path:"/" });
                     //     setCookie(null, 'username', res.data.user.username, { maxAge: 30 * 24 * 60 * 60, path:"/" });

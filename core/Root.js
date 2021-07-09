@@ -47,8 +47,8 @@ export default function Root(props) {
 
 const Body = styled.div `
     position: relative;
-    /* background-color: #f6f6f6; */
-    background-color: #ffffff;
+    background-color: #f6f6f6; 
+    // background-color: #ffffff;
     font-size: ${(props) => props.theme.fontSize};
     font-family: ${(props) => props.theme.fontFamily1};
     font-weight: ${props => props.theme.fontWeightNormal};
@@ -82,22 +82,6 @@ const Body = styled.div `
         &:hover{
             background:${({theme})=>theme.mainColor} !important;
         }
-    }
-
-    ::-webkit-scrollbar {
-        width: 4px !important;
-        color:#aaa;
-    }
-    ::-webkit-scrollbar-track {
-        box-shadow: inset 0 0 5px #aaa !important;
-        border-radius: 10px;
-    }
-    ::-webkit-scrollbar-thumb {
-        background: #777777;
-        border-radius: 10px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-        background: #aaa;
     }
  
     .toTop{
