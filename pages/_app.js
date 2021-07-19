@@ -21,7 +21,7 @@ class MyApp extends App {
       general: {},
         completelyLoaded: false,
         name: 'ИНФОСИСТЕМС',
-        description: 'To be continued...'
+        description: 'Манай компани 1997 оноос эхлэн Мэдээллийн технологийн салбарт програм хангамжийн чиглэлээр ажиллаж зах зээлд өөрийн гэсэн байр сууриа эзэлж, тэргүүлэгч компаниудын нэг болсон.'
     };
     
     async componentDidMount() {
