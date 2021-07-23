@@ -1,5 +1,6 @@
 import React from "react";
 import App from "next/app";
+import '../style.css'
 import checkLanguage from "@/miscs/checkLanguage";
 // import { MenuProvider } from "@/miscs/ContextMenuProvider";
 import { ThemeProvider } from "styled-components";
@@ -20,7 +21,7 @@ class MyApp extends App {
       general: {},
         completelyLoaded: false,
         name: 'ИНФОСИСТЕМС',
-        description: 'To be continued...'
+        description: 'Манай компани 1997 оноос эхлэн Мэдээллийн технологийн салбарт програм хангамжийн чиглэлээр ажиллаж зах зээлд өөрийн гэсэн байр сууриа эзэлж, тэргүүлэгч компаниудын нэг болсон.'
     };
     
     async componentDidMount() {
@@ -41,15 +42,14 @@ class MyApp extends App {
         // TagManager.initialize(tagManagerArgs);
     }
 
-
-
     render() {
         const { Component, pageProps, router  } = this.props;
             return (
                 <UserStore value={this.state}>
                     <ThemeProvider theme={theme}>
-                            {this.state.completelyLoaded? <Component {...pageProps} key={router.route} /> 
-                            :<div style={{width:`100%`, height:`100vh`,display:`flex`, alignItems:"center", justifyContent:"center"}}> <img src="/giff2.gif" /></div> }
+                            {this.state.completelyLoaded?
+                             <Component {...pageProps} key={router.route} /> 
+                            :<div style={{width:`100%`, height:`100vh`,display:`flex`, alignItems:"center", justifyContent:"center"}}><img src="/giff2.gif" /></div> }
                     </ThemeProvider>
                 </UserStore>
             );

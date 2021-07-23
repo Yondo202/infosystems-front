@@ -42,10 +42,10 @@ const Footer = ({logo , footerMenu}) => {
                         {footerMenu?.SocialButton?.length&&footerMenu?.SocialButton.map((el,ind)=>{
                             return(
                                 <div key={ind}>
-                                    {el.name==="facebook"&&<a href={el.link} target="_blank" className="icon facebook"> <FaFacebookF /></a> }
-                                    {el.name==="twitter"&&<a href={el.link} target="_blank" className="icon twitter"> <FaTwitter /></a> }
-                                    {el.name==="youtube"&&<a href={el.link} target="_blank" className="icon youtube"> <FaYoutube /></a>}
-                                    {el.name==="instagram"&&<a href={el.link} target="_blank" className="icon insta"> <FaInstagram /></a>}
+                                    {el.name==="facebook"&&<a href={el.link} rel="noopener" target="_blank" className="icon facebook"> <FaFacebookF /></a> }
+                                    {el.name==="twitter"&&<a href={el.link} rel="noopener" target="_blank" className="icon twitter"> <FaTwitter /></a> }
+                                    {el.name==="youtube"&&<a href={el.link} rel="noopener" target="_blank" className="icon youtube"> <FaYoutube /></a>}
+                                    {el.name==="instagram"&&<a href={el.link} rel="noopener" target="_blank" className="icon insta"> <FaInstagram /></a>}
                                 </div>
                             )
                         })}

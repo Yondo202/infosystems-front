@@ -7,6 +7,8 @@ import { IoIosArrowUp } from "react-icons/io";
 import { animateScroll as scroll } from "react-scroll";
 import { Alert } from "@/components/miscs/CustomComp"
 import UserContext from "./context/Context";
+import MessengerCustomerChat from 'react-messenger-customer-chat';
+
 
 export default function Root(props) {
     const { headerMenu, logo, footerMenu, alert } = useContext(UserContext);
@@ -35,11 +37,12 @@ export default function Root(props) {
             <PreSeo seo={props.seo}/>
             <Header login={props.login} logo={logo} menu={headerMenu || []} />
                 {props.children}
+                <MessengerCustomerChat pageId="104975931248820" appId="2645260245750776" />
                 {!props.login&&<Footer footerMenu={footerMenu} logo={logo}/>}
-                {showBtn&&<div  onClick={clickHandle} className="toTop">
-               <IoIosArrowUp className="one" />
-               <IoIosArrowUp className="two" />
-            </div>}
+                {/* {showBtn&&<div  onClick={clickHandle} className="toTop">
+                <IoIosArrowUp className="one" />
+                <IoIosArrowUp className="two" />
+                </div>} */}
             <Alert alert={alert} />
         </Body>
     )
@@ -47,8 +50,8 @@ export default function Root(props) {
 
 const Body = styled.div `
     position: relative;
-    /* background-color: #f6f6f6; */
-    background-color: #ffffff;
+    background-color: #f6f6f6; 
+    // background-color: #ffffff;
     font-size: ${(props) => props.theme.fontSize};
     font-family: ${(props) => props.theme.fontFamily1};
     font-weight: ${props => props.theme.fontWeightNormal};
@@ -82,22 +85,6 @@ const Body = styled.div `
         &:hover{
             background:${({theme})=>theme.mainColor} !important;
         }
-    }
-
-    ::-webkit-scrollbar {
-        width: 4px !important;
-        color:#aaa;
-    }
-    ::-webkit-scrollbar-track {
-        box-shadow: inset 0 0 5px #aaa !important;
-        border-radius: 10px;
-    }
-    ::-webkit-scrollbar-thumb {
-        background: #777777;
-        border-radius: 10px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-        background: #aaa;
     }
  
     .toTop{

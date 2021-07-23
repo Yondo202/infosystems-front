@@ -19,8 +19,10 @@ const ContentSector = ({news}) => {
             <div className="ContentSection">
                 <div className={`Icons `}>
                     <div className= {`Buttons`}>
-                        <FacebookShareButton media={process.env.serverUrl+news.image.url}
-                        resetButtonStyle={true} 
+                        <FacebookShareButton
+                        media={process.env.serverUrl+news.image.url}
+                        imageurl={process.env.serverUrl+news.image.url}
+                        resetButtonStyle={true}
                         url={`${process.env.frontUrl}${process.env.postUrl}${news.slug}`}
                         // url="https://infosystems.mn/posts/bayar-naadmyn-dr-ded-azhillah-azhilchdyn-ners-holbogdoh-utas"
                         style={{ width: 50, height: 50 }} >
