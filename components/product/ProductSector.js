@@ -18,23 +18,23 @@ const ContentSector = ({news}) => {
             <div className="ContentSection">
                 <div className={`Icons `}>
                     <div className= {`Buttons`}>
-                        <FacebookShareButton  imageURL={process.env.serverUrl+news.image.url} media={process.env.serverUrl+news.image.url} resetButtonStyle={true} url={process.env.frontUrl+process.env.postUrl+news.slug} style={{ width: 50, height: 50 }} >
+                        <FacebookShareButton  imageurl={process.env.serverUrl+news.image.url} media={process.env.serverUrl+news.image.url} resetButtonStyle={true} url={process.env.frontUrl+process.env.productUrl+news.slug} style={{ width: 50, height: 50 }} >
                             <div className="Btnss facebook"><FaFacebookF /></div>
                         </FacebookShareButton>
 
-                        <TwitterShareButton media={minimize(news.image,"small")} resetButtonStyle={true} url={`${process.env.frontUrl}${process.env.postUrl}${news.slug}`} style={{ width: 50, height: 50 }} >
+                        <TwitterShareButton media={minimize(news.image,"small")} resetButtonStyle={true} url={`${process.env.frontUrl}${process.env.productUrl}${news.slug}`} style={{ width: 50, height: 50 }} >
                         <div className="Btnss twitter"><FaTwitter /></div>
                         </TwitterShareButton>
 
-                        <PinterestShareButton media={minimize(news.image,"small")} resetButtonStyle={true} url={`${process.env.frontUrl}${process.env.postUrl}${news.slug}`} style={{ width: 50, height: 50 }} >
+                        <PinterestShareButton media={minimize(news.image,"small")} resetButtonStyle={true} url={`${process.env.frontUrl}${process.env.productUrl}${news.slug}`} style={{ width: 50, height: 50 }} >
                             <div className="Btnss FaPinterestP"><FaPinterestP /></div>
                         </PinterestShareButton>
 
-                        <LinkedinShareButton media={minimize(news.image,"small")} resetButtonStyle={true} url={`${process.env.frontUrl}${process.env.postUrl}${news.slug}`} style={{ width: 50, height: 50 }} >
+                        <LinkedinShareButton media={minimize(news.image,"small")} resetButtonStyle={true} url={`${process.env.frontUrl}${process.env.productUrl}${news.slug}`} style={{ width: 50, height: 50 }} >
                             <div className="Btnss FaLinkedinIn"><FaLinkedinIn /></div>
                         </LinkedinShareButton>
 
-                        <EmailShareButton media={minimize(news.image,"small")} resetButtonStyle={true} url={`${process.env.frontUrl}${process.env.postUrl}${news.slug}`} style={{ width: 50, height: 50 }} >
+                        <EmailShareButton media={minimize(news.image,"small")} resetButtonStyle={true} url={`${process.env.frontUrl}${process.env.productUrl}${news.slug}`} style={{ width: 50, height: 50 }} >
                             <div className="Btnss AiOutlineMail"><MdEmail /></div>
                         </EmailShareButton>
                     </div>

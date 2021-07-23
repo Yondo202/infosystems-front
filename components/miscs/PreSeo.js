@@ -10,7 +10,6 @@ const PreSeo = ({seo}) => {
 
     if(seo) {
         const { title, description, thumb, article } = seo
-
         return (
             <Head>
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -20,6 +19,7 @@ const PreSeo = ({seo}) => {
                 <meta name="description" content={description ? description : ctx.description}/>
                 <meta property="og:description" content={description ? description : ctx.description} />
                 <meta property="og:image" content={thumb ? process.env.serverUrl+thumb : '/logo_sm.png'} />
+                <meta property="og:image:secure_url" content={thumb ? process.env.serverUrl+thumb : '/logo_sm.png'} />
                 <meta property="og:url" content={process.env.frontUrl + Router.asPath} />
                 {article && <meta property="og:type" content="article" />}
             </Head>

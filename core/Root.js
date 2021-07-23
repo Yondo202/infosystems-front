@@ -7,6 +7,8 @@ import { IoIosArrowUp } from "react-icons/io";
 import { animateScroll as scroll } from "react-scroll";
 import { Alert } from "@/components/miscs/CustomComp"
 import UserContext from "./context/Context";
+import MessengerCustomerChat from 'react-messenger-customer-chat';
+
 
 export default function Root(props) {
     const { headerMenu, logo, footerMenu, alert } = useContext(UserContext);
@@ -35,11 +37,12 @@ export default function Root(props) {
             <PreSeo seo={props.seo}/>
             <Header login={props.login} logo={logo} menu={headerMenu || []} />
                 {props.children}
+                <MessengerCustomerChat pageId="104975931248820" appId="2645260245750776" />
                 {!props.login&&<Footer footerMenu={footerMenu} logo={logo}/>}
-                {showBtn&&<div  onClick={clickHandle} className="toTop">
-               <IoIosArrowUp className="one" />
-               <IoIosArrowUp className="two" />
-            </div>}
+                {/* {showBtn&&<div  onClick={clickHandle} className="toTop">
+                <IoIosArrowUp className="one" />
+                <IoIosArrowUp className="two" />
+                </div>} */}
             <Alert alert={alert} />
         </Body>
     )
