@@ -3,11 +3,13 @@ import Header from '@/core/Header'
 import Footer from '@/core/Footer';
 import styled from "styled-components";
 import PreSeo from "@/components/miscs/PreSeo";
-import { IoIosArrowUp } from "react-icons/io";
+// import { IoIosArrowUp } from "react-icons/io";
+import TopLoad from "@/miscs/TopLoad"
 import { animateScroll as scroll } from "react-scroll";
 import { Alert } from "@/components/miscs/CustomComp"
 import UserContext from "./context/Context";
 import MessengerCustomerChat from 'react-messenger-customer-chat';
+import Router from "next/router"
 
 
 export default function Root(props) {
@@ -35,6 +37,7 @@ export default function Root(props) {
     return (
         <Body>
             <PreSeo seo={props.seo}/>
+            <TopLoad Router={Router} />
             <Header login={props.login} logo={logo} menu={headerMenu || []} />
                 {props.children}
                 <MessengerCustomerChat pageId="159708260789747" appId="2645260245750776" />

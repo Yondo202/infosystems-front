@@ -138,9 +138,9 @@ const Container = styled.div`
                     z-index:1;
                 }
                 .HeadSm{
+                    width:100%;
                     height: 120px;
                     padding:8% 15px;
-                    // padding:5px ;
                     background-repeat:no-repeat;
                     background-position:center;
                 }
