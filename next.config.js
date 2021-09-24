@@ -4,6 +4,7 @@ module.exports = {
     serverUrl: "https://infosystems.mn/api",
     frontUrl: "https://infosystems.mn",
     // frontUrl: "http://192.168.88.232:3000",
+    // frontUrl: "localhost:3000",
     pageUrl: "/p/",
     postUrl: "/posts/",
     productUrl: "/product/",

@@ -6,7 +6,7 @@ import MainContent from "components/posts/MainPost"
 
 const Blog = ({news}) => {
     return (
-        <Root seo={{title: news.title, description: decrease(news.description, 120), thumb: news.image.url }}>
+        <Root seo={{title: news?.title, description: decrease(news?.description, 120), thumb: news?.image.url }}>
              <MainContent news={news} />
         </Root>
 

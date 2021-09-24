@@ -290,5 +290,5 @@ const configuration = {
     //   'wordCount',
     //   ''
     ],
-  };
+};
   
