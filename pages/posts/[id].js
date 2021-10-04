@@ -3,10 +3,11 @@ import Root from "@/core/Root";
 import decrease from "@/miscs/decrease"
 import Axios from "axios";
 import MainContent from "components/posts/MainPost"
+import checkLanguage from "@/miscs/checkLanguage";
 
 const Blog = ({news}) => {
     return (
-        <Root seo={{title: news?.title, description: decrease(news?.description, 120), thumb: news?.image.url }}>
+        <Root seo={{title: news.title, description: decrease(news.description, 120), thumb: news.image.url }}>
              <MainContent news={news} />
         </Root>
 
@@ -16,7 +17,7 @@ const Blog = ({news}) => {
 export default Blog;
 
 export async function getServerSideProps({params, req}){
-    let data = await Axios.get(`${process.env.serverUrl}/posts?slug=${params.id}`);
+    let data = await checkLanguage(`/posts?slug=${params.id}`, req, true);
 
     let add
     if(data.data[0]?.count){

@@ -13,12 +13,12 @@ import { UserStore } from "@/core/context/Context"
 
 class MyApp extends App {
     state = {
-      headerMenu: [],
-      footerMenu: [],
-      logo: null,
-      menuTop: [],
-      config: {},
-      general: {},
+        headerMenu: [],
+        footerMenu: [],
+        logo: null,
+        menuTop: [],
+        config: {},
+        general: {},
         completelyLoaded: false,
         name: 'ИНФОСИСТЕМС',
         description: 'Манай компани 1997 оноос эхлэн Мэдээллийн технологийн салбарт програм хангамжийн чиглэлээр ажиллаж зах зээлд өөрийн гэсэн байр сууриа эзэлж, тэргүүлэгч компаниудын нэг болсон.'
@@ -36,7 +36,6 @@ class MyApp extends App {
                 config: config,
             });
         }
-
         // GOOGLE TAG MANAGER
         // const tagManagerArgs = { gtmId: "GTM-5GWNX89" };
         // TagManager.initialize(tagManagerArgs);
@@ -47,6 +46,7 @@ class MyApp extends App {
             return (
                 <UserStore value={this.state}>
                     <ThemeProvider theme={theme}>
+                            {/* <Component {...pageProps} key={router.route} /> */}
                             {this.state.completelyLoaded?
                              <Component {...pageProps} key={router.route} /> 
                             :<div style={{width:`100%`, height:`100vh`,display:`flex`, alignItems:"center", justifyContent:"center"}}><img src="/giff2.gif" /></div> }

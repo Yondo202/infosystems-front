@@ -20,17 +20,17 @@ const ContentSector = ({news}) => {
                 <div className={`Icons `}>
                     <div className= {`Buttons`}>
                         <FacebookShareButton
-                        media={process.env.serverUrl+news.image.url}
-                        imageurl={process.env.serverUrl+news.image.url}
-                        resetButtonStyle={true}
-                        url={`${process.env.frontUrl}${process.env.postUrl}${news.slug}`}
-                        // url="https://infosystems.mn/posts/bayar-naadmyn-dr-ded-azhillah-azhilchdyn-ners-holbogdoh-utas"
+                            media={process.env.serverUrl+news.image.url}
+                            imageurl={process.env.serverUrl+news.image.url}
+                            resetButtonStyle={true}
+                            url={`${process.env.frontUrl}${process.env.postUrl}${news.slug}`}
+                            // url="https://infosystems.mn/posts/bayar-naadmyn-dr-ded-azhillah-azhilchdyn-ners-holbogdoh-utas"
                         style={{ width: 50, height: 50 }} >
                             <div className="Btnss facebook"><FaFacebookF /></div>
                         </FacebookShareButton>
 
                         <TwitterShareButton media={minimize(news.image,"small")} resetButtonStyle={true} url={`${process.env.frontUrl}${process.env.postUrl}${news.slug}`} style={{ width: 50, height: 50 }} >
-                        <div className="Btnss twitter"><FaTwitter /></div>
+                            <div className="Btnss twitter"><FaTwitter /></div>
                         </TwitterShareButton>
 
                         <PinterestShareButton media={minimize(news.image,"small")} resetButtonStyle={true} url={`${process.env.frontUrl}${process.env.postUrl}${news.slug}`} style={{ width: 50, height: 50 }} >

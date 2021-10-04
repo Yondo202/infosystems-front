@@ -2,7 +2,8 @@ import React,{useContext} from 'react'
 import styled from 'styled-components'
 import UserContext from '@/core/context/Context'
 import { FaComments, FaUsers } from "react-icons/fa"
-import { RiFeedbackFill } from "react-icons/ri"
+import { MdModeComment } from "react-icons/md"
+import { MdNotifications } from "react-icons/md"
 import Link from "next/link"
 import { useRouter } from 'next/router'
 
@@ -25,8 +26,15 @@ const LeftMenu = () => {
                 <Link href="/admin/care">
                     <a className={`items ${path.includes('care')?`Active`:``}`}><FaComments /><span>Тусламж</span> </a>
                 </Link>
+
+                <Link href="/admin/insert-notif">
+                    <a className={`items ${path.includes('insert-notif')?`Active`:``}`}>
+                        <MdNotifications />
+                        <span>Мэдэгдэл оруулах</span>
+                    </a>
+                </Link>
                 
-                <div className="items"><RiFeedbackFill /><span>Санал хүсэлт</span> </div>
+                <div className="items"><MdModeComment /><span>Санал хүсэлт</span> </div>
             </div>
         </LeftMenuStyle>
     )
@@ -35,6 +43,9 @@ const LeftMenu = () => {
 export default LeftMenu
 
 const LeftMenuStyle = styled.div`
+    position:sticky;
+    top:0;
+    left:0;
     width: 280px;
     height: 100vh;
     background-color: #182444;

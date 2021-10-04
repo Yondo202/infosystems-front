@@ -3,7 +3,7 @@ import Link from "next/link"
 import styled from 'styled-components'
 import { GiEntryDoor } from "react-icons/gi"
 import { VscCommentDiscussion } from "react-icons/vsc"
-import { CgWebsite } from "react-icons/cg"
+// import { CgWebsite } from "react-icons/cg"
 
 
 const TopMenu = () => {
@@ -27,6 +27,9 @@ const TopMenu = () => {
 export default TopMenu
 
 const TopHeader = styled.div`
+    position:sticky;
+    top:0;
+    left:0;
     font-size: 14px;
     width: 100%;
     padding: 12px 20px;

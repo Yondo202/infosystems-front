@@ -14,7 +14,6 @@ export const UserStore = (props) => {
         if(!ids){
             setProduct({});
         }
-        
         if(!Product.id && ids){
             FetchMenu()
         }else if(slug){
@@ -22,7 +21,7 @@ export const UserStore = (props) => {
         }
     },[slug, ids]);
 
-    const FetchMenu = async () =>{
+    const FetchMenu = async () => {
         let res2 = await axios.post(`${process.env.serverUrl}/graphql`, { query:`query{ products(where:{ id: ${ids} }){ id title slug }  } `})
         setProduct(res2?.data?.data?.products[0]);
     }
