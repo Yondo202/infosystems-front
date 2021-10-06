@@ -24,7 +24,7 @@ const AddModal = ({setShowModal , selectedRow}) => {
     const [ allValues , setAllValues ] = useState({
         description : '',
         customer_id : '',
-        macsversion : '',
+        macsversion : '', 
         apptype : '' ,
         to_customer :'',
         expire_date : '',
@@ -165,12 +165,11 @@ const AddModal = ({setShowModal , selectedRow}) => {
 
                                         <input
                                             required
-                                            checked={allValues.filetype===1 ||allValues.filetype=== '1'?true:false}
+                                            checked={allValues.filetype===0 ||allValues.filetype=== '0'?true:false}
                                             type="radio" 
                                             name="filetype" 
                                             className="setValue fileType"
                                             onChange={changeHandler}
-
                                             value={1}
                                         />
 
@@ -180,7 +179,7 @@ const AddModal = ({setShowModal , selectedRow}) => {
                                         type="radio" 
                                         className="setValue fileType" 
                                         name="filetype"
-                                        checked={allValues.filetype===2||allValues.filetype=== '2'?true:false}
+                                        checked={allValues.filetype===1||allValues.filetype=== '1'?true:false}
                                         onChange={changeHandler}
                                         value={2}/>
                                         <div className="inputTitle">HTML форматаар</div>
@@ -191,8 +190,8 @@ const AddModal = ({setShowModal , selectedRow}) => {
                                     <input checked={selectedRow.is_active} defaultValue={selectedRow.is_active} name='is_active' onChange={changeHandler} type="checkbox" className="active setValue" value={isActive ? 0 : 1} />
                                     <div className="inputTitle">Идэвхтэй</div>
                             </div>
-                            <div style={allValues.filetype === 1 || allValues.filetype === '1' ? {display: 'block'} : {display : 'none'}} className="inputTitle">Хэрэглэгчийн дэлгэцэнд харуулах PDF файл</div>
-                            <div style={allValues.filetype === 1 || allValues.filetype === '1' ? {display: 'flex'} : {display : 'none'}} className="display" >
+                            <div style={allValues.filetype === 0 || allValues.filetype === '0' ? {display: 'block'} : {display : 'none'}} className="inputTitle">Хэрэглэгчийн дэлгэцэнд харуулах PDF файл</div>
+                            <div style={allValues.filetype === 0 || allValues.filetype === '0' ? {display: 'flex'} : {display : 'none'}} className="display" >
                                 <input className="setValue" name="name" value={fileName.name}/>
                                 <button className="ownButton" onClick={HandleAddFile}><FaPlus/></button>
                                 <div className="fileContainer" style={file ? {display : 'flex' } : {display : 'none'}}>
@@ -216,7 +215,7 @@ const AddModal = ({setShowModal , selectedRow}) => {
                                     <button onClick={()=>{setShowModal(false)}} className="ownButton">Болих</button>
                                 </div>
                             </div>
-                           <div style={allValues.filetype === 2 ||allValues.filetype === '2'? {display: 'block'} : {display : 'none'}}>
+                           <div style={allValues.filetype === 1 ||allValues.filetype === '1'? {display: 'block'} : {display : 'none'}}>
                            {!loading?<CKEditor
                             editor={ClassicEditor}
                             data={text}

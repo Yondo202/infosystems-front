@@ -4,7 +4,6 @@ import axios from "axios"
 import { Container } from "./edit"
 import { parseCookies } from "nookies"
 
-
 const GetDataURL = `${process.env.serverUrl}/insert-notifications`
 
 const Delete = ({ setShowModal , selectedRow}) => {

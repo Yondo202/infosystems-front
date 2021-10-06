@@ -16,13 +16,11 @@ const Table = () => {
         setSelectedRow(element)
     }
 
-
     useEffect(() => {
         axios.get(`${process.env.serverUrl}/insert-notifications`).then(res => {
           setData(res.data);
         })
     }, [showModal, showModalEdit, showModalDelete])
-
 
     const handleEdit = () =>{
         if(selectedRow.id){

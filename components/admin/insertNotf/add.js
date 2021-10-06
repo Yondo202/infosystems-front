@@ -165,7 +165,7 @@ const AddModal = ({ setShowModal}) => {
                                         name="filetype" 
                                         className="setValue fileType"
                                         onChange={changeHandler}
-                                        value={1}/>
+                                        value={0}/>
                                         <div>PDF файлаар</div>
                                         <input
                                         required
@@ -173,7 +173,7 @@ const AddModal = ({ setShowModal}) => {
                                         className="setValue fileType" 
                                         name="filetype"
                                         onChange={changeHandler}
-                                        value={2}/>
+                                        value={1}/>
                                         <div className="inputTitle">HTML форматаар</div>
                                     </div>
                                 </div>
@@ -182,8 +182,8 @@ const AddModal = ({ setShowModal}) => {
                                     <input  name='is_active' onChange={changeHandler} type="checkbox" className="active setValue" value={isActive ? 0 : 1} />
                                     <div className="inputTitle">Идэвхтэй</div>
                             </div>
-                            <div style={allValues.filetype === '1' ? {display: 'block'} : {display : 'none'}} className="inputTitle">Хэрэглэгчийн дэлгэцэнд харуулах PDF файл</div>
-                            <div style={allValues.filetype === '1' ? {display: 'flex'} : {display : 'none'}} className="display" >
+                            <div style={allValues.filetype === '0' ? {display: 'block'} : {display : 'none'}} className="inputTitle">Хэрэглэгчийн дэлгэцэнд харуулах PDF файл</div>
+                            <div style={allValues.filetype === '0' ? {display: 'flex'} : {display : 'none'}} className="display" >
                                 <input className="setValue" name="name" value={fileName.name}/>
                                 <button className="ownButton" onClick={HandleAddFile}><FaPlus/></button>
                                 <div className="fileContainer" style={file ? {display : 'flex' } : {display : 'none'}}>
@@ -207,7 +207,7 @@ const AddModal = ({ setShowModal}) => {
                                     <button onClick={()=>{setShowModal(false)}} className="ownButton">Болих</button>
                                 </div>
                             </div>
-                           <div style={allValues.filetype === '2' ? {display: 'block'} : {display : 'none'}}>
+                           <div style={allValues.filetype === '1' ? {display: 'block'} : {display : 'none'}}>
                            {!loading?<CKEditor
                             editor={ClassicEditor}
                             data={text}
