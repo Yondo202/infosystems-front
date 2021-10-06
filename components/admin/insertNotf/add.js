@@ -30,6 +30,7 @@ const AddModal = ({ setShowModal}) => {
         filetype : '' ,
         file_url  :'',
         news_text:  '',
+        pdf_file:''
     })
 
 
@@ -55,8 +56,9 @@ const AddModal = ({ setShowModal}) => {
         data.append( "files", e.target.files[0])
 
         axios.post(`${process.env.serverUrl}/upload` , data, { headers: {Authorization: `bearer ${jwt}`} }).then((response) =>{
+
                 setFileName (response.data[0])
-                setAllValues(prev => ({ ...prev , file_url : response.data[0].url }))
+                setAllValues(prev => ({ ...prev , file_url : response.data[0].url , pdf_file:response.data[0].name }))
                 setFile(false)
             }).catch((error) => {
                 console.log(error);
