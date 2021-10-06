@@ -63,7 +63,7 @@ const Table = () => {
                                     <td>{`${el.apptype === 0 ? "бүгд" : el.apptype === 1 ? "Macs санхүү" : "Посын програм"}`}</td>
                                     <td>{`${el.to_customer === 0 ? "Бүх харилцагч руу" : "Сонгосон харилцагч руу"}`}</td>
                                     <td>{el.customer_id}</td>
-                                    <td>{el.filetype === 1 ? el.pdf_file : "rich text"}</td>
+                                    <td>{el.filetype === 0 ? el.pdf_file : "rich text"}</td>
                                     <td>{el.expire_date}</td>
                                 </tr>
                             )
