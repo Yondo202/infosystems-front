@@ -58,7 +58,7 @@ const AddModal = ({ setShowModal}) => {
         axios.post(`${process.env.serverUrl}/upload` , data, { headers: {Authorization: `bearer ${jwt}`} }).then((response) =>{
 
                 setFileName (response.data[0])
-                setAllValues(prev => ({ ...prev , file_url : response.data[0].url , pdf_file:response.data[0].name }))
+                setAllValues(prev => ({ ...prev , file_url : response.data[0].url , pdf_file: response.data[0].name }))
                 setFile(false)
             }).catch((error) => {
                 console.log(error);
@@ -83,7 +83,7 @@ const AddModal = ({ setShowModal}) => {
                 final[elem.name] = elem.value
             }
         })
-        setAllValues({ ...allValues , ...final , file_url : fileName.url})
+        setAllValues({ ...allValues , ...final , file_url : fileName.url, pdf_file: fileName.pdf_file })
 
          axios.post(`${GetDataURL}` ,  allValues ).then((resp) => {
              setShowModal(false)
@@ -104,6 +104,7 @@ const AddModal = ({ setShowModal}) => {
         e.preventDefault()
         setFile(true)
     }
+
     return(
         <>
             <Container>
@@ -133,8 +134,8 @@ const AddModal = ({ setShowModal}) => {
                                  
                              
                                     <div className="inputTitle">Хэнрүү</div>
-                                    <select name="to_customer" className=" input setValue" defaultValue={-1} onChange={changeHandler}>
-                                        <option disabled selected value={-1}>Сонгоно уу</option>
+                                    <select name="to_customer" className=" input setValue" onChange={changeHandler}>
+                                        <option disabled selected >Сонгоно уу</option>
                                         <option value={0}>Бүх харилцагч руу</option>
                                         <option value={1}>Сонгосон харилцагч руу</option>
                                     </select>
@@ -143,7 +144,7 @@ const AddModal = ({ setShowModal}) => {
                                             <div className="inputTitle">Хэдийг хүртэл</div>
                                             <input name='expire_date' className="setValue" onChange={changeHandler} type="date"/>
                                         </div>
-                                        <div>
+                                        <div style={{marginLeft:20}}>
                                             <div className="inputTitle">Хэдэн удаа</div>
                                             <input name="acount"className="setValue" onChange={changeHandler} type="number"/>
                                         </div>
@@ -151,8 +152,8 @@ const AddModal = ({ setShowModal}) => {
                                 </div>
                                 <div className="item">
                                 <div className="inputTitle">Программ</div>
-                                    <select name='apptype' className="setValue" defaultValue={-1} onChange={changeHandler}>
-                                        <option disabled selected value={-1}>Сонгоно уу</option>
+                                    <select name='apptype' className="setValue" onChange={changeHandler}>
+                                        <option disabled selected >Сонгоно уу</option>
                                         <option value={0}>Бүгд</option>
                                         <option value={1}>Macs санхүү</option>
                                         <option value={2}>Посын програм</option>
@@ -170,18 +171,19 @@ const AddModal = ({ setShowModal}) => {
                                         value={0}/>
                                         <div>PDF файлаар</div>
                                         <input
+                                        style={{marginLeft:30}}
                                         required
                                         type="radio" 
                                         className="setValue fileType" 
                                         name="filetype"
                                         onChange={changeHandler}
                                         value={1}/>
-                                        <div className="inputTitle">HTML форматаар</div>
+                                        <div   className="inputTitle">HTML форматаар</div>
                                     </div>
                                 </div>
                             </div>
                             <div className="statusSelect">
-                                    <input  name='is_active' onChange={changeHandler} type="checkbox" className="active setValue" value={isActive ? 0 : 1} />
+                                    <input name='is_active' onChange={changeHandler} type="checkbox" checked={true} className="active setValue" value={1} />
                                     <div className="inputTitle">Идэвхтэй</div>
                             </div>
                             <div style={allValues.filetype === '0' ? {display: 'block'} : {display : 'none'}} className="inputTitle">Хэрэглэгчийн дэлгэцэнд харуулах PDF файл</div>
