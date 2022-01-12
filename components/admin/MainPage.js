@@ -15,10 +15,10 @@ const MainPage = ({data, users}) => {
                <div className="title">Хэрэглэгчид</div>
                <div className="AllQuestion">
                     <div className="Allhead">
-                        <span> <IoCheckmarkCircleOutline /> Нийт {users.length} хэрэглэгч</span>
+                        <span> <IoCheckmarkCircleOutline /> Нийт {users?.length} хэрэглэгч</span>
                         <div></div>
                     </div>
-                    {users.map((el,ind)=>{
+                    {users?.map((el,ind)=>{
                         return(
                             <div key={ind} className="items">
                                 <div className="SVG">
@@ -46,10 +46,10 @@ const MainPage = ({data, users}) => {
                <div className="title">Сэтгэгдэлүүд</div>
                <div className="AllQuestion">
                     <div className="Allhead">
-                        <span> <IoCheckmarkCircleOutline /> Нийт {data.length} сэтгэгдэл</span>
+                        <span> <IoCheckmarkCircleOutline /> Нийт {data?.length} сэтгэгдэл</span>
                         <div></div>
                     </div>
-                    {data.map((el,ind)=>{
+                    {data?.map((el,ind)=>{
                         return(
                             <div key={ind} className="items">
                                 <div className="SVG">
@@ -57,12 +57,12 @@ const MainPage = ({data, users}) => {
                                 </div>
                                 <div className="TextPar">
                                         <div className="titles">
-                                            <span>{el.name}</span>
-                                            <div className="date">{DateFormat(el.created_at)} -  өмнө</div>
+                                            <span>{el?.name}</span>
+                                            <div className="date">{DateFormat(el?.created_at)} -  өмнө</div>
                                         </div>
                                     
                                     <div className="sm">
-                                        {el.description}
+                                        {el?.description}
                                     </div>
                                 </div>
                             </div>

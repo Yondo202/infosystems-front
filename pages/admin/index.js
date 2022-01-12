@@ -7,6 +7,8 @@ import LeftMenu from '@/components/admin/LeftMenu';
 import TopMenu from "@/components/admin/TopMenu"
 
 const MainFeedback = ({data, cond, users}) => {
+    console.log(`users`, users)
+    console.log(`data`, data)
     return (
         <>
             {cond?

@@ -31,9 +31,9 @@ const HomeUsers = () => {
 
         await axios.post(`${process.env.serverUrl}/graphql`, {
             query: `query{products{ id title catigory slug }}`
-        }).then(res => { 
+        }).then(res => {
             setProducts(res.data.data?.products)
-        })
+        }).catch(err=>console.log(`err`, err?.response))
     }
 
     const ShowHandle = (el) =>{
