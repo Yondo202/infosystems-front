@@ -35,7 +35,6 @@ const login = () => {
                 setLoading(true);
                 await axios.post(`${process.env.serverUrl}/auth/local`, loginInfo )
                 .then(res=>{
-                    console.log(`res`, res);
                     if(res.data.user.admin_confirmed){
                         setCookie(null, 'jwt', res.data.jwt,{ maxAge: 30 * 24 * 60 * 60, path:"/" });
                         setCookie(null, 'username', res.data.user.username, { maxAge: 30 * 24 * 60 * 60, path:"/" });

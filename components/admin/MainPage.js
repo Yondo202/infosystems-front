@@ -7,6 +7,7 @@ import DateFormat from "@/miscs/LanguageDate"
 import DateFormat2 from "@/miscs/FormatDate"
 
 const MainPage = ({data, users}) => {
+    
     return (
         <Container>
 
@@ -25,13 +26,13 @@ const MainPage = ({data, users}) => {
                                 </div>
                                 <div className="TextPar">
                                         <div className="titles">
-                                            <span>{el.username}</span>
+                                            <span>{el?.username}</span>
                                             <div />
-                                            <div className="date">Бүртгүүлсэн өдөр: ( {DateFormat2(el.created_at, true)} )</div>
+                                            <div className="date">Бүртгүүлсэн өдөр: ( {DateFormat2(el?.created_at, true)} )</div>
                                         </div>
                                     
                                     <div className="sm">
-                                        {el.email}
+                                        {el?.email}
                                     </div>
                                 </div>
                             </div>

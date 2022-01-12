@@ -64,16 +64,16 @@ const HomeUsers = () => {
                                 <th>Үйлдэл</th>
                             </tr>
 
-                            {users.map((el, ind) => {
+                            {users.length !==0 && users.map((el, ind) => {
                                 return (
                                     <tr key={ind}>
-                                        <td>{el.company_name}</td>
-                                        <td>{el.company_register}</td>
-                                        <td>{el.email}</td>
-                                        <td>{el.admin_confirmed
+                                        <td>{el?.company_name}</td>
+                                        <td>{el?.company_register}</td>
+                                        <td>{el?.email}</td>
+                                        <td>{el?.admin_confirmed
                                         ?<span className="apps approve">Зөвшөөрсөн</span>
                                         :<span className="apps notApprove">Хүлээгдсэн...</span>}</td>
-                                        <td style={{textAlign:`left`}}><ul>{el.products.map((el, ind)=>{
+                                        <td style={{textAlign:`left`}}><ul>{el?.products.map((el, ind)=>{
                                             return(
                                                 <li key={ind}>{el.title}</li>
                                             )
