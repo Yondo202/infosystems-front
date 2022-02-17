@@ -57,7 +57,7 @@ const Container = styled.div`
     .MainContent{
         .BigTitle{
             font-size: 25px;
-            font-weight: 500;
+            ${props=>props.theme.BoldFont}
             padding-bottom: 15px;
             margin-bottom:15px;
             border-bottom: 1px solid rgba(0,0,0,0.1);

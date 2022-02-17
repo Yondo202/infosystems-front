@@ -63,7 +63,7 @@ const LeftMenuStyle = styled.div`
             align-items: center;
             gap: 18px;
             padding: 15px 25px;
-            font-weight: 500;
+            ${props=>props.theme.BoldFont}
             color: rgba(255,255,255,.7);
             svg{
                 color: rgba(255,255,255,.7);

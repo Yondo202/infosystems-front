@@ -136,7 +136,7 @@ const Container = styled.div`
                 gap: 15px;
                 display: flex;
                 .name{
-                    font-weight: 500;
+                    ${props=>props.theme.BoldFont}
                     color: #24292e;
                 }
             }
@@ -147,7 +147,7 @@ const Container = styled.div`
                 .Author{
                     font-size: 12px;
                     border-radius: 50px;
-                    font-weight: 500;
+                    ${props=>props.theme.BoldFont}
                     padding: 3px 15px;
                     border: 1px solid rgba(0,0,0,0.1);
                 }

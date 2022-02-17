@@ -114,7 +114,7 @@ const Container = styled.div`
     .title{
         padding:0px 15px;
         font-size: 20px;
-        font-weight: 500;
+        ${props=>props.theme.BoldFont}
         margin-bottom: 15px;
     }
     .Parent{
@@ -183,7 +183,7 @@ const Container = styled.div`
                                 background-color:#ffc720;
                                 border-radius: 50px;
                                 padding: 2px 10px;
-                                font-weight: 500;
+                                ${props=>props.theme.BoldFont}
                                 font-size: 11.5px;
                                 width:140px;
                                 height:25px;
@@ -197,7 +197,7 @@ const Container = styled.div`
                         }
                         .text{
                             cursor:pointer;
-                            font-weight: 500;
+                            ${props=>props.theme.BoldFont}
                             text-decoration: none;
                             font-size: 17px;
                             color: #24292e;

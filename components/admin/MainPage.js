@@ -110,7 +110,7 @@ const Container = styled.div`
                 background-color: ${props=>props.theme.mainColor4};
                 span{
                     color: #24292e;
-                    font-weight: 500;
+                    ${props=>props.theme.BoldFont}
                     svg{
                         margin-right: 8px;
                         font-size: 18px;
@@ -135,7 +135,7 @@ const Container = styled.div`
                     width: 90%;
                     .titles{
                         width: 100%;
-                        font-weight: 500;
+                        ${props=>props.theme.BoldFont}
                         text-decoration: none;
                         font-size: 16px;
                         color: #24292e;
@@ -153,7 +153,7 @@ const Container = styled.div`
                         }
                     }
                     .sm{
-                        font-weight: 500;
+                        ${props=>props.theme.BoldFont}
                         margin-top: 6px;
                         font-size: 13.5px;
                         color: #586069;
@@ -164,7 +164,7 @@ const Container = styled.div`
         }
         .title{
             font-size: 20px;
-            font-weight: 500;
+            ${props=>props.theme.BoldFont}
             margin-bottom: 15px;
         }
     }

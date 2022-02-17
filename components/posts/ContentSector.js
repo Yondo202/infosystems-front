@@ -68,7 +68,7 @@ const Container = styled.div`
         justify-content:space-between;
         padding:20px 0px;
         font-family:"Roboto", sans-serif;
-        font-weight:500;
+        ${props=>props.theme.BoldFont};
         
         .Icons{
            position: sticky;

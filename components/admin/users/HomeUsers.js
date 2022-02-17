@@ -106,7 +106,7 @@ const Container = styled.div`
     padding: 0px 20px;
     .title{
         font-size: 20px;
-        font-weight: 500;
+        ${props=>props.theme.BoldFont}
         margin-bottom: 15px;
         padding:0px 15px;
     }
@@ -128,7 +128,7 @@ const Container = styled.div`
                 .apps{
                     border-radius:3px;
                     padding:4px 10px;
-                    font-weight:500;
+                    ${props=>props.theme.BoldFont};
                     font-size:12px;
                 }
                 .approve{

@@ -149,7 +149,7 @@ const Container = styled.div`
                 overflow: hidden;
                 text-overflow: ellipsis;
                 font-size: 20px;
-                font-weight: 500;
+                ${props=>props.theme.BoldFont}
             }
         }
         /* &:hover{

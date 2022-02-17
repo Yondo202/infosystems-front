@@ -83,7 +83,7 @@ const Container = styled.div`
             background-color: ${props=>props.theme.mainColor2};
             color:white;
             border-radius: 5px;
-            font-weight: 500;
+            ${props=>props.theme.BoldFont}
             &:hover{
                 opacity: 0.8;
             }
@@ -103,7 +103,7 @@ const Container = styled.div`
             background-color: ${props=>props.theme.mainColor4};
             span{
                 color: #24292e;
-                font-weight: 500;
+                ${props=>props.theme.BoldFont}
                 svg{
                     margin-right: 8px;
                     font-size: 20px;
@@ -140,7 +140,7 @@ const Container = styled.div`
                             background-color:#ffc720;
                             border-radius: 3px;
                             padding: 2px 10px;
-                            font-weight: 500;
+                            ${props=>props.theme.BoldFont}
                             font-size: 12px;
                             width:130px;
                             height:22px;
@@ -155,7 +155,7 @@ const Container = styled.div`
                     }
                     .text{
                         cursor:pointer;
-                        font-weight: 500;
+                        ${props=>props.theme.BoldFont}
                         text-decoration: none;
                         font-size: 17px;
                         color: #24292e;

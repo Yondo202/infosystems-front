@@ -73,7 +73,7 @@ const LeftMenuComponent = styled.div`
         padding-top:10px;
         .Title{
             font-size:16px;
-            font-weight:600;
+            ${props=>props.theme.BolderFont}
             color:#7B7B7B;
             border-bottom:1px solid rgba(0,0,0,0.2);
             padding-bottom:20px;
@@ -112,7 +112,7 @@ const LeftMenuComponent = styled.div`
             // background-color:rgba(20,110,190,1);
             background-color:${props=>props.theme.mainColor2};
             color:white;
-            font-weight:600;
+            ${props=>props.theme.BolderFont}
             &:hover{
                 color:#fff;
             }

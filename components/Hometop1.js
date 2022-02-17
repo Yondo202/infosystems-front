@@ -157,6 +157,7 @@ const Container = styled.div`
                     background-image:url(/pet4.png);
                 }
                 .title{
+                    font-family:${props=>props.theme.fontFamily};
                     height:6.75rem;
                     font-size:1.25rem;
                     margin-bottom:0;
@@ -177,7 +178,7 @@ const Container = styled.div`
                 .Link{
                     // color: rgba(255,255,255,.65);
                     text-transform: uppercase;
-                    font-weight: 500;
+                    ${props=>props.theme.BoldFont}
                     font-size: 0.9rem;
                     letter-spacing: 2px;
                     text-decoration: none;
@@ -200,7 +201,7 @@ const Container = styled.div`
                     color:white;
                     white-space: nowrap;
                     overflow: hidden;
-                    font-weight:500;
+                    ${props=>props.theme.BoldFont};
                 }
                 .row1{
                     display:flex;
@@ -208,7 +209,7 @@ const Container = styled.div`
                     .write{
                         display:flex;
                         align-items:center;
-                        font-weight:300;
+                        font-family:${props=>props.theme.fontFamily1};
                         color: #008aff;
                         letter-spacing: 1.5px;
                         padding-bottom:5px;

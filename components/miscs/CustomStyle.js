@@ -138,3 +138,39 @@ export const InputStyle = styled.div`
             width: auto;
         }
 `
+
+export const TitleStyle = styled.div`
+    position:relative;
+    margin-bottom:25px;
+    font-size:21px;
+    ${props=>props.theme.BoldFont};
+    &:before{
+        content:'';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height:2px;
+        width:100%;
+        background-color: rgba(0,0,0,.1);
+    }
+    
+    .text{
+        color:${props=>props.theme.mainColor2};
+        color:#222f3e;
+        display: inline-block;
+        position: relative;
+        z-index: 1;
+        padding: 5px 5px 12px 0;
+        // text-transform: uppercase;
+        &:before{
+            content:'';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height:2px;
+            width:100%;
+            background-color: ${props=>props.theme.mainColor2};
+        }
+        
+    }
+`

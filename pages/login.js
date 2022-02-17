@@ -73,7 +73,7 @@ const Container = styled.div`
                     background-color: ${props=>props.theme.mainColor2};
                     color:white;
                     border-radius: 5px;
-                    font-weight: 500;
+                    ${props=>props.theme.BoldFont}
                 }
             }
             .inputItem{
@@ -96,7 +96,7 @@ const Container = styled.div`
                         }
                         opacity:0.8;
                         cursor:pointer;
-                        font-weight:500;
+                        ${props=>props.theme.BoldFont};
                     }
                 }
                 .inputPar{
@@ -123,7 +123,7 @@ const Container = styled.div`
                         font-size: 22px;
                     }
                     input{
-                        font-weight: 500;
+                        ${props=>props.theme.BoldFont}
                         font-size: 15px;
                         outline: none;
                         border:none;
@@ -175,7 +175,7 @@ const Container = styled.div`
             justify-content: center;
             gap: 50px;
             font-size: 16px;
-            font-weight: 500;
+            ${props=>props.theme.BoldFont}
             margin-bottom: 30px;
             .item{
                 transition: all 0.3s ease;

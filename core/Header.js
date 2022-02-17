@@ -296,6 +296,7 @@ const anime2 = keyframes`
 `
 
 const Container = styled.div`
+    
     transition:all 0.3s ease;
     position:fixed;
     top:0;
@@ -320,7 +321,7 @@ const Container = styled.div`
         width:100%;
         margin-top:-30px;
         .subDiv{
-            animation: ${anime3D} 0.7s ease;
+            animation: ${anime} 0.250s ease;
             background-color:#fff;
             .subDivChild{
                 margin-top:30px;
@@ -342,7 +343,8 @@ const Container = styled.div`
                     }
                     .titles{
                         margin-top:8px;
-                        font-size:15px;
+                        font-size:14px;
+                        font-family:${props=>props.theme.fontFamily};
                     }
                 }
             }
@@ -384,7 +386,7 @@ const Container = styled.div`
                 right: -25%;
                 color: white;
                 top: -20%;
-                font-weight: 500;
+                ${props=>props.theme.BoldFont}
                 padding: 2px 10px;
                 letter-spacing: 0.2px;
                 border-radius: 3px;
@@ -419,7 +421,7 @@ const Container = styled.div`
                         // display: inline-block;
                         cursor: pointer;
                         font-size:1rem;
-                        font-weight:400;
+                        font-family:${props=>props.theme.fontFamily};
                         svg{
                             margin-left:2px;
                             font-size:20px;
@@ -435,7 +437,7 @@ const Container = styled.div`
                   
                     .A2{
                         font-size:0.97rem;
-                        font-weight: 500;
+                        ${props=>props.theme.BoldFont}
                         color: rgba(255,255,255,1);
                     }
                 }
@@ -454,7 +456,7 @@ const Container = styled.div`
                             color: #ffffff;
                             width: 18px;
                             height: 18px;
-                            font-weight: 500;
+                            ${props=>props.theme.BoldFont}
                             display: flex;
                             align-items: center;
                             justify-content: center;
@@ -477,7 +479,7 @@ const Container = styled.div`
                         overflow-y: scroll;
                         border-radius: 5px;
                         box-shadow:1px 1px 20px -10px;
-                        animation: ${anime3D} 0.5s ease;
+                        animation: ${anime} 0.3s ease;
                         ::-webkit-scrollbar {
                             width: 0px;
                             height: 0px;
@@ -511,7 +513,7 @@ const Container = styled.div`
                                 .par{
                                     line-height: 100%;
                                     font-size: 15px;
-                                    font-weight: 500;
+                                    ${props=>props.theme.BoldFont}
                                     text-overflow: ellipsis;
                                     white-space: nowrap;
                                     overflow: hidden;
@@ -528,7 +530,7 @@ const Container = styled.div`
                                         align-items: center;
                                         gap: 6px;
                                         font-size: 15px;
-                                        font-weight: 500;
+                                        ${props=>props.theme.BoldFont}
                                         svg{
                                             margin-bottom: -2px;
                                             font-size: 15px;
@@ -591,7 +593,7 @@ const Container = styled.div`
             .Menu{
                 .content{
                     .items{
-                        font-weight: 500;
+                        ${props=>props.theme.BoldFont}
                         transition:all 0.3s ease;
                         font-size:0.88rem;
                         margin: 0px 30px;

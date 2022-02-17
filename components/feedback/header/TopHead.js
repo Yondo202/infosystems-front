@@ -69,7 +69,7 @@ const Header = styled.div`
                 padding:6px 20px;
                 padding-right:40px;
                 border-radius:50px;
-                font-weight: 500;
+                ${props=>props.theme.BoldFont}
                 &:hover{
                     border:1px solid rgba(33, 101, 159, 0.4);
                 }

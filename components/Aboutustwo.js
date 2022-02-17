@@ -126,7 +126,7 @@ const Container = styled.div`
             }
             .Active{
                 position: relative;
-                font-weight: 500;
+                ${props=>props.theme.BoldFont}
                 color: #262626;
                 /* border-bottom: 3px solid ${props=>props.theme.mainColor2}; */
                 .line{

@@ -200,7 +200,7 @@ export const ModalContainer = styled.div`
                 .title{
                     margin-bottom:12px;
                     font-size:14px;
-                    font-weight:500;
+                    ${props=>props.theme.BoldFont};
                 }
                 .buttons{
                     color: rgba(${props=>props.theme.textColor},0.8);
@@ -229,7 +229,7 @@ export const ModalContainer = styled.div`
                         }
                     }
                     span{
-                        font-weight:500;
+                        ${props=>props.theme.BoldFont};
                         margin-right:30px;
                     }
                     svg{
@@ -289,7 +289,7 @@ export const ModalContainer = styled.div`
                     font-size:14px;
                     width:46%;
                     color:rgba(17,17,17);
-                    font-weight:500;
+                    ${props=>props.theme.BoldFont};
                     opacity:0.9;
                 }
                 .desc{

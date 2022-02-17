@@ -189,7 +189,7 @@ const Container = styled.div`
                     }
                 }
                 .headText{
-                    font-weight: 500;
+                    ${props=>props.theme.BoldFont}
                     font-size: 1rem;
                     line-height: normal;
                     padding-left: 8px;

@@ -78,7 +78,7 @@ const Container = styled.div`
             background-color: #fff;
             cursor: pointer;
             font-size: 14px;
-            font-weight: 500;
+            ${props=>props.theme.BoldFont}
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -167,10 +167,11 @@ const Container = styled.div`
                 }
             }
             .bigSector{
+                font-family:${props=>props.theme.fontFamily};
                 width: 100%;
                 overflow: hidden;
                 text-overflow: ellipsis;
-                font-size: 20px;
+                font-size: 18px;
             }
         }
         /* &:hover{

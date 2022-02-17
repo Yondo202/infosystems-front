@@ -42,7 +42,7 @@ const TopHeader = styled.div`
     .items{
         display: flex;
         gap: 35px;
-        font-weight: 500;
+        ${props=>props.theme.BoldFont}
         .item{
             text-decoration: none;
             color: unset;
