@@ -1,14 +1,18 @@
-import React, { useEffect } from 'react'
+import React  from 'react'
+
+import { useRouter } from 'next/router'
 import { TitleStyle } from "@/components/miscs/CustomStyle"
 import styled, { keyframes } from "styled-components"
 import { AiOutlineCalendar } from "react-icons/ai"
-import { FaDownload } from "react-icons/fa"
+// import { FaDownload } from "react-icons/fa"
 import {  BsDownload } from "react-icons/bs"
 import Others from "@/components/posts/Other"
 import axios from 'axios'
 import FileDownload from "js-file-download"
 
 const Programs = ({ data }) => {
+    const router = useRouter()
+    console.log(`data`, data)
     const DownloadHandle= (el) =>{
         axios({
             url: `${process.env.serverUrl}${el.url}`,
@@ -17,6 +21,12 @@ const Programs = ({ data }) => {
         }).then((response) => {
             FileDownload(response.data, el.name);
         });
+    }
+
+    const PushHistory = (post) =>{
+        if(post){
+            router.push(`${process.env.postUrl}${post.slug}`)
+        }
     }
 
     return (
@@ -40,17 +50,17 @@ const Programs = ({ data }) => {
                                 return(
                                     <div key={ind} className="rows items items_list">
                                         {/* <div className="cat"><ImFileZip /></div> */}
-                                        <div className="name">{el.name}</div>
+                                        <div onClick={_=>PushHistory(el.post)} className="name">{el?.post?.id?el.full_name:el.name}</div>
                                         <div className="download bottom">
-                                            <div className="dText"><AiOutlineCalendar /> 2016/16/02</div>
+                                            <div className="dText"><AiOutlineCalendar />{el.files?.updated_at.slice(0,10)??`----/--/--`}</div>
                                             <div onClick={()=>DownloadHandle(el.files)} className="dText dText2"><BsDownload /> Татах</div>
+
                                             {/* <button onClick={()=>DownloadHandle(el.files)} className="button"><FaDownload /> Татах</button> */}
                                         </div>
                                     </div>
                                 )
                             })}
                         </div>
-
                     </div>
                     <div className="col-md-1"></div>
                     <div className="col-md-3 col-12">
@@ -79,12 +89,12 @@ const Container = styled.div`
         background-color:#fff;
         box-shadow:0 0 5px 0 rgb(0 20 30 / 20%);
         margin-bottom: 30px;
-        padding:20px;
+        padding:20px 30px;
 
         .items_list{
-            padding-bottom:20px; 
+            padding-bottom:22px; 
             .name{
-                padding-bottom:8px; 
+                padding-bottom:9px; 
                 cursor:pointer;
                 font-size:18px;
                 color: ${props=>props.theme.mainColor2};
@@ -95,9 +105,12 @@ const Container = styled.div`
             }
             .bottom{
                 display:flex;
+                justify-content:space-between;
                 gap:40px;
                 font-family:${props=>props.theme.fontFamily1};
                 .dText{
+                    display:flex;
+                    align-items:center;
                     font-size:14px;
                     color: ${props=>props.theme.textColor2};
                     svg{

@@ -285,10 +285,11 @@ const anime = keyframes`
     100%{ transform:translateY(0px); opacity:1 }
 `
 
-const anime3D = keyframes`
-    0%{ transform: perspective(600px) rotateX(-30deg); opacity:0 }
-    100%{ transform: perspective(0px) rotateX(0deg); opacity:1 }
-`
+// const anime3D = keyframes`
+//     0%{ transform: perspective(600px) rotateX(-30deg); opacity:0 }
+//     100%{ transform: perspective(0px) rotateX(0deg); opacity:1 }
+// `
+
 const anime2 = keyframes`
     0%{ opacity:0 }
     30%{ opacity:0 }
@@ -558,7 +559,7 @@ const Container = styled.div`
                         right: 0;
                         background-color: #ffffff;
                         box-shadow:1px 1px 20px -10px;
-                        animation: ${anime3D} 0.5s ease;
+                        animation: ${anime} 0.5s ease;
                         .dropDown{
                             padding: 3px 5px;
                             cursor: pointer;

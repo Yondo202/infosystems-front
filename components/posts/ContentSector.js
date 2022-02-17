@@ -1,23 +1,27 @@
 import React from 'react'
 import HtmlParser from "@/miscs/CustomParser"
 import styled from 'styled-components'
+import { TitleStyle } from "@/components/miscs/CustomStyle"
 import minimize from "@/miscs/minimize"
 import { FaFacebookF, FaTwitter, FaPinterestP, FaLinkedinIn } from "react-icons/fa"
 import { MdEmail } from "react-icons/md"
 import {FacebookShareButton,TwitterShareButton, LinkedinShareButton, PinterestShareButton, EmailShareButton } from 'react-share';
 
 const ContentSector = ({news}) => {
-
+    console.log(`news`, news)
     return (
         <Container className="MainContent">
-            <h2 className="title">{news.title}</h2>
+            <TitleStyle className="TitleCustom">
+                <span className="text">{news.title}</span>
+            </TitleStyle>
 
-            <div className="Image">
+            
+            {news?.catigory !== "Заавар" && <div className="Image">
                 <img src={process.env.serverUrl+news.image.url} className="myImg"></img>
-            </div>
+            </div>}
 
             <div className="ContentSection">
-                <div className={`Icons `}>
+                {news?.catigory !== "Заавар" && <div className={`Icons `}>
                     <div className= {`Buttons`}>
                         <FacebookShareButton
                             media={process.env.serverUrl+news.image.url}
@@ -45,7 +49,7 @@ const ContentSector = ({news}) => {
                             <div className="Btnss AiOutlineMail"><MdEmail /></div>
                         </EmailShareButton>
                     </div>
-                </div>
+                </div>}
 
                 <div className="content">
                     <HtmlParser data={news.description}/>
@@ -59,16 +63,11 @@ export default ContentSector
 
 const Container = styled.div`
     width: 99%;
-    .title{
-        font-weight: 400;
-    }
     .ContentSection{
         position: relative;
         display:flex;
         justify-content:space-between;
         padding:20px 0px;
-        font-family:"Roboto", sans-serif;
-        ${props=>props.theme.BoldFont};
         
         .Icons{
            position: sticky;
@@ -128,9 +127,9 @@ const Container = styled.div`
             /* left:65px; */
         }
         .content{
+            font-family:${props=>props.theme.fontFamily};
             width:91%;
             font-size: 15px;
-            font-weight:400;
         }
         img{
             width:100%;

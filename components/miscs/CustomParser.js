@@ -32,10 +32,13 @@ const HtmlParser = ({ data }) => {
       arr.forEach(el=>{
         let img = el.querySelector("img");
         let url = img.getAttribute("src");
-        img.setAttribute("src", process.env.serverUrl+url);
+        // img.setAttribute("src", process.env.serverUrl+url);
+        img.setAttribute("src", url);
       })
     }
   }, [data]);
+
+
   return <div>{parser.parse(data)}</div>;
 };
 

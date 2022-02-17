@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Other from "components/posts/Other"
 import ContentSector from "@/components/posts/ContentSector"
 
-const MainPost = ({news}) => {
+const MainPost = ({ news }) => {
     return (
         <Container >
             <div className="container">
