@@ -8,6 +8,9 @@ const PreSeo = ({seo}) => {
     const Router = useRouter();
     const ctx = useContext(UserContext);
 
+    console.log(`seo`, seo)
+    console.log(`ctx`, ctx)
+
     if(seo) {
         const { title, description, thumb } = seo;
         return (
@@ -21,7 +24,7 @@ const PreSeo = ({seo}) => {
                 <meta property="og:image:secure_url" content={thumb ? process.env.serverUrl+thumb : '/logo_sm.png'} />
                 <meta property="og:url" content={process.env.frontUrl + Router.asPath} />
                 <meta property="og:type" content="article" />
-                <meta property="fb:app_id" content="358757829197481" />
+                {/* <meta property="fb:app_id" content="358757829197481" /> */}
                 <meta name="description" content={description ? description : ctx.description}/>
 
             </Head>
@@ -35,7 +38,7 @@ const PreSeo = ({seo}) => {
             <meta property="og:image" content={'/logo_sm.jpg'} />
             <meta property="og:type" content="article" />
             <meta property="og:url" content={process.env.frontUrl + Router.asPath} />
-            <meta property="fb:app_id" content="358757829197481" />
+            {/* <meta property="fb:app_id" content="358757829197481" /> */}
             <meta name="description" content={ctx.description}/>
         </Head>
     )

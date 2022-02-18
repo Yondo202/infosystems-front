@@ -1,5 +1,6 @@
 import React from "react";
 import App from "next/app";
+import '../public/css/nprogress.css'
 import '../style.css'
 import checkLanguage from "@/miscs/checkLanguage";
 // import { MenuProvider } from "@/miscs/ContextMenuProvider";
@@ -9,7 +10,9 @@ import * as theme from "@/miscs/theme";
 import Router from "next/router"
 import { parseCookies } from "nookies"
 import { UserStore } from "@/core/context/Context"
+import NProgress from 'nprogress';
  
+Router.events.on('routeChangeStart', () => NProgress.start()); Router.events.on('routeChangeComplete', () => NProgress.done()); Router.events.on('routeChangeError', () => NProgress.done());
 
 class MyApp extends App {
     state = {
@@ -46,10 +49,10 @@ class MyApp extends App {
             return (
                 <UserStore value={this.state}>
                     <ThemeProvider theme={theme}>
-                            {/* <Component {...pageProps} key={router.route} /> */}
-                            {this.state.completelyLoaded?
+                            <Component {...pageProps} key={router.route} />
+                            {/* {this.state.completelyLoaded?
                              <Component {...pageProps} key={router.route} /> 
-                            :<div style={{width:`100%`, height:`100vh`,display:`flex`, alignItems:"center", justifyContent:"center"}}><img src="/giff2.gif" /></div> }
+                            :<div style={{width:`100%`, height:`100vh`,display:`flex`, alignItems:"center", justifyContent:"center"}}><img src="/giff2.gif" /></div> } */}
                     </ThemeProvider>
                 </UserStore>
             );
@@ -70,10 +73,6 @@ MyApp.getInitialProps = async({ Component, ctx }) =>{
     const jwt = parseCookies(ctx).jwt;
     const role = parseCookies(ctx).role;
 
-    // console.log(`parseCookies`, parseCookies(ctx));
-    // console.log("---------------")
-
-    console.log(`ctx.pathname.`, ctx.pathname)
 
     if(!jwt){
         if( ctx.pathname.includes("/admin") ){
