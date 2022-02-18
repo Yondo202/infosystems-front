@@ -7,7 +7,7 @@ import HtmlParser from "@/miscs/CustomParser2"
 import DateFormat from '../miscs/FormatDate'
 import axios from 'axios'
 import { parseCookies } from "nookies"
-import {useRouter} from 'next/router'
+import { useRouter } from 'next/router'
 
 const Comments = ({ datas, parent }) => {
     const { id, jwt, role } = parseCookies();

@@ -73,9 +73,13 @@ MyApp.getInitialProps = async({ Component, ctx }) =>{
     // console.log(`parseCookies`, parseCookies(ctx));
     // console.log("---------------")
 
+    console.log(`ctx.pathname.`, ctx.pathname)
+
     if(!jwt){
-        if(ctx.pathname.includes("/feedback") || ctx.pathname.includes("/answer") || ctx.pathname.includes("/admin") ){
+        if( ctx.pathname.includes("/admin") ){
             redirectUser(ctx, "/login");
+        }else if (ctx.pathname.includes("/answer") || ctx.pathname.includes("/feedback")){
+            redirectUser(ctx, "/p/download?redirect=true");
         }
     }else{
         if(ctx.pathname.includes("/admin") && role !== "infosystem_admin" ){

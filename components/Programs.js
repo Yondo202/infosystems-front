@@ -1,9 +1,10 @@
-import React  from 'react'
-
+import React, { useEffect, useContext }  from 'react'
+import UserContext from "@/core/context/Context"
 import { useRouter } from 'next/router'
 import { TitleStyle } from "@/components/miscs/CustomStyle"
 import styled, { keyframes } from "styled-components"
 import { AiOutlineCalendar } from "react-icons/ai"
+import { parseCookies } from "nookies";
 // import { FaDownload } from "react-icons/fa"
 import {  BsDownload } from "react-icons/bs"
 import Others from "@/components/posts/Other"
@@ -11,8 +12,20 @@ import axios from 'axios'
 import FileDownload from "js-file-download"
 
 const Programs = ({ data }) => {
+    const { jwt} = parseCookies();
+    const { alertFunc } = useContext(UserContext);
     const router = useRouter()
-    console.log(`data`, data)
+    const { redirect } = router.query
+
+    useEffect(()=>{
+        if(!jwt){
+            if(redirect === 'true'){
+                alertFunc('orange', "Нэвтэрсэн байх шаардлагатай", true);
+                router.push(`/p/download`)
+            }
+        }
+    },[])
+
     const DownloadHandle= (el) =>{
         axios({
             url: `${process.env.serverUrl}${el.url}`,
@@ -39,6 +52,7 @@ const Programs = ({ data }) => {
                         </div> */}
                         <TitleStyle className="TitleCustom">
                             <span className="text">{data?.name}</span>
+                            {!jwt?<button onClick={_=>router.push(`/login`)} className="login">Нэвтрэх</button>:null}
                         </TitleStyle>
                         <div className="contentPar">
                             {/* <div className="rows header">

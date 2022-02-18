@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react"
+// import ReactNotification from 'react-notifications-component'
 import Header from '@/core/Header'
 import Footer from '@/core/Footer';
 import styled from "styled-components";

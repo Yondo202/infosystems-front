@@ -153,6 +153,23 @@ export const TitleStyle = styled.div`
         width:100%;
         background-color: rgba(0,0,0,.1);
     }
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    .login{
+        // text-transform: uppercase;
+        border-radius:3px;
+        padding: 6px 20px;
+        font-size: 0.75rem;
+        background-color: ${props=>props.theme.mainColor2};
+        color:#fff;
+        border: 1px solid #DDD;
+        letter-spacing:.05em;
+        &:hover{
+            background-color: #2086da;
+        }
+    }
     
     .text{
         color:${props=>props.theme.mainColor2};
