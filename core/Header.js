@@ -240,7 +240,8 @@ const Header = ({menu, logo, login}) => {
                         :null}
 
 
-                        <Link href={username?"/feedback":"/login"}>
+                        {/* <Link href={username?"/feedback":"/login"}> */}
+                        <Link href="/feedback">
                              <a className="content">
                                 <div className={`items ${login?`A2`:``}`}>
                                     Тусламж
