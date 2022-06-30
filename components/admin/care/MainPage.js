@@ -53,13 +53,9 @@ const MainPage = () => {
     }
 
     const ShowHandle = (el) =>{
-        console.log("el");
         setTarget(el);
         setShow(true);
     }
-
-
-    console.log(`datas`, datas);
 
     return (
         <Container>

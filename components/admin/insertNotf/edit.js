@@ -93,7 +93,6 @@ const AddModal = ({setShowModal , selectedRow}) => {
 
         axios.put(`${GetDataURL}/${allValues.id}` , allValues).then((resp) => {
              setShowModal(false)
-            console.log(resp);
         }).catch((err)=>{
             console.log(err);
         })  

@@ -19,6 +19,7 @@ const login = () => {
                     </div>
                 {/* </div> */}
             </Container>
+            <div />
         </Root>
     )
 }
@@ -36,28 +37,30 @@ const Animate2 = keyframes`
 
 const Container = styled.div`
     height: 100vh;
+    font-family: ${props=>props.theme.fontFamily2};
     animation: ${Animate2} 0.6s ease;
-    /* background: url(/header-bg.jpg) 70% 30% no-repeat ${props=>props.theme.mainColor}; */
-    background: url("https://colorlib.com/etc/lf/Login_v4/images/bg-01.jpg") no-repeat ${props=>props.theme.mainColor};
+    background-image: url(/img/left_menu_background.png);
+    background-repeat: no-repeat;
+    background-position: center;
     background-size: 100% 100%;
-    padding-top: 80px;
+    background-color:#051e34;
     margin-top: 0px;
     position:relative;
     display: flex;
     justify-content: center;
-    font-family: ${props=>props.theme.fontFamily2};
+    align-items:center;
     .ContentSector{
+        margin-top:-110px;
         transition: all 0.2s ease;
         background-color: #ffffff;
         height: 40em;
         width: 35em;
         border-radius: 10px;
-        padding: 3em 4.5em;
+        padding: 3em 3em;
         letter-spacing: 0px;
         .InputParent{
             position: relative;
             animation: ${Animate} 0.4s ease;
-            /* display: flex; */
             .buttonPar{
                 .ErrTxt{
                     animation: ${Animate} 0.4s ease;

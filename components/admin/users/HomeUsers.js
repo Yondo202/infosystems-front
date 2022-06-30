@@ -45,8 +45,6 @@ const HomeUsers = () => {
         setTargetUser(el);
     }
 
-    // console.log(`users`, users);
-
     return (
         <Container>
             <div className="title">Нийт хэрэглэгчид - {users.length} </div>

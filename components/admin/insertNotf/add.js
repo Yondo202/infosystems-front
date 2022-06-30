@@ -87,7 +87,6 @@ const AddModal = ({ setShowModal}) => {
 
          axios.post(`${GetDataURL}` ,  allValues ).then((resp) => {
              setShowModal(false)
-            console.log(resp);
         }).catch((err)=>{
             console.log(err);
         }) 

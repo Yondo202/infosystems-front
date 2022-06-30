@@ -27,8 +27,6 @@ const LeftMenu = () => {
                 } }`
             }, { headers: { Authorization: `Bearer ${jwt}` } })
             
-            console.log(`res`, res);
-
             if(res.data.data.users.length){
                 setMenu(res.data.data.users[0]?.products);
                 if(res.data.data.users[0]?.products.length){

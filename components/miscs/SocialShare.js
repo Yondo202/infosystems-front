@@ -1,41 +1,31 @@
 import React from 'react'
 import styled from 'styled-components'
-import minimize from "@/miscs/minimize"
-import Head from 'next/head';
+// import minimize from "@/miscs/minimize"
+// import Head from 'next/head';
 import { FaFacebookF, FaTwitter, FaPinterestP, FaLinkedinIn } from "react-icons/fa"
 import { MdEmail } from "react-icons/md"
 import {FacebookShareButton,TwitterShareButton, LinkedinShareButton, PinterestShareButton, EmailShareButton } from 'react-share';
 
 const SocialShare = ({ news }) => {
-    let path = window.location.origin + '/product/' + news.slug
-
-    console.log(`path`, path);
+    // let path = window.location.origin + '/product/' + news.slug
+    // console.log(`path`, path);
     return (
         <>
-            {/* <Head>
-                {title && <title>{title}</title>}
-                {description && <meta name="description" content={description}/>}
-                {url && <meta property="og:url" content={path} />}
-                <meta property="og:type" content="article" />
-                {title && <meta property="og:title" content={title} />}
-                {description && <meta property="og:description" content={description} />}
-                {thumb && <meta property="og:image" content={thumb} />}
-            </Head> */}
             <Container className={`Icons `}>
                 <div className= {`Buttons`}>
-                    <FacebookShareButton  imageurl={process.env.serverUrl+news.image.url} media={process.env.serverUrl+news.image.url} resetButtonStyle={true} url={process.env.frontUrl+process.env.productUrl+news.slug} style={{ width: 50, height: 50 }} >
+                    <FacebookShareButton resetButtonStyle={true} url={process.env.frontUrl+process.env.productUrl+news.slug} style={{ width: 50, height: 50 }} >
                         <div className="Btnss facebook"><FaFacebookF /></div>
                     </FacebookShareButton>
-                    <TwitterShareButton media={minimize(news.image,"small")} resetButtonStyle={true} url={`${process.env.frontUrl}${process.env.productUrl}${news.slug}`} style={{ width: 50, height: 50 }} >
+                    <TwitterShareButton resetButtonStyle={true} url={`${process.env.frontUrl}${process.env.productUrl}${news.slug}`} style={{ width: 50, height: 50 }} >
                     <div className="Btnss twitter"><FaTwitter /></div>
                     </TwitterShareButton>
-                    <PinterestShareButton media={minimize(news.image,"small")} resetButtonStyle={true} url={`${process.env.frontUrl}${process.env.productUrl}${news.slug}`} style={{ width: 50, height: 50 }} >
+                    <PinterestShareButton resetButtonStyle={true} url={`${process.env.frontUrl}${process.env.productUrl}${news.slug}`} style={{ width: 50, height: 50 }} >
                         <div className="Btnss FaPinterestP"><FaPinterestP /></div>
                     </PinterestShareButton>
-                    <LinkedinShareButton media={minimize(news.image,"small")} resetButtonStyle={true} url={`${process.env.frontUrl}${process.env.productUrl}${news.slug}`} style={{ width: 50, height: 50 }} >
+                    <LinkedinShareButton resetButtonStyle={true} url={`${process.env.frontUrl}${process.env.productUrl}${news.slug}`} style={{ width: 50, height: 50 }} >
                         <div className="Btnss FaLinkedinIn"><FaLinkedinIn /></div>
                     </LinkedinShareButton>
-                    <EmailShareButton media={minimize(news.image,"small")} resetButtonStyle={true} url={`${process.env.frontUrl}${process.env.productUrl}${news.slug}`} style={{ width: 50, height: 50 }} >
+                    <EmailShareButton resetButtonStyle={true} url={`${process.env.frontUrl}${process.env.productUrl}${news.slug}`} style={{ width: 50, height: 50 }} >
                         <div className="Btnss AiOutlineMail"><MdEmail /></div>
                     </EmailShareButton>
                 </div>

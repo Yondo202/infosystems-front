@@ -58,7 +58,7 @@ const Hometop1 = ({ data }) => {
                                 <h3 style={{color:el.color_code}} className="title">{el.title}</h3>
                                 <div className="desc">{el.text}</div>
                                 {/* <div >Learn more</div> */}
-                                <div className={`normal Link`} style={{color:el.color_code}} >Дэлгэрэнгүй</div>
+                                {/* <div className={`normal Link`} style={{color:el.color_code}} >Дэлгэрэнгүй</div> */}
                             </div>
                         </div>
                         )

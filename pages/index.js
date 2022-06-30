@@ -15,9 +15,11 @@ export default function Home({ data }) {
   )
 }
 
-
-export async function getServerSideProps({params, req}){
+// getServerSideProps
+// getStaticProps
+export async function getStaticProps({params, req,  query}){
   let res = await checkLanguage('/home', req, true);
-  return {props: {data: res.data}}
+  return {props: {data: res.data}, revalidate: 60}
 }
 
+// , revalidate: 60

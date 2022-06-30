@@ -12,7 +12,6 @@ const Delete = ({ setShowModal , selectedRow}) => {
 
     const DeleteHandle = () =>{
         axios.delete(`${GetDataURL}/${selectedRow.id}`, { headers: {Authorization: `bearer ${jwt}`} } ).then((res) => {
-            console.log(`res`, res)
             setShowModal(false)
        }).catch((err)=>console.log(`err+++`, err.response))
     }

@@ -6,7 +6,7 @@ import styled from "styled-components";
 import PreSeo from "@/components/miscs/PreSeo";
 // import { IoIosArrowUp } from "react-icons/io";
 import TopLoad from "@/miscs/TopLoad"
-import { animateScroll as scroll } from "react-scroll";
+// import { animateScroll as scroll } from "react-scroll";
 import { Alert } from "@/components/miscs/CustomComp"
 import UserContext from "./context/Context";
 import MessengerCustomerChat from 'react-messenger-customer-chat';
@@ -15,29 +15,29 @@ import Router from "next/router"
 
 export default function Root(props) {
     const { headerMenu, logo, footerMenu, alert } = useContext(UserContext);
-    const [ showBtn, setShowBtn ] = useState(false);
+    // const [ showBtn, setShowBtn ] = useState(false);
 
-    React.useEffect(()=>{
-        window.addEventListener("scroll", handleScroll);
-    },[])
+    // React.useEffect(()=>{
+    //     window.addEventListener("scroll", handleScroll);
+    // },[])
 
     // scroll.scrollTo(0);
 
-    const handleScroll = () => {
-        if (window.pageYOffset > 600.88) {
-            setShowBtn(true);
-        }else {
-            setShowBtn(false);
-        }
-    }
+    // const handleScroll = () => {
+    //     if (window.pageYOffset > 600.88) {
+    //         setShowBtn(true);
+    //     }else {
+    //         setShowBtn(false);
+    //     }
+    // }
 
-    const clickHandle = ()=>{
-         scroll.scrollTo(0);
-    }
+    // const clickHandle = ()=>{
+    //      scroll.scrollTo(0);
+    // }
 
     return (
         <Body>
-            <PreSeo seo={props.seo}/>
+            <PreSeo seo={props?.seo}/>
             <TopLoad Router={Router} />
             <Header login={props.login} logo={logo} menu={headerMenu || []} />
                 {props.children}
@@ -54,10 +54,7 @@ export default function Root(props) {
 
 const Body = styled.div `
     position: relative;
-    // background-color: #f6f6f6; 
-    // background-color: #fafafb; 
     background-color: #f0f2f5; 
-    
     font-size: ${(props) => props.theme.fontSize};
     font-family: ${(props) => props.theme.fontFamily1};
     font-weight: ${props => props.theme.fontWeightNormal};

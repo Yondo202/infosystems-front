@@ -414,16 +414,13 @@ const Container = styled.div`
                         align-items:center;
                         transition:all 0.3s ease;
                         color: rgba(255,255,255,.65);
-                        -webkit-transition: color .25s ease;
-                        -o-transition: color .25s ease;
                         transition: color .25s ease;
                         margin: 0px 20px;
-                        // line-height: 20px;
                         position: relative;
-                        // display: inline-block;
                         cursor: pointer;
                         font-size:1rem;
                         font-family:${props=>props.theme.fontFamily};
+                        
                         svg{
                             margin-left:2px;
                             font-size:20px;
@@ -439,7 +436,6 @@ const Container = styled.div`
                   
                     .A2{
                         font-size:0.97rem;
-                        ${props=>props.theme.BoldFont}
                         color: rgba(255,255,255,1);
                     }
                 }
