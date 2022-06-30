@@ -17,13 +17,13 @@ const index = ({ data }) => {
 
 export default index
 
-// getServerSideProps
-// getStaticProps
 export async function getServerSideProps(ctx){
     const cookies = nookies.get(ctx)
     let projectsname = await axios.get(process.env.serverUrl+'/projectcategories')
     let pId = projectsname?.data?.find( item=> item.name === ctx.query.pname)?.id
-    return { props: {data: { cf_jwt:cookies.cf_jwt??null, cf_id: cookies.cf_id??null, projectid: Object.keys(ctx.query).length === 0?'login':pId??null } }}
+    let P = Object.keys(ctx.query).length === 0?'login':pId??null
+    let cf_jwt = cookies.cf_jwt??null
+    let cf_id = cookies.cf_id??null
+    return { props: {data: { cf_jwt:cf_jwt, cf_id: cf_id, projectid: P  } }}
 }
   
-  // , revalidate: 60

@@ -70,11 +70,6 @@ MyApp.getInitialProps = async({ Component, ctx }) =>{
     const jwt = parseCookies(ctx).jwt;
     const role = parseCookies(ctx).role;
 
-    // console.log(`parseCookies`, parseCookies(ctx));
-    // console.log("---------------")
-
-    console.log(`ctx.pathname.`, ctx.pathname)
-
     if(!jwt){
         if( ctx.pathname.includes("/admin") ){
             redirectUser(ctx, "/login");
