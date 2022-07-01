@@ -88,11 +88,24 @@ const Issue = ({ data }) => {
 
 export default Issue
 
+const textColor1 = '#294260';
+
 const Container = styled.div`
+    font-family: ${props=>props.theme.fontFamily};
+    display:flex;
+    justify-content:center;
+    color:${textColor1};
     .content{
         background-color:#fff;
         border:1px solid rgba(0,0,0,0.2);
-        padding:30px 20px;
+        border-radius:6px;
+        padding:30px 30px;
+        border-radius:6px;
+
+        width:950px;
+        @media (max-width:950px){
+            width:100%;
+        }
         .issue_body{
             .desc{
                 font-size:13px;

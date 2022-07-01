@@ -15,25 +15,6 @@ import Router from "next/router"
 
 export default function Root(props) {
     const { headerMenu, logo, footerMenu, alert } = useContext(UserContext);
-    // const [ showBtn, setShowBtn ] = useState(false);
-
-    // React.useEffect(()=>{
-    //     window.addEventListener("scroll", handleScroll);
-    // },[])
-
-    // scroll.scrollTo(0);
-
-    // const handleScroll = () => {
-    //     if (window.pageYOffset > 600.88) {
-    //         setShowBtn(true);
-    //     }else {
-    //         setShowBtn(false);
-    //     }
-    // }
-
-    // const clickHandle = ()=>{
-    //      scroll.scrollTo(0);
-    // }
 
     return (
         <Body>
@@ -43,10 +24,6 @@ export default function Root(props) {
                 {props.children}
                 <MessengerCustomerChat pageId="159708260789747" appId="2645260245750776" />
                 {!props.login&&<Footer footerMenu={footerMenu} logo={logo}/>}
-                {/* {showBtn&&<div  onClick={clickHandle} className="toTop">
-                <IoIosArrowUp className="one" />
-                <IoIosArrowUp className="two" />
-                </div>} */}
             <Alert alert={alert} />
         </Body>
     )

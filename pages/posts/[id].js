@@ -8,7 +8,7 @@ import checkLanguage from "@/miscs/checkLanguage";
 const Blog = ({news}) => {
     return (
         <Root seo={{title: news.title, description: decrease(news.description, 120), thumb: news.image.url }}>
-             <MainContent news={news} />
+            <MainContent news={news} />
         </Root>
 
     );
