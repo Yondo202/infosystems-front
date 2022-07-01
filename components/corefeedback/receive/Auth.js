@@ -92,7 +92,12 @@ export default Auth
 const Container = styled.div`
     width:100vw;
     height:100vh;
-    background-color:#193048;
+    // background-color:#193048;
+    background-image: url(/img/left_menu_background.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+    background-color:#051e34;
     display:flex;
     justify-content:center;
     .middle_body{

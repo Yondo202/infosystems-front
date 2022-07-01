@@ -1,5 +1,4 @@
 import React from "react";
-import App from "next/app";
 import '../style.css'
 import checkLanguage from "@/miscs/checkLanguage";
 // import { MenuProvider } from "@/miscs/ContextMenuProvider";
@@ -10,9 +9,8 @@ import Router from "next/router"
 import { parseCookies } from "nookies"
 import { UserStore } from "@/core/context/Context"
  
-
-class MyApp extends App {
-    state = {
+const MyApp = ({ Component, pageProps, router }) =>{
+    const [ stateCore, setStateCore ] = React.useState({
         headerMenu: [],
         footerMenu: [],
         logo: null,
@@ -22,40 +20,40 @@ class MyApp extends App {
         completelyLoaded: false,
         name: 'ИНФОСИСТЕМС',
         description: 'Манай компани 1997 оноос эхлэн Мэдээллийн технологийн салбарт програм хангамжийн чиглэлээр ажиллаж зах зээлд өөрийн гэсэн байр сууриа эзэлж, тэргүүлэгч компаниудын нэг болсон.'
-    };
-    
-    async componentDidMount() {
+    })
+  
+    React.useEffect(()=>{
+      Fetch()
+    },[])
+  
+    const Fetch = async () =>{
+      const config = { width: window.innerWidth, height: window.innerHeight };
+      try{
         const res = await checkLanguage('/settings', null, true);
-        const config = {width: window.innerWidth, height: window.innerHeight};
-        if(res.data.header_menu?.length){
-            this.setState({
-                headerMenu:res.data.header_menu,
-                logo : res.data.logo,
-                footerMenu: res.data.FooterSector,
-                completelyLoaded: true,
-                config: config,
-            });
-        }
-        // GOOGLE TAG MANAGER
-        // const tagManagerArgs = { gtmId: "GTM-5GWNX89" };
-        // TagManager.initialize(tagManagerArgs);
+        setStateCore({
+            headerMenu:res.data.header_menu,
+            logo : res.data.logo,
+            footerMenu: res.data.FooterSector,
+            completelyLoaded: true,
+            config: config,
+        })
+        
+      }catch{
+        return {}
+      }
     }
-
-    render() {
-        const { Component, pageProps, router  } = this.props;
-            return (
-                <UserStore value={this.state}>
-                    <ThemeProvider theme={theme}>
-                            {/* <Component {...pageProps} key={router.route} /> */}
-                            {this.state.completelyLoaded?
-                             <Component {...pageProps} key={router.route} /> 
-                            :<div style={{width:`100%`, height:`100vh`,display:`flex`, alignItems:"center", justifyContent:"center"}}><img src="/giff2.gif" /></div> }
-                    </ThemeProvider>
-                </UserStore>
-            );
-    }
+  
+    return(
+        <UserStore value={stateCore}>
+            <ThemeProvider theme={theme}>
+                {stateCore.completelyLoaded?
+                <Component {...pageProps} key={router.route} /> 
+                :<div style={{width:`100%`, height:`100vh`,display:`flex`, alignItems:"center", justifyContent:"center"}}><img src="/giff2.gif" /></div> }
+            </ThemeProvider>
+        </UserStore>
+    )
 }
-
+  
 function redirectUser(ctx, location){
     if(ctx.req){
         ctx.res.writeHead(302, { Location: location });

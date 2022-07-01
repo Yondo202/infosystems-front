@@ -1,12 +1,13 @@
 import React from 'react'
 import axios from 'axios'
 import nookies from 'nookies'
+import CFRoot from '@/components/corefeedback/CFRoot'
 import Auth from '@/components/corefeedback/receive/Auth'
+import { Container } from "./index"
 import Issue from '@/components/corefeedback/receive/Issue'
-// getServerSideProps
-// getStaticProps
+
 const ids = ({ data, cf_jwt }) => {
-    if( cf_jwt )  return < Issue data={data} />
+    if( cf_jwt )  return <Container><CFRoot /> <Issue data={data} /> </Container>
     return <Auth />
 }
 
